@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+  <style>
+    body { padding: 25px; background-color: #f1f3f5; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    .card { box-shadow: 0 4px 12px rgba(0,0,0,0.08); border: none; border-radius: 10px; background-color: #ffffff; }
+    .card-title-bar { border-bottom: 2px solid #e9ecef; padding-bottom: 12px; margin-bottom: 18px; font-weight: 600; color: #212529; }
+    .table-container { max-height: 400px; overflow-y: auto; margin-top: 15px; border-radius: 6px; border: 1px solid #dee2e6; }
+    .table th { position: sticky; top: 0; background-color: #212529 !important; color: white; z-index: 2; font-weight: 500; }
+    .row-error { background-color: #f8d7da !important; color: #842029; }
+    .row-update { background-color: #fff3cd !important; }
+    .global-spinner { display: none; margin-left: 15px; vertical-align: middle; }
+    .section-divider { border-left: 4px solid #0d6efd; padding-left: 10px; }
+  </style>
+</head>
+<body>
+
+<div class="container-fluid">
+  <h2 class="text-center text-dark fw-bold mb-4">🚀 HỆ THỐNG QUẢN TRỊ DỮ LIỆU CÂN - HAKGROUP</h2>
+  
+  <div class="row g-4">
+    
+    <div class="col-xl-6">
+      <div class="card p-4 h-100">
+        <h4 class="card-title-bar section-divider">📥 KHỐI 1: NẠP VÀ KIỂM TRA PHIẾU CÂN MỚI</h4>
+        <p class="text-muted small">Chọn file Excel từ trạm cân để rà soát lỗi rác, lỗi ngày tháng và đối soát trùng trước khi lưu.</p>
+        
+        <div class="row g-2 align-items-center mb-3">
+          <div class="col-sm-7">
+            <input type="file" id="excelFile" class="form-control" accept=".xlsx, .xls">
+          </div>
+          <div class="col-sm-5 d-grid">
+            <button id="btnPreview" class="btn btn-warning fw-bold" onclick="loadPreview()">1. Kiểm tra File</button>
+          </div>
+        </div>
+        
+        <div class="row g-2">
+          <div class="col-sm-6 d-grid">
+            <button id="btnConfirm" class="btn btn-success fw-bold" onclick="submitImport()" disabled>2. Xác nhận Nạp Data</button>
+          </div>
+          <div class="col-sm-6 d-grid">
+            <button id="btnCancel" class="btn btn-danger fw-bold" onclick="cancelAndClearFiles()" disabled>❌ Hủy & Xóa file tạm</button>
+          </div>
+        </div>
+        <div class="mt-2 d-grid">
+          <a id="btnDraftLink" class="btn btn-outline-primary fw-bold d-none" target="_blank" href="#">📂 Mở file Sheet Draft vừa tạo để đối soát</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-6">
+      <div class="card p-4 h-100">
+        <h4 class="card-title-bar section-divider">📊 KHỐI 2 & 3: TRÍCH XUẤT VÀ TẢI BÁO CÁO HỆ THỐNG</h4>
+        <p class="text-muted small">Chạy độc lập bất cứ lúc nào từ dữ liệu hiện tại trong hệ thống (Không bắt buộc phải nạp file mới).</p>
+        
+        <div class="row g-2 mb-3 bg-light p-3 border rounded">
+          <div class="col-6">
+            <label class="form-label small fw-bold text-secondary">Từ ngày (Hạch toán):</label>
+            <input type="date" id="reportFromDate" class="form-control">
+          </div>
+          <div class="col-6">
+            <label class="form-label small fw-bold text-secondary">Đến ngày:</label>
+            <input type="date" id="reportToDate" class="form-control">
+          </div>
+        </div>
+
+        <div class="row g-2">
+          <div class="col-sm-6 border-end pe-3">
+            <h6 class="fw-bold text-primary mb-2">📋 PHÂN KHU BÁO CÁO MISA</h6>
+            <button class="btn btn-primary btn-sm w-100 mb-2 fw-bold" onclick="actionCreateMisa()">Bấm tạo Data MISA</button>
+            <button id="btnDownloadMisa" class="btn btn-outline-primary btn-sm w-100 fw-bold" onclick="actionDownloadMisa()">Tải file Excel MISA (.xlsx)</button>
+          </div>
+          <div class="col-sm-6 ps-3">
+            <h6 class="fw-bold text-success mb-2">📈 PHÂN KHU TỔNG HỢP</h6>
+            <button class="btn btn-success btn-sm w-100 h-100 fw-bold" style="max-height: 72px;" onclick="actionExportGeneral()">Tải Báo Cáo Tổng Hợp (.xlsx)</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="msgStatus" class="mt-4 alert d-none text-center fw-bold"></div>
+  <div class="text-center mt-2">
+    <div class="spinner-border text-primary global-spinner" id="globalSpinner" style="width: 2.5rem; height: 2.5rem;"></div>
+  </div>
+
+  <div class="card p-3 mt-4 d-none" id="previewCard">
+    <h5 class="text-secondary fw-bold">📋 BẢNG LƯỚI ĐỐI SOÁT CHI TIẾT TRƯỚC KHI LƯU</h5>
+    <div class="d-flex justify-content-between my-2 align-items-center">
+      <span class="badge bg-secondary">* Dòng lỗi ngày tháng (màu đỏ) sẽ tự động khóa chọn.</span>
+      <button class="btn btn-sm btn-secondary fw-bold" onclick="toggleSelectAll(this)">Bỏ chọn tất cả</button>
+    </div>
+    
+    <div class="table-container">
+      <table class="table table-bordered table-hover m-0">
+        <thead>
+          <tr>
+            <th width="4%" class="text-center">Chọn</th>
+            <th>Loại Import</th>
+            <th>Mã Số Chứng Từ</th>
+            <th>Số Phiếu</th>
+            <th>Số Xe</th>
+            <th>Ngày Cân 1</th>
+            <th>Giờ 1</th>
+            <th>Ngày Cân 2</th>
+            <th>Giờ 2</th>
+            <th class="text-end">KL Hàng (Kg)</th>
+            <th>Trạng Thái / Lỗi</th>
+          </tr>
+        </thead>
+        <tbody id="previewBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+  let currentPreviewData = [];
+
+  function setUINonActive(status) {
+    document.getElementById('globalSpinner').style.display = status ? 'inline-block' : 'none';
+    document.getElementById('btnPreview').disabled = status;
+    const btnConfirm = document.getElementById('btnConfirm');
+    const btnCancel = document.getElementById('btnCancel');
+    
+    if(!status && currentPreviewData.length > 0) {
+      btnConfirm.disabled = false;
+      btnCancel.disabled = false;
+    } else {
+      btnConfirm.disabled = true;
+      btnCancel.disabled = true;
+    }
+  }
+
+  function printMsg(text, type='info') {
+    const box = document.getElementById('msgStatus');
+    box.className = `mt-4 alert alert-${type}`; box.innerText = text; box.classList.remove('d-none');
+  }
+
+  function loadPreview() {
+    const fileInput = document.getElementById('excelFile');
+    if (fileInput.files.length === 0) { alert("Vui lòng chọn file Excel trạm cân cần import!"); return; }
+    
+    setUINonActive(true);
+    document.getElementById('btnDraftLink').classList.add('d-none');
+    printMsg("Hệ thống đang tải file lên Drive, chuẩn hóa khối lượng và sinh file Draft...", "warning");
+    
+    const file = fileInput.files[0]; const reader = new FileReader();
+    reader.onload = function(e) {
+      const base64 = e.target.result.split(',')[1];
+      const fileData = { base64: base64, mimeType: file.type, name: file.name };
+
+      google.script.run
+        .withSuccessHandler(function(res) {
+          setUINonActive(false);
+          if (res.status === "success") {
+            currentPreviewData = res.data;
+            renderPreviewGrid(res.data);
+            if(res.draftUrl) {
+              const linkBtn = document.getElementById('btnDraftLink');
+              linkBtn.href = res.draftUrl; linkBtn.classList.remove('d-none');
+            }
+          } else { printMsg("Lỗi đọc dữ liệu: " + res.message, "danger"); }
+        })
+        .withFailureHandler(function(err) { setUINonActive(false); printMsg("Lỗi kết nối: " + err.toString(), "danger"); })
+        .step1_PreviewDraft(fileData);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function renderPreviewGrid(data) {
+    const body = document.getElementById('previewBody'); body.innerHTML = "";
+    if(data.length === 0) {
+      body.innerHTML = `<tr><td colspan="11" class="text-center text-muted">Không tìm thấy phiếu cân hợp lệ.</td></tr>`;
+      document.getElementById('previewCard').classList.remove('d-none'); return;
+    }
+    data.forEach((row, index) => {
+      let trClass = "";
+      if (row.isError) trClass = "row-error";
+      else if (row.typeImport === "Cập nhật dòng cũ") trClass = "row-update";
+      let checkboxHtml = `<input type="checkbox" class="row-chk" data-idx="${index}" ${row.isError ? 'disabled' : 'checked'}>`;
+      if (row.typeImport.includes("Bỏ qua")) checkboxHtml = `⚠️`;
+
+      body.innerHTML += `
+        <tr class="${trClass}">
+          <td class="text-center">${checkboxHtml}</td>
+          <td><strong>${row.typeImport}</strong></td>
+          <td><code>${row.uniqueKey}</code></td>
+          <td>${row.soPhieu}</td>
+          <td>${row.soXe}</td>
+          <td>${row.ngayCan1}</td>
+          <td>${row.gioCan1}</td>
+          <td>${row.ngayCan2}</td>
+          <td>${row.gioCan2}</td>
+          <td class="text-end text-primary fw-bold">${Number(row.klHangGoc).toLocaleString()}</td>
+          <td><small>${row.isError ? '❌ ' + row.errorMsg : '✔️ Sẵn sàng'}</small></td>
+        </tr>`;
+    });
+    document.getElementById('previewCard').classList.remove('d-none');
+    document.getElementById('btnConfirm').disabled = false;
+    document.getElementById('btnCancel').disabled = false;
+    printMsg(`Đã tạo xong file Draft chống trùng! Bạn có thể bấm chọn Lưu Data hoặc bấm Hủy để xóa file tạm khỏi hệ thống.`, "info");
+  }
+
+  // CHỨC NĂNG HỦY BỎ KHÔNG IMPORT VÀ XÓA FILE TẠM TRÊN DRIVE
+  function cancelAndClearFiles() {
+    if (!confirm("Bạn chắc chắn muốn HỦY TIẾN TRÌNH này? Hệ thống sẽ xóa sạch toàn bộ file Excel vừa tải lên trong thư mục tạm INPUT!")) return;
+    
+    document.getElementById('globalSpinner').style.display = 'inline-block';
+    document.getElementById('btnConfirm').disabled = true;
+    document.getElementById('btnCancel').disabled = true;
+    printMsg("Hệ thống đang tiến hành dọn dẹp và xóa các file rác trong Folder INPUT...", "warning");
+    
+    google.script.run
+      .withSuccessHandler(function(res) {
+        document.getElementById('globalSpinner').style.display = 'none';
+        if (res.status === "success") {
+          printMsg("ĐÃ HUỶ: " + res.message, "danger");
+          document.getElementById('previewCard').classList.add('d-none');
+          document.getElementById('btnDraftLink').classList.add('d-none');
+          document.getElementById('excelFile').value = "";
+          currentPreviewData = [];
+        } else {
+          printMsg("Lỗi khi dọn file: " + res.message, "danger");
+          document.getElementById('btnCancel').disabled = false;
+        }
+      })
+      .withFailureHandler(function(err) {
+        document.getElementById('globalSpinner').style.display = 'none';
+        printMsg("Lỗi máy chủ: " + err.toString(), "danger");
+        document.getElementById('btnCancel').disabled = false;
+      })
+      .clearInputFolderFiles();
+  }
+
+  function toggleSelectAll(btn) {
+    const chks = document.querySelectorAll('.row-chk:not([disabled])');
+    if(btn.innerText === "Chọn tất cả") { chks.forEach(c => c.checked = true); btn.innerText = "Bỏ chọn tất cả"; }
+    else { chks.forEach(c => c.checked = false); btn.innerText = "Chọn tất cả"; }
+  }
+
+  function submitImport() {
+    const chks = document.querySelectorAll('.row-chk:checked');
+    if(chks.length === 0) { alert("Bạn chưa tích chọn dòng hợp lệ nào để lưu!"); return; }
+    if(!confirm(`Xác nhận ghi chính thức ${chks.length} dòng phiếu vào hệ thống?`)) return;
+
+    setUINonActive(true); document.getElementById('btnConfirm').disabled = true;
+    printMsg("Đang lưu trữ dữ liệu hạch toán và tự động tính đơn giá giật cấp...", "warning");
+
+    let confirmedList = []; chks.forEach(chk => { confirmedList.push(currentPreviewData[parseInt(chk.getAttribute('data-idx'))]); });
+
+    google.script.run
+      .withSuccessHandler(function(res) {
+        setUINonActive(false);
+        if(res.status === "success") {
+          printMsg("HOÀN THÀNH IMPORT: " + res.message, "success");
+          document.getElementById('previewCard').classList.add('d-none');
+          document.getElementById('btnDraftLink').classList.add('d-none');
+          document.getElementById('excelFile').value = ""; currentPreviewData = [];
+        } else { printMsg("Lỗi khi ghi data: " + res.message, "danger"); document.getElementById('btnConfirm').disabled = false; }
+      })
+      .withFailureHandler(function(err) { setUINonActive(false); printMsg("Lỗi máy chủ: " + err.toString(), "danger"); document.getElementById('btnConfirm').disabled = false; })
+      .step1_ConfirmImport(confirmedList);
+  }
+
+  /* ========================================================
+   * XỬ LÝ KHỐI 2 & 3: CÁC CHỨC NĂNG XUẤT BÁO CÁO BIỆT LẬP
+   * ======================================================== */
+  function actionCreateMisa() {
+    const fDate = document.getElementById('reportFromDate').value;
+    const tDate = document.getElementById('reportToDate').value;
+    document.getElementById('globalSpinner').style.display = 'inline-block';
+    printMsg("Đang tổng hợp dữ liệu, đối soát Mã NCC và Hợp Đồng sang bảng MISA...", "warning");
+    google.script.run
+      .withSuccessHandler(function(res) {
+        document.getElementById('globalSpinner').style.display = 'none';
+        if(res.status === "success") { printMsg("THÀNH CÔNG: Đã tạo dữ liệu hạch toán MISA! Bạn có thể bấm nút Tải Excel bên dưới.", "success"); }
+        else { printMsg("Lỗi hạch toán: " + res.message, "danger"); }
+      })
+      .withFailureHandler(function(err) { document.getElementById('globalSpinner').style.display = 'none'; printMsg("Lỗi: " + err.toString(), "danger"); })
+      .runCreateMisaData(fDate, tDate);
+  }
+
+  function actionDownloadMisa() {
+    document.getElementById('globalSpinner').style.display = 'inline-block';
+    printMsg("Đang chuyển đổi bảng tính MISA thành định dạng file .xlsx...", "warning");
+    google.script.run
+      .withSuccessHandler(function(res) {
+        document.getElementById('globalSpinner').style.display = 'none';
+        if(res.status === "success" && res.url) { printMsg("Đã khởi tạo link tải MISA thành công!", "success"); window.open(res.url, '_blank'); }
+        else { printMsg("Không tải được: " + res.message, "danger"); }
+      })
+      .withFailureHandler(function(err) { document.getElementById('globalSpinner').style.display = 'none'; printMsg("Lỗi: " + err.toString(), "danger"); })
+      .downloadMisaExcel();
+  }
+
+  function actionExportGeneral() {
+    const fDate = document.getElementById('reportFromDate').value;
+    const tDate = document.getElementById('reportToDate').value;
+    document.getElementById('globalSpinner').style.display = 'inline-block';
+    printMsg("Đang bóc tách dữ liệu và thiết lập cấu trúc tệp báo cáo tổng hợp...", "warning");
+    google.script.run
+      .withSuccessHandler(function(res) {
+        document.getElementById('globalSpinner').style.display = 'none';
+        if(res.status === "success" && res.url) { printMsg("Đã khởi tạo link tải Báo cáo tổng hợp thành công!", "success"); window.open(res.url, '_blank'); }
+        else { printMsg("Lỗi trích xuất: " + res.message, "danger"); }
+      })
+      .withFailureHandler(function(err) { document.getElementById('globalSpinner').style.display = 'none'; printMsg("Lỗi máy chủ: " + err.toString(), "danger"); })
+      .exportToExcel(fDate, tDate);
+  }
+</script>
+</body>
+</html>
