@@ -2,315 +2,1779 @@
 <html>
 <head>
   <base target="_top">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    body { padding: 25px; background-color: #f1f3f5; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    .card { box-shadow: 0 4px 12px rgba(0,0,0,0.08); border: none; border-radius: 10px; background-color: #ffffff; }
-    .card-title-bar { border-bottom: 2px solid #e9ecef; padding-bottom: 12px; margin-bottom: 18px; font-weight: 600; color: #212529; }
-    .table-container { max-height: 400px; overflow-y: auto; margin-top: 15px; border-radius: 6px; border: 1px solid #dee2e6; }
-    .table th { position: sticky; top: 0; background-color: #212529 !important; color: white; z-index: 2; font-weight: 500; }
-    .row-error { background-color: #f8d7da !important; color: #842029; }
-    .row-update { background-color: #fff3cd !important; }
-    .global-spinner { display: none; margin-left: 15px; vertical-align: middle; }
-    .section-divider { border-left: 4px solid #0d6efd; padding-left: 10px; }
+    :root{
+      --bg:#F1F3F0;
+      --surface:#FFFFFF;
+      --ink:#1E211C;
+      --ink-soft:#5B6259;
+      --brand-dark:#16241C;
+      --brand:#1B4332;
+      --brand-light:#274C3B;
+      --accent:#C08829;
+      --accent-soft:#F3E3C0;
+      --danger:#B3261E;
+      --danger-soft:#F7E3E1;
+      --success:#2E7D4F;
+      --success-soft:#E3F0E7;
+      --border:#DCE0D8;
+      --radius:10px;
+      --shadow:0 2px 10px rgba(22,36,28,.06);
+    }
+    *{box-sizing:border-box;}
+    html,body{margin:0;padding:0;height:100%;}
+    body{
+      font-family:'Be Vietnam Pro',sans-serif;
+      background:var(--bg);
+      color:var(--ink);
+      font-size:14px;
+      -webkit-font-smoothing:antialiased;
+    }
+    .mono{font-family:'JetBrains Mono',monospace;}
+    .app{display:flex;min-height:100vh;}
+
+    /* ---------- SIDEBAR ---------- */
+    .sidebar{
+      width:252px;flex:0 0 252px;
+      background:var(--brand-dark);
+      color:#EAF0EC;
+      display:flex;flex-direction:column;
+      padding:22px 16px;
+      position:sticky;top:0;height:100vh;
+    }
+    .brand{display:flex;align-items:center;gap:12px;margin-bottom:28px;padding:0 6px;}
+    .seal{
+      width:46px;height:46px;border-radius:50%;
+      border:2px dashed var(--accent);
+      display:flex;align-items:center;justify-content:center;
+      transform:rotate(-8deg);
+      flex:0 0 auto;
+      background:rgba(192,136,41,.08);
+    }
+    .seal span{
+      font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;
+      color:var(--accent);letter-spacing:.5px;
+    }
+    .brand-text .name{font-weight:700;font-size:14.5px;line-height:1.25;color:#fff;}
+    .brand-text .sub{font-size:11px;color:#9BAFA1;margin-top:2px;letter-spacing:.3px;}
+
+    .menu{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px;}
+    .menu-item{
+      display:flex;align-items:center;gap:11px;
+      padding:11px 12px;border-radius:9px;cursor:pointer;
+      color:#C9D6CD;font-weight:500;font-size:13.5px;
+      transition:background .15s ease, color .15s ease;
+      user-select:none;
+    }
+    .menu-item svg{width:18px;height:18px;flex:0 0 auto;opacity:.85;}
+    .menu-item:hover{background:rgba(255,255,255,.06);color:#fff;}
+    .menu-item.active{background:var(--brand);color:#fff;}
+    .menu-item.active svg{opacity:1;}
+    .menu-sep{height:1px;background:rgba(255,255,255,.08);margin:14px 4px;}
+    .sub-menu{margin:2px 0 8px 30px;display:none;flex-direction:column;gap:2px;}
+    .sub-menu.open{display:flex;}
+    .sub-item{
+      padding:7px 10px;border-radius:7px;font-size:12.5px;color:#9BAFA1;cursor:pointer;
+    }
+    .sub-item:hover{color:#fff;}
+    .sub-item.active{color:var(--accent);font-weight:600;}
+    .sidebar-foot{margin-top:auto;padding:12px 8px 4px;font-size:11px;color:#748376;}
+
+    /* ---------- CONTENT ---------- */
+    .content{flex:1;min-width:0;padding:26px 32px 60px;}
+    .view{display:none;}
+    .view.active{display:block;animation:fadein .18s ease;}
+    @keyframes fadein{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+
+    .page-head{margin-bottom:20px;}
+    .page-head h1{font-size:20px;margin:0 0 4px;font-weight:700;color:var(--brand-dark);}
+    .page-head p{margin:0;color:var(--ink-soft);font-size:13px;}
+
+    .card{
+      background:var(--surface);border:1px solid var(--border);
+      border-radius:var(--radius);box-shadow:var(--shadow);
+      padding:20px;margin-bottom:18px;
+    }
+    .card h2{font-size:14.5px;margin:0 0 14px;font-weight:600;color:var(--brand-dark);
+      display:flex;align-items:center;gap:8px;}
+    .card h2 .tag{
+      font-size:10.5px;background:var(--accent-soft);color:#8A5F17;
+      padding:2px 8px;border-radius:20px;font-weight:700;letter-spacing:.3px;
+    }
+
+    /* tabs within Import view */
+    .tabbar{display:flex;gap:4px;margin-bottom:16px;border-bottom:1px solid var(--border);}
+    .tabbtn{
+      padding:9px 16px;font-size:13px;font-weight:600;color:var(--ink-soft);
+      cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;
+    }
+    .tabbtn.active{color:var(--brand);border-color:var(--brand);}
+    .tabpane{display:none;}
+    .tabpane.active{display:block;}
+
+    /* form elements */
+    .field-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;}
+    .field label{display:block;font-size:12px;font-weight:600;color:var(--ink-soft);margin-bottom:6px;}
+    .field input,.field select{
+      width:100%;padding:9px 11px;border:1px solid var(--border);border-radius:8px;
+      font-size:13.5px;font-family:inherit;background:#fff;color:var(--ink);
+    }
+    .field input:focus,.field select:focus{outline:2px solid var(--brand-light);outline-offset:1px;border-color:var(--brand);}
+    .field.advanced{opacity:.9;}
+
+    .btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;}
+    .btn{
+      appearance:none;border:none;border-radius:8px;padding:10px 18px;
+      font-size:13.5px;font-weight:600;cursor:pointer;
+      display:inline-flex;align-items:center;gap:8px;transition:filter .12s ease, transform .05s ease;
+    }
+    .btn:active{transform:scale(.98);}
+    .btn-primary{background:var(--brand);color:#fff;}
+    .btn-primary:hover{filter:brightness(1.08);}
+    .btn-accent{background:var(--accent);color:#3A2A05;}
+    .btn-accent:hover{filter:brightness(1.06);}
+    .btn-ghost{background:#EEF1EC;color:var(--ink);}
+    .btn-ghost:hover{background:#E4E9E1;}
+    .btn-danger{background:var(--danger-soft);color:var(--danger);}
+    .btn-danger:hover{filter:brightness(.97);}
+    .btn:disabled{opacity:.55;cursor:not-allowed;}
+    .btn-sm{padding:5px 10px;font-size:12px;border-radius:6px;}
+
+    .dropzone{
+      border:2px dashed var(--border);border-radius:10px;padding:26px;text-align:center;
+      color:var(--ink-soft);cursor:pointer;background:#FAFBF9;
+    }
+    .dropzone.drag{border-color:var(--brand);background:var(--success-soft);}
+    .dropzone input{display:none;}
+    .filelist{margin-top:10px;font-size:12.5px;color:var(--ink-soft);}
+    .filelist .fitem{padding:4px 0;display:flex;justify-content:space-between;}
+
+    table{width:100%;border-collapse:collapse;font-size:12.8px;}
+    thead th{
+      text-align:left;padding:9px 10px;background:var(--brand);color:#fff;
+      font-weight:600;position:sticky;top:0;white-space:nowrap;
+    }
+    tbody td{padding:8px 10px;border-bottom:1px solid var(--border);white-space:nowrap;}
+    tbody tr:hover{background:#F6F8F5;}
+    .table-wrap{overflow:auto;max-height:52vh;border:1px solid var(--border);border-radius:8px;}
+    .num{text-align:right;font-family:'JetBrains Mono',monospace;}
+    .badge{padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;display:inline-block;}
+    .badge-ok{background:var(--success-soft);color:var(--success);}
+    .badge-warn{background:var(--danger-soft);color:var(--danger);}
+    .badge-neutral{background:#EEF1EC;color:var(--ink-soft);}
+
+    .summary-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:16px;}
+    .stat{
+      flex:1;min-width:150px;background:var(--surface);border:1px solid var(--border);
+      border-radius:var(--radius);box-shadow:var(--shadow);padding:14px 16px;
+    }
+    .stat .label{font-size:11.5px;color:var(--ink-soft);font-weight:600;margin-bottom:4px;}
+    .stat .value{font-family:'JetBrains Mono',monospace;font-size:19px;font-weight:700;color:var(--brand-dark);}
+
+    .empty-state{padding:40px 10px;text-align:center;color:var(--ink-soft);}
+    .empty-state svg{opacity:.4;margin-bottom:10px;}
+
+    #toast-container{position:fixed;right:20px;bottom:20px;display:flex;flex-direction:column;gap:8px;z-index:9999;}
+    .toast{
+      padding:12px 16px;border-radius:8px;font-size:13px;font-weight:500;color:#fff;
+      box-shadow:0 4px 16px rgba(0,0,0,.18);min-width:220px;animation:toastin .18s ease;
+    }
+    .toast.ok{background:var(--brand);}
+    .toast.err{background:var(--danger);}
+    @keyframes toastin{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+    .spinner{
+      width:15px;height:15px;border-radius:50%;border:2px solid rgba(255,255,255,.5);
+      border-top-color:#fff;animation:spin .7s linear infinite;display:inline-block;
+    }
+    @keyframes spin{to{transform:rotate(360deg);}}
+    .overlay-loading{
+      position:fixed;inset:0;background:rgba(22,36,28,.35);z-index:9998;
+      display:none;align-items:center;justify-content:center;
+    }
+    .overlay-loading.show{display:flex;}
+    .overlay-box{background:#fff;padding:18px 26px;border-radius:10px;font-weight:600;color:var(--brand-dark);
+      display:flex;align-items:center;gap:12px;box-shadow:0 8px 30px rgba(0,0,0,.2);}
+    .overlay-box .spinner{border-color:rgba(27,67,50,.25);border-top-color:var(--brand);width:18px;height:18px;}
+
+    .table-wrap tfoot td{
+      position:sticky;bottom:0;background:#EEF1EC;font-weight:700;color:var(--brand-dark);
+      border-top:2px solid var(--border);white-space:nowrap;
+    }
+
+    .bg-group-card{
+      border:1px solid var(--border);border-radius:9px;padding:14px;margin-bottom:12px;background:#FAFBF9;
+    }
+    .bg-group-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+    .bg-group-head strong{font-size:13px;color:var(--brand-dark);}
+    select[multiple]{height:auto;padding:6px;}
+    select[multiple] option{padding:4px 6px;border-radius:4px;}
+
+    @media (max-width:820px){
+      .app{flex-direction:column;}
+      .sidebar{width:100%;flex:none;height:auto;position:relative;}
+      .menu{flex-direction:row;flex-wrap:wrap;}
+      .sub-menu{margin-left:8px;}
+      .content{padding:18px;}
+    }
   </style>
 </head>
 <body>
-
-<div class="container-fluid">
-  <h2 class="text-center text-dark fw-bold mb-4">🚀 HỆ THỐNG QUẢN TRỊ DỮ LIỆU CÂN - HAKGROUP</h2>
-  
-  <div class="row g-4">
-    
-    <div class="col-xl-6">
-      <div class="card p-4 h-100">
-        <h4 class="card-title-bar section-divider">📥 KHỐI 1: NẠP VÀ KIỂM TRA PHIẾU CÂN MỚI</h4>
-        <p class="text-muted small">Chọn file Excel từ trạm cân để rà soát lỗi rác, lỗi ngày tháng và đối soát trùng trước khi lưu.</p>
-        
-        <div class="row g-2 align-items-center mb-3">
-          <div class="col-sm-7">
-            <input type="file" id="excelFile" class="form-control" accept=".xlsx, .xls">
-          </div>
-          <div class="col-sm-5 d-grid">
-            <button id="btnPreview" class="btn btn-warning fw-bold" onclick="loadPreview()">1. Kiểm tra File</button>
-          </div>
-        </div>
-        
-        <div class="row g-2">
-          <div class="col-sm-6 d-grid">
-            <button id="btnConfirm" class="btn btn-success fw-bold" onclick="submitImport()" disabled>2. Xác nhận Nạp Data</button>
-          </div>
-          <div class="col-sm-6 d-grid">
-            <button id="btnCancel" class="btn btn-danger fw-bold" onclick="cancelAndClearFiles()" disabled>❌ Hủy & Xóa file tạm</button>
-          </div>
-        </div>
-        <div class="mt-2 d-grid">
-          <a id="btnDraftLink" class="btn btn-outline-primary fw-bold d-none" target="_blank" href="#">📂 Mở file Sheet Draft vừa tạo để đối soát</a>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="seal"><span>HAK</span></div>
+        <div class="brand-text">
+          <div class="name">HAKGROUP</div>
+          <div class="sub">Sổ Cân Điện Tử</div>
         </div>
       </div>
-    </div>
 
-    <div class="col-xl-6">
-      <div class="card p-4 h-100">
-        <h4 class="card-title-bar section-divider">📊 KHỐI 2 & 3: TRÍCH XUẤT VÀ TẢI BÁO CÁO HỆ THỐNG</h4>
-        <p class="text-muted small">Chạy độc lập bất cứ lúc nào từ dữ liệu hiện tại trong hệ thống (Không bắt buộc phải nạp file mới).</p>
-        
-        <div class="row g-2 mb-3 bg-light p-3 border rounded">
-          <div class="col-6">
-            <label class="form-label small fw-bold text-secondary">Từ ngày (Hạch toán):</label>
-            <input type="date" id="reportFromDate" class="form-control">
+      <ul class="menu">
+        <li class="menu-item active" data-view="view-import">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
+          Import &amp; Nhập liệu
+        </li>
+        <li class="sub-menu open" id="submenu-import">
+          <div class="sub-item active" data-tab="tab-file" data-group="import">Import file cân</div>
+          <div class="sub-item" data-tab="tab-manual" data-group="import">Nhập tay</div>
+        </li>
+
+        <li class="menu-item" data-view="view-nhapkho">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg>
+          Báo cáo tổng hợp nhập kho
+        </li>
+        <li class="sub-menu" id="submenu-nhapkho">
+          <div class="sub-item active" data-tab="nk-tab-tonghop" data-group="nhapkho">Báo cáo tổng hợp cân</div>
+          <div class="sub-item" data-tab="nk-tab-misa" data-group="nhapkho">Báo cáo Misa</div>
+        </li>
+
+        <li class="menu-item" data-view="view-baogia">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+          Quản lý báo giá
+        </li>
+        <li class="sub-menu" id="submenu-baogia">
+          <div class="sub-item active" data-tab="bg-tab-nhap" data-group="baogia">Nhập báo giá</div>
+          <div class="sub-item" data-tab="bg-tab-hieuluc" data-group="baogia">Hiệu lực báo giá</div>
+          <div class="sub-item" data-tab="bg-tab-mabaogia" data-group="baogia">Danh mục mã báo giá</div>
+          <div class="sub-item" data-tab="bg-tab-makl" data-group="baogia">Danh mục mã khối lượng</div>
+        </li>
+      </ul>
+
+      <div class="sidebar-foot">© HAKGROUP · Quản lý Thanh toán HAK</div>
+    </aside>
+
+    <main class="content">
+
+      <!-- ============ VIEW 1: IMPORT & NHẬP LIỆU ============ -->
+      <section id="view-import" class="view active">
+        <div class="page-head">
+          <h1>Import &amp; Nhập liệu phiếu cân</h1>
+          <p>Tải file cân lên để đối soát tự động, hoặc nhập tay từng phiếu.</p>
+        </div>
+
+        <div class="tabbar">
+          <div class="tabbtn active" data-pane="tab-file">📥 Import file cân</div>
+          <div class="tabbtn" data-pane="tab-manual">✍️ Nhập tay</div>
+        </div>
+
+        <!-- TAB: IMPORT FILE -->
+        <div class="tabpane active" id="tab-file">
+          <div class="card">
+            <h2>Bước 1 · Tải file cân lên</h2>
+            <div class="dropzone" id="dropzone">
+              <div>Kéo thả file .xls / .xlsx vào đây, hoặc <strong>bấm để chọn file</strong></div>
+              <input type="file" id="fileInput" accept=".xls,.xlsx" multiple>
+            </div>
+            <div class="filelist" id="fileList"></div>
+            <div class="btnrow">
+              <button class="btn btn-primary" id="btnPreview">Tải lên &amp; Xem trước</button>
+              <button class="btn btn-danger" id="btnClearFolder">Dọn dẹp file tạm trong thư mục Input</button>
+            </div>
           </div>
-          <div class="col-6">
-            <label class="form-label small fw-bold text-secondary">Đến ngày:</label>
-            <input type="date" id="reportToDate" class="form-control">
+
+          <div class="card" id="previewCard" style="display:none;">
+            <h2>Bước 2 · Xem trước &amp; đối soát <span class="tag" id="previewCount">0 dòng</span></h2>
+            <p style="font-size:12.5px;color:var(--ink-soft);margin:0 0 10px;">Bỏ tick những dòng KHÔNG muốn nhập (mặc định các dòng hợp lệ đều được chọn sẵn). Dòng lỗi không thể chọn.</p>
+            <div class="btnrow" style="margin-top:0;margin-bottom:10px;">
+              <button class="btn btn-ghost btn-sm" id="btnTogglePreviewAll">☑️ Chọn / Bỏ chọn tất cả</button>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th><input type="checkbox" id="previewCheckHeader" checked></th>
+                    <th>Trạng thái</th><th>Mã CT</th><th>Số phiếu</th><th>Số xe</th>
+                    <th>Ngày cân 1</th><th>Giờ cân 1</th><th>Ngày cân 2</th><th>Giờ cân 2</th>
+                    <th class="num">KL Cân1</th><th class="num">KL Cân2</th><th class="num">KL Hàng</th><th>Ghi chú</th>
+                  </tr>
+                </thead>
+                <tbody id="previewBody"></tbody>
+              </table>
+            </div>
+            <div class="btnrow">
+              <button class="btn btn-primary" id="btnConfirmImport">✔️ Xác nhận nhập liệu (theo lựa chọn)</button>
+              <button class="btn btn-ghost" id="btnCancelPreview">Hủy xem trước</button>
+            </div>
           </div>
         </div>
 
-        <div class="row g-2">
-          <div class="col-sm-6 border-end pe-3">
-            <h6 class="fw-bold text-primary mb-2">📋 PHÂN KHU BÁO CÁO MISA</h6>
-            <button class="btn btn-primary btn-sm w-100 mb-2 fw-bold" onclick="actionCreateMisa()">Bấm tạo Data MISA</button>
-            <button id="btnDownloadMisa" class="btn btn-outline-primary btn-sm w-100 fw-bold" onclick="actionDownloadMisa()">Tải file Excel MISA (.xlsx)</button>
-          </div>
-          <div class="col-sm-6 ps-3">
-            <h6 class="fw-bold text-success mb-2">📈 PHÂN KHU TỔNG HỢP</h6>
-            <button class="btn btn-success btn-sm w-100 h-100 fw-bold" style="max-height: 72px;" onclick="actionExportGeneral()">Tải Báo Cáo Tổng Hợp (.xlsx)</button>
+        <!-- TAB: NHẬP TAY -->
+        <div class="tabpane" id="tab-manual">
+          <div class="card">
+            <h2>Nhập tay 1 phiếu cân</h2>
+            <div class="field-grid">
+              <div class="field"><label>Số phiếu *</label><input id="m_soPhieu" placeholder="VD: 00123"></div>
+              <div class="field"><label>Số xe *</label><input id="m_soXe" placeholder="VD: 51C-123.45"></div>
+              <div class="field advanced"><label>Biển số 2 (xe kéo/rơ-moóc)</label><input id="m_soXe2" placeholder="Tùy chọn"></div>
+              <div class="field"><label>Khách hàng (cột L) *</label><input id="m_khachHang" placeholder="Tên khách hàng"></div>
+              <div class="field"><label>Ngày cân 1 *</label><input type="date" id="m_ngayCan1"></div>
+              <div class="field"><label>Giờ cân 1 *</label><input type="time" id="m_gioCan1"></div>
+              <div class="field"><label>Ngày cân 2 *</label><input type="date" id="m_ngayCan2"></div>
+              <div class="field"><label>Giờ cân 2 *</label><input type="time" id="m_gioCan2"></div>
+              <div class="field"><label>KL cân 1 (kg hoặc tấn)</label><input type="number" id="m_klCan1" placeholder="0"></div>
+              <div class="field"><label>KL cân 2 (kg hoặc tấn)</label><input type="number" id="m_klCan2" placeholder="0"></div>
+              <div class="field"><label>KL hàng * (kg hoặc tấn)</label><input type="number" id="m_klHang" placeholder="0"></div>
+              <div class="field advanced"><label>Mã Đại Lý - ĐL (đối chiếu Misa, VD: DT)</label><input id="m_maKH" placeholder="Tùy chọn"></div>
+              <div class="field advanced"><label>Mã Nguồn Gốc - NG (đối chiếu Misa, VD: ĐL)</label><input id="m_maNG" placeholder="Tùy chọn"></div>
+            </div>
+            <p style="font-size:11.5px;color:var(--ink-soft);margin-top:10px;">* Nếu số nhập &lt; 70, hệ thống hiểu là đơn vị Tấn và tự quy đổi ra Kg (theo đúng quy ước của bước Import file).</p>
+            <div class="btnrow">
+              <button class="btn btn-primary" id="btnSubmitManual">Lưu phiếu cân</button>
+              <button class="btn btn-ghost" id="btnResetManual">Làm mới form</button>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
 
+      <!-- ============ VIEW 2: BÁO CÁO TỔNG HỢP CÂN ============ -->
+      <!-- ============ VIEW: BÁO CÁO TỔNG HỢP NHẬP KHO ============ -->
+      <section id="view-nhapkho" class="view">
+        <div class="page-head">
+          <h1>Báo cáo tổng hợp nhập kho</h1>
+          <p>Gồm Báo cáo tổng hợp cân và Báo cáo Misa · Lọc theo ngày, xe, khách hàng, đại lý/nguồn gốc và trạng thái ĐNTT.</p>
+        </div>
+
+        <div class="tabbar">
+          <div class="tabbtn active" data-pane="nk-tab-tonghop">📊 Báo cáo tổng hợp cân</div>
+          <div class="tabbtn" data-pane="nk-tab-misa">🧾 Báo cáo Misa</div>
+        </div>
+
+        <!-- TAB CẤP 1: BÁO CÁO TỔNG HỢP CÂN -->
+        <div class="tabpane active" id="nk-tab-tonghop">
+          <div class="tabbar">
+            <div class="tabbtn active" data-pane="th-tab-phieucan">📋 Theo phiếu cân</div>
+            <div class="tabbtn" data-pane="th-tab-bg">💰 Theo báo giá (đơn giá áp dụng)</div>
+          </div>
+
+          <!-- TAB CẤP 2: THEO PHIẾU CÂN -->
+          <div class="tabpane active" id="th-tab-phieucan">
+            <div class="card">
+              <h2>Bộ lọc</h2>
+              <div class="field-grid">
+                <div class="field"><label>Từ ngày</label><input type="date" id="th_fromDate"></div>
+                <div class="field"><label>Đến ngày</label><input type="date" id="th_toDate"></div>
+                <div class="field"><label>Số xe</label><select id="th_xe"><option value="">Tất cả</option></select></div>
+                <div class="field"><label>Khách hàng</label><select id="th_kh"><option value="">Tất cả</option></select></div>
+                <div class="field"><label>Đại lý (ĐL)</label><select id="th_daiLy"><option value="">Tất cả</option></select></div>
+                <div class="field"><label>Nguồn gốc (NG)</label><select id="th_nguonGoc"><option value="">Tất cả</option></select></div>
+                <div class="field"><label>Tình trạng thanh toán (ID_DNTT)</label>
+                  <select id="th_trangThai">
+                    <option value="">Tất cả</option>
+                    <option value="da">Đã lập ĐNTT (đã thanh toán)</option>
+                    <option value="chua">Chưa lập ĐNTT (chưa thanh toán)</option>
+                  </select>
+                </div>
+              </div>
+              <div class="btnrow">
+                <button class="btn btn-primary" id="btnLocTongHop">🔍 Lọc dữ liệu</button>
+                <button class="btn btn-accent" id="btnExcelTongHop">⬇️ Xuất Excel</button>
+                <button class="btn btn-accent" id="btnPdfTongHop">🖨️ Xuất PDF</button>
+              </div>
+            </div>
+
+            <div class="summary-row">
+              <div class="stat"><div class="label">SỐ LƯỢNG PHIẾU</div><div class="value" id="th_sumSoLuong">0</div></div>
+              <div class="stat"><div class="label">TỔNG KHỐI LƯỢNG (KG)</div><div class="value" id="th_sumKL">0</div></div>
+              <div class="stat"><div class="label">TỔNG THÀNH TIỀN (VNĐ)</div><div class="value" id="th_sumTien">0</div></div>
+            </div>
+
+            <div class="card">
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Mã CT</th><th>Số phiếu</th><th>Ngày cân 1</th><th>Số xe</th><th>Biển số 2</th><th>Khách hàng</th>
+                      <th class="num">KL Hàng (kg)</th><th class="num">Đơn giá</th><th class="num">Thành tiền</th>
+                      <th>Tình trạng thanh toán</th><th></th>
+                    </tr>
+                  </thead>
+                  <tbody id="th_tableBody"></tbody>
+                  <tfoot id="th_tableFoot"></tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB CẤP 2: THEO BÁO GIÁ -->
+          <div class="tabpane" id="th-tab-bg">
+            <div class="card">
+              <h2>Bộ lọc</h2>
+              <div class="field-grid">
+                <div class="field"><label>Từ ngày</label><input type="date" id="dg_fromDate"></div>
+                <div class="field"><label>Đến ngày</label><input type="date" id="dg_toDate"></div>
+                <div class="field"><label>Số xe</label><select id="dg_xe"><option value="">Tất cả</option></select></div>
+                <div class="field"><label>Khách hàng</label><select id="dg_kh"><option value="">Tất cả</option></select></div>
+                <div class="field"><label>Đại lý (ĐL)</label><select id="dg_daiLy"><option value="">Tất cả</option></select></div>
+                <div class="field"><label>Nguồn gốc (NG)</label><select id="dg_nguonGoc"><option value="">Tất cả</option></select></div>
+                <div class="field"><label>Mã báo giá (Mã ĐG)</label><select id="dg_maDonGia"><option value="">Tất cả</option></select></div>
+                <div class="field"><label>Mã khối lượng (Mã KL)</label><select id="dg_maKL"><option value="">Tất cả</option></select></div>
+                <div class="field"><label>Tình trạng thanh toán (ID_DNTT)</label>
+                  <select id="dg_trangThai">
+                    <option value="">Tất cả</option>
+                    <option value="da">Đã lập ĐNTT (đã thanh toán)</option>
+                    <option value="chua">Chưa lập ĐNTT (chưa thanh toán)</option>
+                  </select>
+                </div>
+              </div>
+              <div class="btnrow">
+                <button class="btn btn-primary" id="btnLocDonGia">🔍 Lọc dữ liệu</button>
+                <button class="btn btn-accent" id="btnExcelDonGia">⬇️ Xuất Excel</button>
+                <button class="btn btn-accent" id="btnPdfDonGia">🖨️ Xuất PDF</button>
+              </div>
+            </div>
+
+            <div class="summary-row">
+              <div class="stat"><div class="label">SỐ LƯỢNG PHIẾU</div><div class="value" id="dg_sumSoLuong">0</div></div>
+              <div class="stat"><div class="label">TỔNG THÀNH TIỀN (VNĐ)</div><div class="value" id="dg_sumTien">0</div></div>
+            </div>
+
+            <div class="card">
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Mã CT</th><th>Ngày cân</th><th>Mã đơn giá</th><th>Mã KL</th>
+                      <th class="num">Giá gốc (ĐG_AD)</th><th class="num">Điều chỉnh</th><th class="num">Đơn giá áp dụng</th>
+                      <th>Diễn giải đơn giá</th><th>Trạng thái giá</th><th class="num">Thành tiền</th>
+                    </tr>
+                  </thead>
+                  <tbody id="dg_tableBody"></tbody>
+                  <tfoot id="dg_tableFoot"></tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB CẤP 1: BÁO CÁO MISA -->
+        <div class="tabpane" id="nk-tab-misa">
+          <div class="card">
+            <h2>Tạo / cập nhật dữ liệu Misa</h2>
+            <div class="field-grid">
+              <div class="field"><label>Từ ngày</label><input type="date" id="ms_genFrom"></div>
+              <div class="field"><label>Đến ngày</label><input type="date" id="ms_genTo"></div>
+            </div>
+            <div class="btnrow">
+              <button class="btn btn-ghost" id="btnGenMisa">⚙️ Chạy trích xuất dữ liệu Misa</button>
+              <button class="btn btn-accent" id="btnDownloadMisaGoc">⬇️ Xuất file MISA gốc (để Import lên MISA)</button>
+            </div>
+            <p style="font-size:11.5px;color:var(--ink-soft);margin-top:8px;">
+              File này giữ NGUYÊN 31 cột đúng định dạng nhập liệu của phần mềm MISA (khác với "Báo cáo Misa" bên dưới — đó là bảng rút gọn để xem/lọc, không dùng để import lên MISA được). Hãy bấm "Chạy trích xuất" trước nếu vừa có phiếu cân mới.
+            </p>
+          </div>
+
+          <div class="card">
+            <h2>Bộ lọc báo cáo</h2>
+            <div class="field-grid">
+              <div class="field"><label>Từ ngày</label><input type="date" id="ms_fromDate"></div>
+              <div class="field"><label>Đến ngày</label><input type="date" id="ms_toDate"></div>
+              <div class="field"><label>Số xe</label><select id="ms_xe"><option value="">Tất cả</option></select></div>
+              <div class="field"><label>Khách hàng / NCC</label><select id="ms_kh"><option value="">Tất cả</option></select></div>
+              <div class="field"><label>Trạng thái thanh toán</label>
+                <select id="ms_trangThai">
+                  <option value="">Tất cả</option>
+                  <option value="da">Đã lập ĐNTT (đã thanh toán)</option>
+                  <option value="chua">Chưa lập ĐNTT (chưa thanh toán)</option>
+                </select>
+              </div>
+            </div>
+            <div class="btnrow">
+              <button class="btn btn-primary" id="btnLocMisa">🔍 Lọc dữ liệu</button>
+              <button class="btn btn-accent" id="btnExcelMisa">⬇️ Xuất Excel</button>
+              <button class="btn btn-accent" id="btnPdfMisa">🖨️ Xuất PDF</button>
+            </div>
+          </div>
+
+          <div class="summary-row">
+            <div class="stat"><div class="label">SỐ LƯỢNG DÒNG</div><div class="value" id="ms_sumSoLuong">0</div></div>
+            <div class="stat"><div class="label">TỔNG KHỐI LƯỢNG (TẤN)</div><div class="value" id="ms_sumKL">0</div></div>
+            <div class="stat"><div class="label">TỔNG THÀNH TIỀN (VNĐ)</div><div class="value" id="ms_sumTien">0</div></div>
+          </div>
+
+          <div class="card">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Mã CT</th><th>Ngày</th><th>Số xe</th><th class="num">KL (Tấn)</th>
+                    <th class="num">Đơn giá</th><th class="num">Thành tiền</th><th>Tên NCC</th>
+                    <th>Trạng thái ĐNTT</th><th></th>
+                  </tr>
+                </thead>
+                <tbody id="ms_tableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ VIEW 4: QUẢN LÝ BÁO GIÁ ============ -->
+      <section id="view-baogia" class="view">
+        <div class="page-head">
+          <h1>Quản lý báo giá</h1>
+          <p>Nhập báo giá mới, sao chép từ báo giá cũ, tách nhóm giá, và quản lý danh mục mã.</p>
+        </div>
+
+        <div class="tabbar">
+          <div class="tabbtn active" data-pane="bg-tab-nhap">✍️ Nhập báo giá</div>
+          <div class="tabbtn" data-pane="bg-tab-hieuluc">📅 Hiệu lực báo giá</div>
+          <div class="tabbtn" data-pane="bg-tab-mabaogia">🏷️ Danh mục mã báo giá</div>
+          <div class="tabbtn" data-pane="bg-tab-makl">⚖️ Danh mục mã khối lượng</div>
+        </div>
+
+        <!-- TAB: NHẬP BÁO GIÁ -->
+        <div class="tabpane active" id="bg-tab-nhap">
+          <div class="card" style="background:var(--accent-soft);box-shadow:none;border:1px solid var(--accent);">
+            <p style="margin:0;font-size:13px;color:#5C4109;">
+              <strong>Hướng dẫn nhanh:</strong> Điền <strong>Bước 1</strong> → (tùy chọn) <strong>Bước 2</strong> để sao chép nhanh từ báo giá cũ, hoặc bỏ qua và tự thêm nhóm giá ở <strong>Bước 3</strong> → bấm <strong>Lưu báo giá</strong> ở cuối trang.
+            </p>
+          </div>
+
+          <div class="card" id="bg_editBanner" style="display:none;background:var(--danger-soft);box-shadow:none;border:1px solid var(--danger);">
+            <p style="margin:0;font-size:13px;color:var(--danger);">
+              ✏️ <strong>Đang SỬA báo giá</strong> mã <span id="bg_editMaChungTu" class="mono"></span> — bấm "Cập nhật báo giá" ở cuối trang để lưu, hoặc
+              <button class="btn btn-ghost btn-sm" id="bgBtnCancelEdit" style="margin-left:6px;">Hủy sửa</button>
+            </p>
+          </div>
+
+          <div class="card">
+            <h2>Bước 1 · Thông tin phiếu báo giá</h2>
+            <div class="field-grid">
+              <div class="field"><label>Ngày báo giá *</label><input type="date" id="bg_ngayBaoGia"></div>
+              <div class="field"><label>Thời điểm hiệu lực *</label><input type="datetime-local" id="bg_hieuLuc"></div>
+            </div>
+          </div>
+
+          <div class="card" id="bg_copyCard">
+            <h2>Bước 2 · Sao chép từ báo giá cũ <span class="tag">tùy chọn - có thể bỏ qua</span></h2>
+            <div id="bg_copyEmptyNote" style="display:none;font-size:13px;color:var(--ink-soft);background:#F6F8F5;border:1px dashed var(--border);border-radius:8px;padding:10px 12px;margin-bottom:12px;">
+              Hệ thống chưa có báo giá nào để sao chép — cứ nhập báo giá đầu tiên ở <strong>Bước 3</strong> bên dưới. Từ lần sau, mục này sẽ cho phép sao chép nhanh từ các báo giá đã lưu.
+            </div>
+            <div class="field-grid" id="bg_copyFields">
+              <div class="field" style="grid-column:span 2;">
+                <label>Chọn phiếu báo giá nguồn</label>
+                <select id="bg_copySource"><option value="">-- Không sao chép, nhập mới hoàn toàn --</option></select>
+              </div>
+            </div>
+            <div class="btnrow" id="bg_copyBtnRow">
+              <button class="btn btn-ghost" id="bgBtnLoadCopy">📋 Nạp dữ liệu để sao chép</button>
+            </div>
+            <p id="bg_copyHint" style="font-size:11.5px;color:var(--ink-soft);margin-top:8px;">Nạp toàn bộ nhóm giá của phiếu đã chọn vào Bước 3 để chỉnh sửa giá rồi lưu thành phiếu báo giá <strong>mới</strong> (không ghi đè phiếu cũ). <strong>Nếu không cần sao chép, bỏ qua bước này và làm thẳng Bước 3.</strong></p>
+          </div>
+
+          <div class="card">
+            <h2>Bước 3 · Nhập / chỉnh sửa các nhóm giá <span class="tag" id="bg_groupCount">0 nhóm</span></h2>
+            <p style="font-size:12.5px;color:var(--ink-soft);margin:0 0 12px;">Đây là nơi nhập báo giá <strong>mới hoàn toàn</strong>: chọn Mã báo giá + Mã khối lượng + nhập Đơn giá cho từng nhóm. Bấm "+ Thêm nhóm giá mới" để thêm nhóm trống.</p>
+            <div id="bg_groupsContainer"></div>
+            <div class="btnrow">
+              <button class="btn btn-accent" id="bgBtnAddGroup">+ Thêm nhóm giá mới</button>
+            </div>
+          </div>
+
+          <div class="btnrow">
+            <button class="btn btn-primary" id="bgBtnSaveQuote">✔️ Lưu báo giá</button>
+            <button class="btn btn-danger" id="bgBtnResetQuote">Làm mới toàn bộ form</button>
+          </div>
+        </div>
+
+        <!-- TAB: HIỆU LỰC BÁO GIÁ -->
+        <div class="tabpane" id="bg-tab-hieuluc">
+          <div class="card">
+            <h2>Xử lý hiệu lực</h2>
+            <div class="btnrow" style="margin-top:0;">
+              <button class="btn btn-primary" id="bgBtnUpdateHieuLuc">🔄 Cập nhật &amp; xem "Còn hiệu lực"</button>
+              <button class="btn btn-ghost" id="bgBtnShowAll">📋 Xem toàn bộ lịch sử</button>
+            </div>
+            <div class="field-grid" style="margin-top:14px;">
+              <div class="field"><label>Đến ngày (mốc xuất file)</label><input type="date" id="bg_exportDate"></div>
+              <div class="field" style="grid-column:span 2;"><label>Tìm nhanh theo mã / diễn giải</label><input type="text" id="bg_search" placeholder="Gõ để lọc bảng bên dưới…"></div>
+            </div>
+            <div class="btnrow">
+              <button class="btn btn-ghost btn-sm" id="bgBtnToggleAll">☑️ Chọn / Bỏ chọn tất cả</button>
+              <button class="btn btn-accent" id="bgBtnExport">⬇️ Xuất Excel (theo dòng đã chọn)</button>
+            </div>
+            <p style="font-size:11.5px;color:var(--ink-soft);margin-top:6px;">Lưu ý: các mã cùng chung 1 lần nhập báo giá sẽ được xuất cùng nhau dù chỉ chọn 1 dòng.</p>
+          </div>
+
+          <div class="card">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th><input type="checkbox" id="bg_checkHeader" checked></th>
+                    <th>Mã</th><th>Diễn giải</th><th class="num">KL Min</th><th class="num">KL Max</th>
+                    <th class="num">Đơn giá</th><th>Từ ngày</th><th>Đến ngày</th><th>Trạng thái</th><th>Hành động</th>
+                  </tr>
+                </thead>
+                <tbody id="bg_hieuLucBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: DANH MỤC MÃ BÁO GIÁ -->
+        <div class="tabpane" id="bg-tab-mabaogia">
+          <div class="card">
+            <h2>Thêm mã báo giá mới</h2>
+            <div class="field-grid">
+              <div class="field"><label>Mã Đại lý *</label><input id="bg_daiLyMa" list="bg_daiLyMaList" placeholder="VD: DT"></div>
+              <div class="field"><label>Tên đầy đủ Đại lý *</label><input id="bg_daiLyTen" list="bg_daiLyTenList" placeholder="VD: Duy Thức"></div>
+              <div class="field"><label>Mã Nguồn gốc *</label><input id="bg_nguonGocMa" list="bg_nguonGocMaList" placeholder="VD: NS"></div>
+              <div class="field"><label>Tên đầy đủ Nguồn gốc *</label><input id="bg_nguonGocTen" list="bg_nguonGocTenList" placeholder="VD: Nông Sơn"></div>
+              <div class="field"><label>Hình ảnh</label>
+                <select id="bg_hinhAnh"><option value="Y">Có hình ảnh (Y)</option><option value="N">Không hình ảnh (N)</option></select>
+              </div>
+            </div>
+            <datalist id="bg_daiLyMaList"></datalist>
+            <datalist id="bg_daiLyTenList"></datalist>
+            <datalist id="bg_nguonGocMaList"></datalist>
+            <datalist id="bg_nguonGocTenList"></datalist>
+            <div class="card" style="background:#F6F8F5;box-shadow:none;padding:12px 14px;margin:14px 0;">
+              <div style="font-size:12px;color:var(--ink-soft);">Xem trước:</div>
+              <div class="mono" id="bg_maPreview" style="font-weight:700;color:var(--brand-dark);">—</div>
+              <div style="font-size:12.5px;color:var(--ink);margin-top:2px;" id="bg_noiDungPreview"></div>
+            </div>
+            <div class="btnrow">
+              <button class="btn btn-primary" id="bgBtnAddMaBaoGia">+ Thêm vào danh mục</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>Danh mục hiện có <span class="tag" id="bg_maBaoGiaCount">0 mã</span></h2>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>STT</th><th>Mã báo giá</th><th>Đại lý</th><th>Nguồn gốc</th><th>Hình ảnh</th><th>Nội dung</th><th></th></tr></thead>
+                <tbody id="bg_maBaoGiaBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: DANH MỤC MÃ KHỐI LƯỢNG -->
+        <div class="tabpane" id="bg-tab-makl">
+          <div class="card">
+            <h2>Thêm mã khối lượng mới</h2>
+            <div class="field-grid">
+              <div class="field"><label>KL Min (Tấn) *</label><input type="number" id="bg_klMin" placeholder="0"></div>
+              <div class="field"><label>KL Max (Tấn) *</label><input type="number" id="bg_klMax" placeholder="45"></div>
+            </div>
+            <div class="card" style="background:#F6F8F5;box-shadow:none;padding:12px 14px;margin:14px 0;">
+              <div style="font-size:12px;color:var(--ink-soft);">Mã khối lượng sẽ tạo:</div>
+              <div class="mono" id="bg_klPreview" style="font-weight:700;color:var(--brand-dark);">—</div>
+            </div>
+            <div class="btnrow">
+              <button class="btn btn-primary" id="bgBtnAddMaKL">+ Thêm vào danh mục</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>Danh mục hiện có <span class="tag" id="bg_maKLCount">0 mã</span></h2>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Mã khối lượng</th><th class="num">KL Min (Tấn)</th><th class="num">KL Max (Tấn)</th><th>Ngày tạo</th><th></th></tr></thead>
+                <tbody id="bg_maKLBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
   </div>
 
-  <div id="msgStatus" class="mt-4 alert d-none text-center fw-bold"></div>
-  <div class="text-center mt-2">
-    <div class="spinner-border text-primary global-spinner" id="globalSpinner" style="width: 2.5rem; height: 2.5rem;"></div>
-  </div>
+  <div class="overlay-loading" id="overlay"><div class="overlay-box"><span class="spinner"></span><span id="overlayText">Đang xử lý…</span></div></div>
+  <div id="toast-container"></div>
 
-  <div class="card p-3 mt-4 d-none" id="previewCard">
-    <h5 class="text-secondary fw-bold">📋 BẢNG LƯỚI ĐỐI SOÁT CHI TIẾT TRƯỚC KHI LƯU</h5>
-    <div class="d-flex justify-content-between my-2 align-items-center">
-      <span class="badge bg-secondary">* Dòng lỗi ngày tháng (màu đỏ) sẽ tự động khóa chọn.</span>
-      <button class="btn btn-sm btn-secondary fw-bold" onclick="toggleSelectAll(this)">Bỏ chọn tất cả</button>
-    </div>
-    
-    <div class="table-container">
-      <table class="table table-bordered table-hover m-0">
-        <thead>
-          <tr>
-            <th width="4%" class="text-center">Chọn</th>
-            <th>Loại Import</th>
-            <th>Mã Số Chứng Từ</th>
-            <th>Số Phiếu</th>
-            <th>Số Xe</th>
-            <th>Ngày Cân 1</th>
-            <th>Giờ 1</th>
-            <th>Ngày Cân 2</th>
-            <th>Giờ 2</th>
-            <th class="text-end">KL Hàng (Kg)</th>
-            <th>Trạng Thái / Lỗi</th>
-          </tr>
-        </thead>
-        <tbody id="previewBody"></tbody>
-      </table>
-    </div>
-  </div>
-</div>
-
-<script>
-  let currentPreviewData = [];
-
-  function setUINonActive(status) {
-    document.getElementById('globalSpinner').style.display = status ? 'inline-block' : 'none';
-    document.getElementById('btnPreview').disabled = status;
-    const btnConfirm = document.getElementById('btnConfirm');
-    const btnCancel = document.getElementById('btnCancel');
-    
-    if(!status && currentPreviewData.length > 0) {
-      btnConfirm.disabled = false;
-      btnCancel.disabled = false;
-    } else {
-      btnConfirm.disabled = true;
-      btnCancel.disabled = true;
+  <script>
+    // ---------------------------------------------------------------
+    // UTILITIES
+    // ---------------------------------------------------------------
+    function todayStr(){
+      const d = new Date();
+      const tz = new Date(d.getTime() - d.getTimezoneOffset()*60000);
+      return tz.toISOString().slice(0,10);
     }
-  }
-
-  function printMsg(text, type='info') {
-    const box = document.getElementById('msgStatus');
-    box.className = `mt-4 alert alert-${type}`; box.innerText = text; box.classList.remove('d-none');
-  }
-
-  function loadPreview() {
-    const fileInput = document.getElementById('excelFile');
-    if (fileInput.files.length === 0) { alert("Vui lòng chọn file Excel trạm cân cần import!"); return; }
-    
-    setUINonActive(true);
-    document.getElementById('btnDraftLink').classList.add('d-none');
-    printMsg("Hệ thống đang tải file lên Drive, chuẩn hóa khối lượng và sinh file Draft...", "warning");
-    
-    const file = fileInput.files[0]; const reader = new FileReader();
-    reader.onload = function(e) {
-      const base64 = e.target.result.split(',')[1];
-      const fileData = { base64: base64, mimeType: file.type, name: file.name };
-
-      google.script.run
-        .withSuccessHandler(function(res) {
-          setUINonActive(false);
-          if (res.status === "success") {
-            currentPreviewData = res.data;
-            renderPreviewGrid(res.data);
-            if(res.draftUrl) {
-              const linkBtn = document.getElementById('btnDraftLink');
-              linkBtn.href = res.draftUrl; linkBtn.classList.remove('d-none');
-            }
-          } else { printMsg("Lỗi đọc dữ liệu: " + res.message, "danger"); }
-        })
-        .withFailureHandler(function(err) { setUINonActive(false); printMsg("Lỗi kết nối: " + err.toString(), "danger"); })
-        .step1_PreviewDraft(fileData);
-    };
-    reader.readAsDataURL(file);
-  }
-
-  function renderPreviewGrid(data) {
-    const body = document.getElementById('previewBody'); body.innerHTML = "";
-    if(data.length === 0) {
-      body.innerHTML = `<tr><td colspan="11" class="text-center text-muted">Không tìm thấy phiếu cân hợp lệ.</td></tr>`;
-      document.getElementById('previewCard').classList.remove('d-none'); return;
+    function fmtNum(n){ return Math.round(n||0).toLocaleString('vi-VN'); }
+    function showOverlay(text){ document.getElementById('overlayText').textContent = text || 'Đang xử lý…'; document.getElementById('overlay').classList.add('show'); }
+    function hideOverlay(){ document.getElementById('overlay').classList.remove('show'); }
+    function toast(msg, ok){
+      const c = document.getElementById('toast-container');
+      const el = document.createElement('div');
+      el.className = 'toast ' + (ok ? 'ok' : 'err');
+      el.textContent = msg;
+      c.appendChild(el);
+      setTimeout(()=>{ el.remove(); }, 5200);
     }
-    data.forEach((row, index) => {
-      let trClass = "";
-      if (row.isError) trClass = "row-error";
-      else if (row.typeImport === "Cập nhật dòng cũ") trClass = "row-update";
-      let checkboxHtml = `<input type="checkbox" class="row-chk" data-idx="${index}" ${row.isError ? 'disabled' : 'checked'}>`;
-      if (row.typeImport.includes("Bỏ qua")) checkboxHtml = `⚠️`;
+    function runServer(fnName, ...args){
+      return new Promise((resolve, reject)=>{
+        google.script.run
+          .withSuccessHandler(resolve)
+          .withFailureHandler(err => reject(err))
+          [fnName](...args);
+      });
+    }
 
-      body.innerHTML += `
-        <tr class="${trClass}">
-          <td class="text-center">${checkboxHtml}</td>
-          <td><strong>${row.typeImport}</strong></td>
-          <td><code>${row.uniqueKey}</code></td>
-          <td>${row.soPhieu}</td>
-          <td>${row.soXe}</td>
-          <td>${row.ngayCan1}</td>
-          <td>${row.gioCan1}</td>
-          <td>${row.ngayCan2}</td>
-          <td>${row.gioCan2}</td>
-          <td class="text-end text-primary fw-bold">${Number(row.klHangGoc).toLocaleString()}</td>
-          <td><small>${row.isError ? '❌ ' + row.errorMsg : '✔️ Sẵn sàng'}</small></td>
-        </tr>`;
+    // ---------------------------------------------------------------
+    // NAVIGATION (sidebar menu + sub-tabs + import view's own tabbar)
+    // ---------------------------------------------------------------
+    document.querySelectorAll('.menu-item[data-view]').forEach(item=>{
+      item.addEventListener('click', ()=>{
+        document.querySelectorAll('.menu-item[data-view]').forEach(i=>i.classList.remove('active'));
+        item.classList.add('active');
+        const viewId = item.getAttribute('data-view');
+        document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+        document.getElementById(viewId).classList.add('active');
+        // Mỗi menu-item có thể sở hữu 1 sub-menu riêng (id="submenu-<phần sau 'view-'>").
+        // Đóng hết các sub-menu khác, chỉ mở đúng sub-menu của mục đang chọn (nếu có).
+        document.querySelectorAll('.sub-menu').forEach(sm => sm.classList.remove('open'));
+        const submenu = document.getElementById('submenu-' + viewId.replace('view-', ''));
+        if (submenu) submenu.classList.add('open');
+
+        if (viewId === 'view-nhapkho' && !state.loadedTongHop) { state.loadedTongHop = true; locTongHop(); }
+        if (viewId === 'view-baogia' && !state.loadedBaoGia) { state.loadedBaoGia = true; bgInitView(); }
+      });
     });
-    document.getElementById('previewCard').classList.remove('d-none');
-    document.getElementById('btnConfirm').disabled = false;
-    document.getElementById('btnCancel').disabled = false;
-    printMsg(`Đã tạo xong file Draft chống trùng! Bạn có thể bấm chọn Lưu Data hoặc bấm Hủy để xóa file tạm khỏi hệ thống.`, "info");
-  }
-
-  // CHỨC NĂNG HỦY BỎ KHÔNG IMPORT VÀ XÓA FILE TẠM TRÊN DRIVE
-  function cancelAndClearFiles() {
-    if (!confirm("Bạn chắc chắn muốn HỦY TIẾN TRÌNH này? Hệ thống sẽ xóa sạch toàn bộ file Excel vừa tải lên trong thư mục tạm INPUT!")) return;
-    
-    document.getElementById('globalSpinner').style.display = 'inline-block';
-    document.getElementById('btnConfirm').disabled = true;
-    document.getElementById('btnCancel').disabled = true;
-    printMsg("Hệ thống đang tiến hành dọn dẹp và xóa các file rác trong Folder INPUT...", "warning");
-    
-    google.script.run
-      .withSuccessHandler(function(res) {
-        document.getElementById('globalSpinner').style.display = 'none';
-        if (res.status === "success") {
-          printMsg("ĐÃ HUỶ: " + res.message, "danger");
-          document.getElementById('previewCard').classList.add('d-none');
-          document.getElementById('btnDraftLink').classList.add('d-none');
-          document.getElementById('excelFile').value = "";
-          currentPreviewData = [];
-        } else {
-          printMsg("Lỗi khi dọn file: " + res.message, "danger");
-          document.getElementById('btnCancel').disabled = false;
+    // Chuyển tab: chỉ tác động trong PHẠM VI view cha chứa nút bấm (tránh 1 view
+    // có nhiều nhóm tab con làm ảnh hưởng lẫn nhau, vd Import và Báo giá).
+    document.querySelectorAll('.tabbtn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        // QUAN TRỌNG: scope theo phần tử CHA TRỰC TIẾP của .tabbar (không phải cả .view),
+        // để hỗ trợ đúng trường hợp có tabbar LỒNG NHAU (vd view-nhapkho: tabbar ngoài
+        // chọn "Báo cáo tổng hợp cân"/"Báo cáo Misa", còn tabbar trong của tab "tổng hợp
+        // cân" lại chọn "Theo phiếu cân"/"Theo báo giá"). Nếu chỉ scope theo .view như
+        // trước, bấm tab con sẽ vô tình tắt luôn tab cha vì cùng nằm trong 1 .view.
+        const tabbar = btn.closest('.tabbar');
+        const container = tabbar.parentElement;
+        Array.from(tabbar.children).forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const paneId = btn.getAttribute('data-pane');
+        Array.from(container.children).forEach(el => {
+          if (el.classList && el.classList.contains('tabpane')) el.classList.remove('active');
+        });
+        document.getElementById(paneId).classList.add('active');
+        const subItem = document.querySelector('.sub-item[data-tab="' + paneId + '"]');
+        if (subItem) {
+          const submenu = subItem.closest('.sub-menu');
+          if (submenu) submenu.querySelectorAll('.sub-item').forEach(s => s.classList.remove('active'));
+          subItem.classList.add('active');
         }
-      })
-      .withFailureHandler(function(err) {
-        document.getElementById('globalSpinner').style.display = 'none';
-        printMsg("Lỗi máy chủ: " + err.toString(), "danger");
-        document.getElementById('btnCancel').disabled = false;
-      })
-      .clearInputFolderFiles();
-  }
+        // Các tab con tự tải dữ liệu lần đầu được mở (giống các view chính)
+        if (paneId === 'th-tab-bg' && !state.loadedDonGia) { state.loadedDonGia = true; locDonGia(); }
+        if (paneId === 'nk-tab-misa' && !state.loadedMisa) { state.loadedMisa = true; locMisa(); }
+      });
+    });
+    document.querySelectorAll('.sub-item[data-tab]').forEach(sub=>{
+      sub.addEventListener('click', ()=>{
+        const targetBtn = document.querySelector('.tabbtn[data-pane="' + sub.getAttribute('data-tab') + '"]');
+        if (targetBtn) targetBtn.click();
+      });
+    });
 
-  function toggleSelectAll(btn) {
-    const chks = document.querySelectorAll('.row-chk:not([disabled])');
-    if(btn.innerText === "Chọn tất cả") { chks.forEach(c => c.checked = true); btn.innerText = "Bỏ chọn tất cả"; }
-    else { chks.forEach(c => c.checked = false); btn.innerText = "Chọn tất cả"; }
-  }
+    const state = {
+      previewData: [], loadedTongHop:false, loadedMisa:false, filterOptions:null,
+      loadedBaoGia:false, loadedDonGia:false, bgGroups: [], bgGroupSeq: 0, bgIdTam: '', bgEditingId: null,
+      bgMaBaoGiaList: [], bgMaKLList: [], bgQuoteList: [],
+      bgHieuLucData: [], bgViewType: 'FINAL', bgUncheckedIds: new Set()
+    };
 
-  function submitImport() {
-    const chks = document.querySelectorAll('.row-chk:checked');
-    if(chks.length === 0) { alert("Bạn chưa tích chọn dòng hợp lệ nào để lưu!"); return; }
-    if(!confirm(`Xác nhận ghi chính thức ${chks.length} dòng phiếu vào hệ thống?`)) return;
+    // ---------------------------------------------------------------
+    // INIT: ngày mặc định = hôm nay, tải dropdown filter
+    // ---------------------------------------------------------------
+    window.addEventListener('DOMContentLoaded', ()=>{
+      const t = todayStr();
+      ['th_fromDate','th_toDate','ms_fromDate','ms_toDate','ms_genFrom','ms_genTo','bg_ngayBaoGia','bg_exportDate','dg_fromDate','dg_toDate'].forEach(id=>{
+        document.getElementById(id).value = t;
+      });
+      document.getElementById('bg_hieuLuc').value = nowDatetimeLocalStr();
+      loadFilterOptions();
+    });
+    function nowDatetimeLocalStr(){
+      const d = new Date();
+      const tz = new Date(d.getTime() - d.getTimezoneOffset()*60000);
+      return tz.toISOString().slice(0,16);
+    }
 
-    setUINonActive(true); document.getElementById('btnConfirm').disabled = true;
-    printMsg("Đang lưu trữ dữ liệu hạch toán và tự động tính đơn giá giật cấp...", "warning");
+    function loadFilterOptions(){
+      runServer('getFilterOptions').then(res=>{
+        if (res.status !== 'success') { toast(res.message, false); return; }
+        state.filterOptions = res;
+        fillSelect('th_xe', res.xeList);
+        fillSelect('th_kh', res.khachHangList);
+        fillSelect('th_daiLy', res.daiLyList);
+        fillSelect('th_nguonGoc', res.nguonGocList);
+        fillSelect('dg_xe', res.xeList);
+        fillSelect('dg_kh', res.khachHangList);
+        fillSelect('dg_daiLy', res.daiLyList);
+        fillSelect('dg_nguonGoc', res.nguonGocList);
+        fillSelect('dg_maDonGia', res.maDonGiaList);
+        fillSelect('dg_maKL', res.maKLList);
+        fillSelect('ms_xe', res.xeList);
+        fillSelect('ms_kh', res.ncList);
+      }).catch(err=> toast('Lỗi tải bộ lọc: ' + err, false));
+    }
+    function fillSelect(id, list){
+      const sel = document.getElementById(id);
+      const current = sel.value;
+      sel.innerHTML = '<option value="">Tất cả</option>' + list.map(v=>'<option value="'+escapeHtml(v)+'">'+escapeHtml(v)+'</option>').join('');
+      sel.value = current;
+    }
+    function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
-    let confirmedList = []; chks.forEach(chk => { confirmedList.push(currentPreviewData[parseInt(chk.getAttribute('data-idx'))]); });
+    // ---------------------------------------------------------------
+    // TAB IMPORT FILE
+    // ---------------------------------------------------------------
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('fileInput');
+    let pendingFiles = [];
 
-    google.script.run
-      .withSuccessHandler(function(res) {
-        setUINonActive(false);
-        if(res.status === "success") {
-          printMsg("HOÀN THÀNH IMPORT: " + res.message, "success");
-          document.getElementById('previewCard').classList.add('d-none');
-          document.getElementById('btnDraftLink').classList.add('d-none');
-          document.getElementById('excelFile').value = ""; currentPreviewData = [];
-        } else { printMsg("Lỗi khi ghi data: " + res.message, "danger"); document.getElementById('btnConfirm').disabled = false; }
-      })
-      .withFailureHandler(function(err) { setUINonActive(false); printMsg("Lỗi máy chủ: " + err.toString(), "danger"); document.getElementById('btnConfirm').disabled = false; })
-      .step1_ConfirmImport(confirmedList);
-  }
+    dropzone.addEventListener('click', ()=> fileInput.click());
+    dropzone.addEventListener('dragover', e=>{ e.preventDefault(); dropzone.classList.add('drag'); });
+    dropzone.addEventListener('dragleave', ()=> dropzone.classList.remove('drag'));
+    dropzone.addEventListener('drop', e=>{
+      e.preventDefault(); dropzone.classList.remove('drag');
+      pendingFiles = Array.from(e.dataTransfer.files);
+      renderFileList();
+    });
+    fileInput.addEventListener('change', ()=>{
+      pendingFiles = Array.from(fileInput.files);
+      renderFileList();
+    });
+    function renderFileList(){
+      const box = document.getElementById('fileList');
+      if (pendingFiles.length === 0) { box.innerHTML = ''; return; }
+      box.innerHTML = pendingFiles.map(f=>'<div class="fitem"><span>'+escapeHtml(f.name)+'</span><span>'+(Math.round(f.size/1024))+' KB</span></div>').join('');
+    }
 
-  /* ========================================================
-   * XỬ LÝ KHỐI 2 & 3: CÁC CHỨC NĂNG XUẤT BÁO CÁO BIỆT LẬP
-   * ======================================================== */
-  function actionCreateMisa() {
-    const fDate = document.getElementById('reportFromDate').value;
-    const tDate = document.getElementById('reportToDate').value;
-    document.getElementById('globalSpinner').style.display = 'inline-block';
-    printMsg("Đang tổng hợp dữ liệu, đối soát Mã NCC và Hợp Đồng sang bảng MISA...", "warning");
-    google.script.run
-      .withSuccessHandler(function(res) {
-        document.getElementById('globalSpinner').style.display = 'none';
-        if(res.status === "success") { printMsg("THÀNH CÔNG: Đã tạo dữ liệu hạch toán MISA! Bạn có thể bấm nút Tải Excel bên dưới.", "success"); }
-        else { printMsg("Lỗi hạch toán: " + res.message, "danger"); }
-      })
-      .withFailureHandler(function(err) { document.getElementById('globalSpinner').style.display = 'none'; printMsg("Lỗi: " + err.toString(), "danger"); })
-      .runCreateMisaData(fDate, tDate);
-  }
+    function fileToBase64(file){
+      return new Promise((resolve, reject)=>{
+        const reader = new FileReader();
+        reader.onload = ()=> resolve(reader.result.split(',')[1]);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
 
-  function actionDownloadMisa() {
-    document.getElementById('globalSpinner').style.display = 'inline-block';
-    printMsg("Đang chuyển đổi bảng tính MISA thành định dạng file .xlsx...", "warning");
-    google.script.run
-      .withSuccessHandler(function(res) {
-        document.getElementById('globalSpinner').style.display = 'none';
-        if(res.status === "success" && res.url) { printMsg("Đã khởi tạo link tải MISA thành công!", "success"); window.open(res.url, '_blank'); }
-        else { printMsg("Không tải được: " + res.message, "danger"); }
-      })
-      .withFailureHandler(function(err) { document.getElementById('globalSpinner').style.display = 'none'; printMsg("Lỗi: " + err.toString(), "danger"); })
-      .downloadMisaExcel();
-  }
+    document.getElementById('btnPreview').addEventListener('click', async ()=>{
+      if (pendingFiles.length === 0) { toast('Vui lòng chọn ít nhất 1 file cân (.xls/.xlsx).', false); return; }
+      showOverlay('Đang tải file lên & đối soát…');
+      try {
+        let lastResult = null;
+        for (const file of pendingFiles){
+          const base64 = await fileToBase64(file);
+          lastResult = await runServer('step1_PreviewDraft', { base64, mimeType: file.type || 'application/vnd.ms-excel', name: file.name });
+        }
+        if (lastResult.status !== 'success') { toast(lastResult.message, false); return; }
+        state.previewData = lastResult.data;
+        renderPreview();
+        pendingFiles = []; fileInput.value = ''; renderFileList();
+        toast('Đã xem trước ' + lastResult.data.length + ' dòng.', true);
+      } catch(err){
+        toast('Lỗi xem trước: ' + err, false);
+      } finally { hideOverlay(); }
+    });
 
-  function actionExportGeneral() {
-    const fDate = document.getElementById('reportFromDate').value;
-    const tDate = document.getElementById('reportToDate').value;
-    document.getElementById('globalSpinner').style.display = 'inline-block';
-    printMsg("Đang bóc tách dữ liệu và thiết lập cấu trúc tệp báo cáo tổng hợp...", "warning");
-    google.script.run
-      .withSuccessHandler(function(res) {
-        document.getElementById('globalSpinner').style.display = 'none';
-        if(res.status === "success" && res.url) { printMsg("Đã khởi tạo link tải Báo cáo tổng hợp thành công!", "success"); window.open(res.url, '_blank'); }
-        else { printMsg("Lỗi trích xuất: " + res.message, "danger"); }
-      })
-      .withFailureHandler(function(err) { document.getElementById('globalSpinner').style.display = 'none'; printMsg("Lỗi máy chủ: " + err.toString(), "danger"); })
-      .exportToExcel(fDate, tDate);
-  }
-</script>
+    document.getElementById('btnClearFolder').addEventListener('click', async ()=>{
+      showOverlay('Đang dọn dẹp thư mục Input…');
+      try {
+        const res = await runServer('clearInputFolderFiles');
+        toast(res.message, res.status === 'success');
+      } catch(err){ toast('Lỗi: ' + err, false); } finally { hideOverlay(); }
+    });
+
+    function renderPreview(){
+      const card = document.getElementById('previewCard');
+      const body = document.getElementById('previewBody');
+      const rows = state.previewData;
+      document.getElementById('previewCount').textContent = rows.length + ' dòng';
+      if (rows.length === 0){ card.style.display='none'; return; }
+      card.style.display='block';
+      body.innerHTML = rows.map((r,i)=>{
+        const badge = r.isError ? '<span class="badge badge-warn">❌ Lỗi</span>' : '<span class="badge badge-ok">✔️ Hợp lệ</span>';
+        // Dòng lỗi không thể chọn (không thể import); dòng hợp lệ mặc định được chọn sẵn
+        const checkboxCell = r.isError
+          ? '<input type="checkbox" disabled title="Dòng lỗi, không thể chọn">'
+          : '<input type="checkbox" class="preview-row-check" data-idx="'+i+'" checked>';
+        return '<tr>'
+          + '<td>'+checkboxCell+'</td>'
+          + '<td>'+badge+'</td>'
+          + '<td class="mono">'+escapeHtml(r.uniqueKey)+'</td>'
+          + '<td>'+escapeHtml(r.soPhieu)+'</td>'
+          + '<td>'+escapeHtml(r.soXe)+'</td>'
+          + '<td>'+escapeHtml(r.ngayCan1)+'</td>'
+          + '<td>'+escapeHtml(r.gioCan1)+'</td>'
+          + '<td>'+escapeHtml(r.ngayCan2)+'</td>'
+          + '<td>'+escapeHtml(r.gioCan2)+'</td>'
+          + '<td class="num">'+fmtNum(r.klCan1)+'</td>'
+          + '<td class="num">'+fmtNum(r.klCan2)+'</td>'
+          + '<td class="num">'+fmtNum(r.klHangGoc)+'</td>'
+          + '<td>'+ (r.isError ? escapeHtml(r.errorMsg) : escapeHtml(r.typeImport)) +'</td>'
+          + '</tr>';
+      }).join('');
+    }
+
+    document.getElementById('btnTogglePreviewAll').addEventListener('click', ()=>{
+      const boxes = document.querySelectorAll('.preview-row-check');
+      const anyUnchecked = Array.from(boxes).some(b => !b.checked);
+      boxes.forEach(b => b.checked = anyUnchecked);
+    });
+    document.getElementById('previewCheckHeader').addEventListener('change', (e)=>{
+      document.querySelectorAll('.preview-row-check').forEach(b => b.checked = e.target.checked);
+    });
+
+    document.getElementById('btnCancelPreview').addEventListener('click', ()=>{
+      state.previewData = [];
+      document.getElementById('previewCard').style.display='none';
+    });
+
+    document.getElementById('btnConfirmImport').addEventListener('click', async ()=>{
+      if (state.previewData.length === 0) return;
+      // Chỉ gửi các dòng ĐÃ TICK (theo lựa chọn) lên server, không bắt buộc phải import tất cả
+      const checkedIdx = new Set(
+        Array.from(document.querySelectorAll('.preview-row-check:checked')).map(b => parseInt(b.getAttribute('data-idx'), 10))
+      );
+      const selectedRows = state.previewData.filter((r, i) => checkedIdx.has(i));
+      if (selectedRows.length === 0) { toast('Vui lòng chọn ít nhất 1 dòng hợp lệ để nhập.', false); return; }
+      showOverlay('Đang ghi dữ liệu vào hệ thống…');
+      try {
+        const res = await runServer('step1_ConfirmImport', selectedRows);
+        toast(res.message, res.status === 'success');
+        if (res.status === 'success'){
+          state.previewData = [];
+          document.getElementById('previewCard').style.display = 'none';
+          loadFilterOptions();
+        }
+      } catch(err){ toast('Lỗi xác nhận: ' + err, false); } finally { hideOverlay(); }
+    });
+
+    // ---------------------------------------------------------------
+    // TAB NHẬP TAY
+    // ---------------------------------------------------------------
+    document.getElementById('btnSubmitManual').addEventListener('click', async ()=>{
+      const fields = {
+        soPhieu: document.getElementById('m_soPhieu').value,
+        soXe: document.getElementById('m_soXe').value,
+        soXe2: document.getElementById('m_soXe2').value,
+        khachHang: document.getElementById('m_khachHang').value,
+        ngayCan1: document.getElementById('m_ngayCan1').value,
+        gioCan1: document.getElementById('m_gioCan1').value,
+        ngayCan2: document.getElementById('m_ngayCan2').value,
+        gioCan2: document.getElementById('m_gioCan2').value,
+        klCan1: document.getElementById('m_klCan1').value,
+        klCan2: document.getElementById('m_klCan2').value,
+        klHang: document.getElementById('m_klHang').value,
+        maKH: document.getElementById('m_maKH').value,
+        maNG: document.getElementById('m_maNG').value
+      };
+      showOverlay('Đang lưu phiếu cân…');
+      try {
+        const res = await runServer('addManualPhieuCan', fields);
+        toast(res.message, res.status === 'success');
+        if (res.status === 'success'){ resetManualForm(); loadFilterOptions(); }
+      } catch(err){ toast('Lỗi: ' + err, false); } finally { hideOverlay(); }
+    });
+    document.getElementById('btnResetManual').addEventListener('click', resetManualForm);
+    function resetManualForm(){
+      ['m_soPhieu','m_soXe','m_soXe2','m_khachHang','m_ngayCan1','m_gioCan1','m_ngayCan2','m_gioCan2','m_klCan1','m_klCan2','m_klHang','m_maKH','m_maNG']
+        .forEach(id=> document.getElementById(id).value = '');
+    }
+
+    // ---------------------------------------------------------------
+    // BÁO CÁO TỔNG HỢP CÂN
+    // ---------------------------------------------------------------
+    function readTongHopFilters(){
+      return {
+        fromDate: document.getElementById('th_fromDate').value,
+        toDate: document.getElementById('th_toDate').value,
+        xe: document.getElementById('th_xe').value,
+        khachHang: document.getElementById('th_kh').value,
+        daiLy: document.getElementById('th_daiLy').value,
+        nguonGoc: document.getElementById('th_nguonGoc').value,
+        trangThai: document.getElementById('th_trangThai').value
+      };
+    }
+    async function locTongHop(){
+      showOverlay('Đang tải báo cáo tổng hợp cân…');
+      try {
+        const res = await runServer('getBaoCaoTongHop', readTongHopFilters());
+        if (res.status !== 'success'){ toast(res.message, false); return; }
+        renderTongHop(res);
+      } catch(err){ toast('Lỗi tải báo cáo: ' + err, false); } finally { hideOverlay(); }
+    }
+    function renderTongHop(res){
+      document.getElementById('th_sumSoLuong').textContent = res.summary.soLuong;
+      document.getElementById('th_sumKL').textContent = fmtNum(res.summary.tongKL);
+      document.getElementById('th_sumTien').textContent = fmtNum(res.summary.tongTien);
+      const body = document.getElementById('th_tableBody');
+      const foot = document.getElementById('th_tableFoot');
+      if (res.data.length === 0){
+        body.innerHTML = '<tr><td colspan="11" class="empty-state">Không có dữ liệu phù hợp bộ lọc.</td></tr>';
+        foot.innerHTML = '';
+        return;
+      }
+      body.innerHTML = res.data.map(r=>{
+        // Dùng idDntt (giá trị thô cột AA) để xác định màu, vì trangThaiThanhToan
+        // giờ hiển thị đúng nội dung thật (vd "Đóng TT") thay vì chuỗi cố định.
+        const badgeClass = r.idDntt ? 'badge-ok' : 'badge-warn';
+        return '<tr>'
+          + '<td class="mono">'+escapeHtml(r.maChungTu)+'</td>'
+          + '<td>'+escapeHtml(r.soPhieu)+'</td>'
+          + '<td>'+escapeHtml(r.ngayCan1)+'</td>'
+          + '<td>'+escapeHtml(r.soXe)+'</td>'
+          + '<td>'+(r.soXe2 ? escapeHtml(r.soXe2) : '—')+'</td>'
+          + '<td>'+escapeHtml(r.khachHang)+'</td>'
+          + '<td class="num">'+fmtNum(r.klHang)+'</td>'
+          + '<td class="num">'+fmtNum(r.donGia)+'</td>'
+          + '<td class="num">'+fmtNum(r.thanhTien)+'</td>'
+          + '<td><span class="badge '+badgeClass+'">'+escapeHtml(r.trangThaiThanhToan)+'</span></td>'
+          + '<td><button class="btn btn-ghost btn-sm" data-print="'+escapeHtml(r.maChungTu)+'">🖨️ In Phiếu Nhập Kho</button></td>'
+          + '</tr>';
+      }).join('');
+      body.querySelectorAll('[data-print]').forEach(btn=>{
+        btn.addEventListener('click', ()=> inPhieuCan(btn.getAttribute('data-print')));
+      });
+
+      // Dòng Tổng cộng dưới view, dính đáy bảng khi cuộn
+      foot.innerHTML = '<tr>'
+        + '<td colspan="6">TỔNG CỘNG (' + res.summary.soLuong + ' phiếu)</td>'
+        + '<td class="num">' + fmtNum(res.summary.tongKL) + '</td>'
+        + '<td class="num">—</td>'
+        + '<td class="num">' + fmtNum(res.summary.tongTien) + '</td>'
+        + '<td></td><td></td>'
+        + '</tr>';
+    }
+    document.getElementById('btnLocTongHop').addEventListener('click', locTongHop);
+    document.getElementById('btnExcelTongHop').addEventListener('click', async ()=>{
+      showOverlay('Đang tạo file Excel…');
+      try {
+        const res = await runServer('exportBaoCaoTongHopExcel', readTongHopFilters());
+        if (res.status === 'success') window.open(res.url, '_blank'); else toast(res.message, false);
+      } catch(err){ toast('Lỗi xuất Excel: ' + err, false); } finally { hideOverlay(); }
+    });
+    document.getElementById('btnPdfTongHop').addEventListener('click', async ()=>{
+      showOverlay('Đang tạo file PDF…');
+      try {
+        const res = await runServer('exportBaoCaoTongHopPDF', readTongHopFilters());
+        if (res.status === 'success') window.open(res.url, '_blank'); else toast(res.message, false);
+      } catch(err){ toast('Lỗi xuất PDF: ' + err, false); } finally { hideOverlay(); }
+    });
+
+    // ---------------------------------------------------------------
+    // TAB "THEO BÁO GIÁ" (xem đơn giá áp dụng thế nào)
+    // ---------------------------------------------------------------
+    function readDonGiaFilters(){
+      return {
+        fromDate: document.getElementById('dg_fromDate').value,
+        toDate: document.getElementById('dg_toDate').value,
+        xe: document.getElementById('dg_xe').value,
+        khachHang: document.getElementById('dg_kh').value,
+        daiLy: document.getElementById('dg_daiLy').value,
+        nguonGoc: document.getElementById('dg_nguonGoc').value,
+        maDonGia: document.getElementById('dg_maDonGia').value,
+        maKL: document.getElementById('dg_maKL').value,
+        trangThai: document.getElementById('dg_trangThai').value
+      };
+    }
+    async function locDonGia(){
+      showOverlay('Đang tải báo cáo theo báo giá…');
+      try {
+        const res = await runServer('getBaoCaoDonGia', readDonGiaFilters());
+        if (res.status !== 'success'){ toast(res.message, false); return; }
+        renderDonGia(res);
+      } catch(err){ toast('Lỗi tải báo cáo: ' + err, false); } finally { hideOverlay(); }
+    }
+    function renderDonGia(res){
+      document.getElementById('dg_sumSoLuong').textContent = res.summary.soLuong;
+      document.getElementById('dg_sumTien').textContent = fmtNum(res.summary.tongTien);
+      const body = document.getElementById('dg_tableBody');
+      const foot = document.getElementById('dg_tableFoot');
+      if (res.data.length === 0){
+        body.innerHTML = '<tr><td colspan="10" class="empty-state">Không có dữ liệu phù hợp bộ lọc.</td></tr>';
+        foot.innerHTML = '';
+        return;
+      }
+      body.innerHTML = res.data.map(r=>{
+        let badgeClass = 'badge-neutral';
+        if (r.trangThaiGia === 'OK' || r.trangThaiGia === 'Test giá' || r.trangThaiGia === 'Test Giá') badgeClass = 'badge-ok';
+        else if (r.trangThaiGia) badgeClass = 'badge-warn';
+        return '<tr>'
+          + '<td class="mono">'+escapeHtml(r.maChungTu)+'</td>'
+          + '<td>'+escapeHtml(r.ngayCan1)+'</td>'
+          + '<td class="mono">'+escapeHtml(r.maDonGia)+'</td>'
+          + '<td class="mono">'+(r.maKL ? escapeHtml(r.maKL) : '—')+'</td>'
+          + '<td class="num">'+fmtNum(r.giaGoc)+'</td>'
+          + '<td class="num">'+fmtNum(r.dieuChinh)+'</td>'
+          + '<td class="num">'+fmtNum(r.donGiaApDung)+'</td>'
+          + '<td>'+escapeHtml(r.dienGiai || '—')+'</td>'
+          + '<td><span class="badge '+badgeClass+'">'+(escapeHtml(r.trangThaiGia) || '—')+'</span></td>'
+          + '<td class="num">'+fmtNum(r.thanhTien)+'</td>'
+          + '</tr>';
+      }).join('');
+
+      foot.innerHTML = '<tr>'
+        + '<td colspan="9">TỔNG CỘNG (' + res.summary.soLuong + ' phiếu)</td>'
+        + '<td class="num">' + fmtNum(res.summary.tongTien) + '</td>'
+        + '</tr>';
+    }
+    document.getElementById('btnLocDonGia').addEventListener('click', locDonGia);
+    document.getElementById('btnExcelDonGia').addEventListener('click', async ()=>{
+      showOverlay('Đang tạo file Excel…');
+      try {
+        const res = await runServer('exportBaoCaoDonGiaExcel', readDonGiaFilters());
+        if (res.status === 'success') window.open(res.url, '_blank'); else toast(res.message, false);
+      } catch(err){ toast('Lỗi xuất Excel: ' + err, false); } finally { hideOverlay(); }
+    });
+    document.getElementById('btnPdfDonGia').addEventListener('click', async ()=>{
+      showOverlay('Đang tạo file PDF…');
+      try {
+        const res = await runServer('exportBaoCaoDonGiaPDF', readDonGiaFilters());
+        if (res.status === 'success') window.open(res.url, '_blank'); else toast(res.message, false);
+      } catch(err){ toast('Lỗi xuất PDF: ' + err, false); } finally { hideOverlay(); }
+    });
+
+    async function inPhieuCan(maChungTu){
+      showOverlay('Đang tạo phiếu nhập kho PDF…');
+      try {
+        const res = await runServer('exportPhieuCanPDF', maChungTu);
+        if (res.status === 'success') window.open(res.url, '_blank'); else toast(res.message, false);
+      } catch(err){ toast('Lỗi in phiếu: ' + err, false); } finally { hideOverlay(); }
+    }
+
+    // ---------------------------------------------------------------
+    // BÁO CÁO IMPORT MISA
+    // ---------------------------------------------------------------
+    function readMisaFilters(){
+      return {
+        fromDate: document.getElementById('ms_fromDate').value,
+        toDate: document.getElementById('ms_toDate').value,
+        xe: document.getElementById('ms_xe').value,
+        khachHang: document.getElementById('ms_kh').value,
+        trangThai: document.getElementById('ms_trangThai').value
+      };
+    }
+    async function locMisa(){
+      showOverlay('Đang tải báo cáo Misa…');
+      try {
+        const res = await runServer('getBaoCaoMisa', readMisaFilters());
+        if (res.status !== 'success'){ toast(res.message, false); return; }
+        renderMisa(res);
+      } catch(err){ toast('Lỗi tải báo cáo: ' + err, false); } finally { hideOverlay(); }
+    }
+    function renderMisa(res){
+      document.getElementById('ms_sumSoLuong').textContent = res.summary.soLuong;
+      document.getElementById('ms_sumKL').textContent = fmtNum(res.summary.tongKL);
+      document.getElementById('ms_sumTien').textContent = fmtNum(res.summary.tongTien);
+      const body = document.getElementById('ms_tableBody');
+      if (res.data.length === 0){
+        body.innerHTML = '<tr><td colspan="9" class="empty-state">Không có dữ liệu phù hợp bộ lọc.</td></tr>';
+        return;
+      }
+      body.innerHTML = res.data.map(r=>{
+        const badgeClass = r.trangThaiThanhToan === 'Đã lập ĐNTT' ? 'badge-ok' : 'badge-warn';
+        return '<tr>'
+          + '<td class="mono">'+escapeHtml(r.maChungTu)+'</td>'
+          + '<td>'+escapeHtml(r.ngay)+'</td>'
+          + '<td>'+escapeHtml(r.soXe)+'</td>'
+          + '<td class="num">'+fmtNum(r.khoiLuong)+'</td>'
+          + '<td class="num">'+fmtNum(r.donGia)+'</td>'
+          + '<td class="num">'+fmtNum(r.thanhTien)+'</td>'
+          + '<td>'+escapeHtml(r.tenNCC)+'</td>'
+          + '<td><span class="badge '+badgeClass+'">'+escapeHtml(r.trangThaiThanhToan)+'</span></td>'
+          + '<td><button class="btn btn-ghost btn-sm" data-print="'+escapeHtml(r.maChungTu)+'">🖨️ In Phiếu Nhập Kho</button></td>'
+          + '</tr>';
+      }).join('');
+      body.querySelectorAll('[data-print]').forEach(btn=>{
+        btn.addEventListener('click', ()=> inPhieuCan(btn.getAttribute('data-print')));
+      });
+    }
+    document.getElementById('btnLocMisa').addEventListener('click', locMisa);
+    document.getElementById('btnExcelMisa').addEventListener('click', async ()=>{
+      showOverlay('Đang tạo file Excel…');
+      try {
+        const res = await runServer('exportBaoCaoMisaExcel', readMisaFilters());
+        if (res.status === 'success') window.open(res.url, '_blank'); else toast(res.message, false);
+      } catch(err){ toast('Lỗi xuất Excel: ' + err, false); } finally { hideOverlay(); }
+    });
+    document.getElementById('btnPdfMisa').addEventListener('click', async ()=>{
+      showOverlay('Đang tạo file PDF…');
+      try {
+        const res = await runServer('exportBaoCaoMisaPDF', readMisaFilters());
+        if (res.status === 'success') window.open(res.url, '_blank'); else toast(res.message, false);
+      } catch(err){ toast('Lỗi xuất PDF: ' + err, false); } finally { hideOverlay(); }
+    });
+    document.getElementById('btnGenMisa').addEventListener('click', async ()=>{
+      const from = document.getElementById('ms_genFrom').value;
+      const to = document.getElementById('ms_genTo').value;
+      showOverlay('Đang trích xuất dữ liệu Misa…');
+      try {
+        const res = await runServer('runCreateMisaData', from, to);
+        toast(res.message, res.status === 'success');
+        if (res.status === 'success') { loadFilterOptions(); }
+      } catch(err){ toast('Lỗi: ' + err, false); } finally { hideOverlay(); }
+    });
+    document.getElementById('btnDownloadMisaGoc').addEventListener('click', async ()=>{
+      showOverlay('Đang tạo file MISA gốc…');
+      try {
+        const res = await runServer('downloadMisaExcel');
+        if (res.status === 'success') window.open(res.url, '_blank'); else toast(res.message, false);
+      } catch(err){ toast('Lỗi xuất file MISA gốc: ' + err, false); } finally { hideOverlay(); }
+    });
+
+    // =================================================================
+    // QUẢN LÝ BÁO GIÁ
+    // =================================================================
+    async function bgInitView(){
+      showOverlay('Đang tải dữ liệu báo giá…');
+      // FIX QUAN TRỌNG: trước đây dùng Promise.all() — nếu 1 trong 3 lệnh gọi bị lỗi
+      // (mạng chập chờn, quyền truy cập...) thì TOÀN BỘ bị hủy ngay lập tức, khiến
+      // bgAddGroup()/bgRenderGroups() (phần hiển thị khung "Nhập báo giá mới") không
+      // bao giờ chạy tới — chỉ còn phần "Sao chép" hiển thị sẵn trong HTML tĩnh, gây
+      // cảm giác "không biết nhập ở đâu, chỉ thấy copy". Nay đổi sang Promise.allSettled
+      // (không hủy ngang) + bọc try/catch riêng từng bước, để 1 phần lỗi không kéo
+      // sập toàn bộ; khung "Nhập báo giá mới" LUÔN được hiển thị dù có lỗi tải dữ liệu.
+      const results = await Promise.allSettled([
+        runServer('BG_getMaBaoGiaList'),
+        runServer('BG_getMaKLList'),
+        runServer('BG_getQuoteList')
+      ]);
+      const [maBgResult, maKlResult, quotesResult] = results;
+
+      if (maBgResult.status === 'fulfilled' && maBgResult.value.status === 'success') {
+        state.bgMaBaoGiaList = maBgResult.value.data;
+      } else {
+        toast('Không tải được danh mục Mã Báo Giá: ' + (maBgResult.reason || maBgResult.value?.message || 'lỗi không xác định'), false);
+      }
+      if (maKlResult.status === 'fulfilled' && maKlResult.value.status === 'success') {
+        state.bgMaKLList = maKlResult.value.data;
+      } else {
+        toast('Không tải được danh mục Mã Khối Lượng: ' + (maKlResult.reason || maKlResult.value?.message || 'lỗi không xác định'), false);
+      }
+      if (quotesResult.status === 'fulfilled' && quotesResult.value.status === 'success') {
+        state.bgQuoteList = quotesResult.value.data;
+      } else {
+        toast('Không tải được danh sách báo giá cũ: ' + (quotesResult.reason || quotesResult.value?.message || 'lỗi không xác định'), false);
+      }
+
+      try { bgFillCopySelect(); } catch(e) { console.error(e); }
+      try { bgFillDatalists(); } catch(e) { console.error(e); }
+      try { renderMaBaoGiaTable(); } catch(e) { console.error(e); }
+      try { renderMaKLTable(); } catch(e) { console.error(e); }
+
+      // Luôn hiển thị khung "Nhập báo giá mới", bất kể các bước tải dữ liệu ở trên
+      // thành công hay không — đây là điểm mấu chốt của bản vá này.
+      try {
+        if (state.bgGroups.length === 0) bgAddGroup();
+        bgRenderGroups();
+      } catch(e) { console.error(e); toast('Lỗi hiển thị khung nhập báo giá: ' + e, false); }
+
+      hideOverlay();
+    }
+
+    function bgFillCopySelect(){
+      const sel = document.getElementById('bg_copySource');
+      const emptyNote = document.getElementById('bg_copyEmptyNote');
+      const fields = document.getElementById('bg_copyFields');
+      const btnRow = document.getElementById('bg_copyBtnRow');
+      const hint = document.getElementById('bg_copyHint');
+      const isEmpty = state.bgQuoteList.length === 0;
+
+      emptyNote.style.display = isEmpty ? 'block' : 'none';
+      fields.style.display = isEmpty ? 'none' : 'grid';
+      btnRow.style.display = isEmpty ? 'none' : 'flex';
+      hint.style.display = isEmpty ? 'none' : 'block';
+
+      sel.innerHTML = '<option value="">-- Không sao chép, nhập mới hoàn toàn --</option>' +
+        state.bgQuoteList.map(q => '<option value="'+escapeHtml(q.soBaoGia)+'">'+escapeHtml(q.soBaoGia)+' · hiệu lực '+escapeHtml(q.hieuLuc)+'</option>').join('');
+    }
+
+    // ---------- Nhóm giá: thêm / xóa / tách / đồng bộ DOM <-> state ----------
+    function bgAddGroup(prefill){
+      state.bgGroupSeq++;
+      state.bgGroups.push({
+        id: 'g' + state.bgGroupSeq,
+        maList: (prefill && prefill.maList) ? prefill.maList.slice() : [],
+        klCode: (prefill && prefill.klCode) || '',
+        gia: (prefill && prefill.gia) || ''
+      });
+    }
+
+    function bgSyncGroupFromDOM(gid){
+      const g = state.bgGroups.find(x => x.id === gid);
+      if (!g) return;
+      const select = document.querySelector('.bg-ma-select[data-gid="'+gid+'"]');
+      if (select) g.maList = Array.from(select.selectedOptions).map(o => o.value);
+      const klSel = document.querySelector('.bg-kl-select[data-gid="'+gid+'"]');
+      if (klSel) g.klCode = klSel.value;
+      const giaInput = document.querySelector('.bg-gia-input[data-gid="'+gid+'"]');
+      if (giaInput) g.gia = giaInput.value;
+    }
+
+    function bgSyncAllGroupsFromDOM(){
+      state.bgGroups.forEach(g => bgSyncGroupFromDOM(g.id));
+    }
+
+    function bgRemoveGroup(gid){
+      bgSyncAllGroupsFromDOM();
+      state.bgGroups = state.bgGroups.filter(g => g.id !== gid);
+      bgRenderGroups();
+    }
+
+    function bgSplitGroup(gid){
+      bgSyncAllGroupsFromDOM();
+      const idx = state.bgGroups.findIndex(g => g.id === gid);
+      if (idx === -1) return;
+      const g = state.bgGroups[idx];
+      if (g.maList.length <= 1) { toast('Nhóm này chỉ có 1 mã, không cần tách.', false); return; }
+      const newGroups = g.maList.map(ma => ({
+        id: 'g' + (++state.bgGroupSeq), maList: [ma], klCode: g.klCode, gia: g.gia
+      }));
+      state.bgGroups.splice(idx, 1, ...newGroups);
+      bgRenderGroups();
+      toast('Đã tách thành ' + newGroups.length + ' nhóm riêng, có thể chỉnh giá độc lập.', true);
+    }
+
+    function bgMaOptionsHtml(selectedList){
+      return state.bgMaBaoGiaList.map(m => {
+        const sel = selectedList.includes(m.maBaoGia) ? ' selected' : '';
+        return '<option value="'+escapeHtml(m.maBaoGia)+'" data-search="'+escapeHtml((m.maBaoGia+' '+m.noiDung).toLowerCase())+'"'+sel+'>'
+          + escapeHtml(m.maBaoGia) + ' — ' + escapeHtml(m.noiDung) + '</option>';
+      }).join('');
+    }
+    function bgKLOptionsHtml(selected){
+      return '<option value="">-- Chọn --</option>' + state.bgMaKLList.map(k=>{
+        const sel = k.maKL === selected ? ' selected' : '';
+        return '<option value="'+escapeHtml(k.maKL)+'"'+sel+'>'+escapeHtml(k.maKL)+' ('+(k.klMinKg/1000)+' - '+(k.klMaxKg/1000)+' Tấn)</option>';
+      }).join('');
+    }
+
+    function bgRenderGroups(){
+      const container = document.getElementById('bg_groupsContainer');
+      document.getElementById('bg_groupCount').textContent = state.bgGroups.length + ' nhóm';
+      if (state.bgGroups.length === 0){
+        container.innerHTML = '<div class="empty-state">Chưa có nhóm giá nào. Bấm "+ Thêm nhóm giá mới" để bắt đầu.</div>';
+        return;
+      }
+      container.innerHTML = state.bgGroups.map((g, idx) => (
+        '<div class="bg-group-card" data-gid="'+g.id+'">'
+        + '<div class="bg-group-head"><strong>Nhóm giá #'+(idx+1)+'</strong>'
+        + '<div class="btnrow" style="margin:0;">'
+        + '<button class="btn btn-ghost btn-sm" data-action="split" data-gid="'+g.id+'">🔀 Tách nhóm</button>'
+        + '<button class="btn btn-danger btn-sm" data-action="remove" data-gid="'+g.id+'">🗑️ Xóa nhóm</button>'
+        + '</div></div>'
+        + '<div class="field-grid">'
+        + '<div class="field" style="grid-column:span 2;"><label>Lọc mã báo giá</label>'
+        + '<input type="text" class="bg-ma-filter" data-gid="'+g.id+'" placeholder="Gõ để lọc theo mã hoặc diễn giải…"></div>'
+        + '<div class="field" style="grid-column:span 2;"><label>Chọn mã báo giá (giữ Ctrl/Cmd để chọn nhiều)</label>'
+        + '<select multiple class="bg-ma-select" data-gid="'+g.id+'" size="6">'+bgMaOptionsHtml(g.maList)+'</select>'
+        + '<div class="bg-selected-count" data-gid="'+g.id+'" style="font-size:11.5px;color:var(--ink-soft);margin-top:4px;">Đã chọn: '+g.maList.length+' mã</div></div>'
+        + '<div class="field"><label>Mã khối lượng</label><select class="bg-kl-select" data-gid="'+g.id+'">'+bgKLOptionsHtml(g.klCode)+'</select></div>'
+        + '<div class="field"><label>Đơn giá</label><input type="number" class="bg-gia-input" data-gid="'+g.id+'" value="'+escapeHtml(g.gia)+'" placeholder="0"></div>'
+        + '</div></div>'
+      )).join('');
+
+      container.querySelectorAll('[data-action="split"]').forEach(btn=>{
+        btn.addEventListener('click', ()=> bgSplitGroup(btn.getAttribute('data-gid')));
+      });
+      container.querySelectorAll('[data-action="remove"]').forEach(btn=>{
+        btn.addEventListener('click', ()=> bgRemoveGroup(btn.getAttribute('data-gid')));
+      });
+      container.querySelectorAll('.bg-ma-filter').forEach(inp=>{
+        inp.addEventListener('input', ()=>{
+          const gid = inp.getAttribute('data-gid');
+          const kw = inp.value.trim().toLowerCase();
+          const select = document.querySelector('.bg-ma-select[data-gid="'+gid+'"]');
+          Array.from(select.options).forEach(opt=>{
+            opt.style.display = (!kw || opt.getAttribute('data-search').includes(kw)) ? '' : 'none';
+          });
+        });
+      });
+      container.querySelectorAll('.bg-ma-select').forEach(sel=>{
+        sel.addEventListener('change', ()=>{
+          const gid = sel.getAttribute('data-gid');
+          const countEl = document.querySelector('.bg-selected-count[data-gid="'+gid+'"]');
+          if (countEl) countEl.textContent = 'Đã chọn: ' + sel.selectedOptions.length + ' mã';
+        });
+      });
+    }
+
+    document.getElementById('bgBtnAddGroup').addEventListener('click', ()=>{
+      bgSyncAllGroupsFromDOM();
+      bgAddGroup();
+      bgRenderGroups();
+    });
+
+    document.getElementById('bgBtnLoadCopy').addEventListener('click', async ()=>{
+      const soBaoGia = document.getElementById('bg_copySource').value;
+      if (!soBaoGia) { toast('Vui lòng chọn 1 phiếu báo giá để sao chép.', false); return; }
+      showOverlay('Đang nạp dữ liệu để sao chép…');
+      try {
+        const res = await runServer('BG_getQuoteDetail', soBaoGia);
+        if (res.status !== 'success') { toast(res.message, false); return; }
+        state.bgGroups = [];
+        res.data.forEach(g => bgAddGroup(g));
+        state.bgIdTam = soBaoGia;
+        bgRenderGroups();
+        toast('Đã nạp ' + res.data.length + ' nhóm giá từ phiếu ' + soBaoGia + '. Chỉnh sửa rồi bấm Lưu để tạo phiếu mới.', true);
+      } catch(err){ toast('Lỗi nạp dữ liệu sao chép: ' + err, false); }
+      finally { hideOverlay(); }
+    });
+
+    document.getElementById('bgBtnSaveQuote').addEventListener('click', async ()=>{
+      bgSyncAllGroupsFromDOM();
+
+      // CHẾ ĐỘ SỬA: chỉ có đúng 1 nhóm, cập nhật thẳng vào dòng Baogia_DN đang sửa
+      if (state.bgEditingId) {
+        const g = state.bgGroups[0];
+        if (!g || !g.maList || g.maList.length === 0 || !g.klCode || !(parseFloat(g.gia) > 0)) {
+          toast('Vui lòng chọn đủ Mã báo giá, Mã khối lượng và nhập Đơn giá > 0.', false);
+          return;
+        }
+        const payload = { idBgct: state.bgEditingId, maList: g.maList, klCode: g.klCode, gia: g.gia, hieuLuc: document.getElementById('bg_hieuLuc').value };
+        showOverlay('Đang cập nhật báo giá…');
+        try {
+          const res = await runServer('BG_updateBaogiaRow', payload);
+          toast(res.message, res.status === 'success');
+          if (res.status === 'success') {
+            bgCancelEdit();
+            const hl = await runServer(state.bgViewType === 'SAVE' ? 'BG_showAllData' : 'BG_updateHieuLuc');
+            if (hl.status === 'success') { state.bgHieuLucData = hl.data; state.bgViewType = hl.viewType; renderHieuLucTable(); }
+          }
+        } catch(err){ toast('Lỗi cập nhật báo giá: ' + err, false); }
+        finally { hideOverlay(); }
+        return;
+      }
+
+      // CHẾ ĐỘ TẠO MỚI (nhập mới hoặc sao chép)
+      const payload = {
+        ngayBaoGia: document.getElementById('bg_ngayBaoGia').value,
+        hieuLuc: document.getElementById('bg_hieuLuc').value,
+        idTam: state.bgIdTam || '',
+        groups: state.bgGroups.map(g => ({ maList: g.maList, klCode: g.klCode, gia: g.gia }))
+      };
+      showOverlay('Đang lưu báo giá…');
+      try {
+        const res = await runServer('BG_createQuote', payload);
+        toast(res.message, res.status === 'success');
+        if (res.status === 'success'){
+          bgResetQuoteForm();
+          const quotes = await runServer('BG_getQuoteList');
+          if (quotes.status === 'success') { state.bgQuoteList = quotes.data; bgFillCopySelect(); }
+        }
+      } catch(err){ toast('Lỗi lưu báo giá: ' + err, false); }
+      finally { hideOverlay(); }
+    });
+
+    document.getElementById('bgBtnResetQuote').addEventListener('click', bgResetQuoteForm);
+    function bgResetQuoteForm(){
+      state.bgGroups = [];
+      state.bgIdTam = '';
+      bgCancelEdit(false); // thoát chế độ sửa nếu đang sửa, nhưng không gọi lại resetForm (tránh đệ quy)
+      document.getElementById('bg_copySource').value = '';
+      document.getElementById('bg_ngayBaoGia').value = todayStr();
+      document.getElementById('bg_hieuLuc').value = nowDatetimeLocalStr();
+      bgAddGroup();
+      bgRenderGroups();
+    }
+
+    // Nạp 1 dòng báo giá (theo ID_BGCT) vào khung Nhập báo giá để SỬA.
+    // Backend đã kiểm tra editable (chưa có phiếu cân áp dụng + chưa hết hiệu lực);
+    // nếu không đủ điều kiện sẽ báo lý do và KHÔNG cho sửa.
+    function bgEditRow(id){
+      showOverlay('Đang tải dữ liệu báo giá…');
+      runServer('BG_getBaogiaRowByHash', id).then(res=>{
+        hideOverlay();
+        if (res.status !== 'success') { toast(res.message, false); return; }
+        if (!res.editable) { toast('Không thể sửa: ' + res.reason, false); return; }
+        const tabBtn = document.querySelector('.tabbtn[data-pane="bg-tab-nhap"]');
+        if (tabBtn) tabBtn.click();
+        state.bgEditingId = res.idBgct;
+        state.bgGroupSeq = 1;
+        state.bgGroups = [{ id: 'edit1', maList: res.maList, klCode: res.klCode, gia: res.gia }];
+        document.getElementById('bg_hieuLuc').value = res.hieuLuc;
+        document.getElementById('bg_editMaChungTu').textContent = res.maList.join(', ') + ' (Số báo giá gốc: ' + res.soBaoGia + ')';
+        document.getElementById('bg_editBanner').style.display = 'block';
+        document.getElementById('bgBtnSaveQuote').textContent = '💾 Cập nhật báo giá';
+        bgRenderGroups();
+        toast('Đã nạp báo giá để sửa. Chỉnh xong bấm "Cập nhật báo giá".', true);
+      }).catch(err=>{ hideOverlay(); toast('Lỗi tải dữ liệu: ' + err, false); });
+    }
+
+    // Thoát chế độ sửa. resetFormToo=false khi được gọi từ chính bgResetQuoteForm (tránh đệ quy vô hạn).
+    function bgCancelEdit(resetFormToo){
+      const wasEditing = !!state.bgEditingId;
+      state.bgEditingId = null;
+      document.getElementById('bg_editBanner').style.display = 'none';
+      document.getElementById('bgBtnSaveQuote').textContent = '✔️ Lưu báo giá';
+      if (wasEditing && resetFormToo !== false) bgResetQuoteForm();
+    }
+    document.getElementById('bgBtnCancelEdit').addEventListener('click', ()=> bgCancelEdit(true));
+
+    async function bgDeleteRow(id){
+      if (!confirm('Bạn có chắc muốn XÓA báo giá này? Hành động không thể hoàn tác.')) return;
+      showOverlay('Đang kiểm tra và xóa…');
+      try {
+        const res = await runServer('BG_deleteBaogiaRow', id);
+        toast(res.message, res.status === 'success');
+        if (res.status === 'success') {
+          const hl = await runServer(state.bgViewType === 'SAVE' ? 'BG_showAllData' : 'BG_updateHieuLuc');
+          if (hl.status === 'success') { state.bgHieuLucData = hl.data; state.bgViewType = hl.viewType; renderHieuLucTable(); }
+          const quotes = await runServer('BG_getQuoteList');
+          if (quotes.status === 'success') { state.bgQuoteList = quotes.data; bgFillCopySelect(); }
+        }
+      } catch(err){ toast('Lỗi xóa báo giá: ' + err, false); }
+      finally { hideOverlay(); }
+    }
+
+    // ---------- Danh mục mã báo giá ----------
+    function bgFillDatalists(){
+      // Chỉ gợi ý autocomplete cho MÃ ngắn (DT, NS...) vì đây là giá trị tái sử dụng
+      // trực tiếp từ danh mục. "Tên đầy đủ" không có sẵn dưới dạng danh sách riêng
+      // (Ma_BaoGia chỉ lưu câu "Nội dung" đã ghép sẵn), nên không thể gợi ý an toàn.
+      const daiLyMaSet = new Set(), ngMaSet = new Set();
+      state.bgMaBaoGiaList.forEach(m=>{
+        if (m.daiLy) daiLyMaSet.add(m.daiLy);
+        if (m.nguonGoc) ngMaSet.add(m.nguonGoc);
+      });
+      document.getElementById('bg_daiLyMaList').innerHTML = Array.from(daiLyMaSet).map(v=>'<option value="'+escapeHtml(v)+'">').join('');
+      document.getElementById('bg_nguonGocMaList').innerHTML = Array.from(ngMaSet).map(v=>'<option value="'+escapeHtml(v)+'">').join('');
+    }
+    function renderMaBaoGiaTable(){
+      document.getElementById('bg_maBaoGiaCount').textContent = state.bgMaBaoGiaList.length + ' mã';
+      const body = document.getElementById('bg_maBaoGiaBody');
+      if (state.bgMaBaoGiaList.length === 0){ body.innerHTML = '<tr><td colspan="7" class="empty-state">Danh mục trống.</td></tr>'; return; }
+      body.innerHTML = state.bgMaBaoGiaList.map(m=>(
+        '<tr><td>'+escapeHtml(m.stt)+'</td><td class="mono">'+escapeHtml(m.maBaoGia)+'</td><td>'+escapeHtml(m.daiLy)+'</td>'
+        + '<td>'+escapeHtml(m.nguonGoc)+'</td><td>'+escapeHtml(m.hinhAnh)+'</td><td>'+escapeHtml(m.noiDung)+'</td>'
+        + '<td><button class="btn btn-danger btn-sm" data-delma="'+escapeHtml(m.maBaoGia)+'">Xóa</button></td></tr>'
+      )).join('');
+      body.querySelectorAll('[data-delma]').forEach(btn=>{
+        btn.addEventListener('click', ()=> bgDeleteMaBaoGia(btn.getAttribute('data-delma')));
+      });
+    }
+    function bgUpdateMaBaoGiaPreview(){
+      const daiLyMa = document.getElementById('bg_daiLyMa').value.trim().toUpperCase();
+      const nguonGocMa = document.getElementById('bg_nguonGocMa').value.trim().toUpperCase();
+      const hinhAnh = document.getElementById('bg_hinhAnh').value;
+      const daiLyTen = document.getElementById('bg_daiLyTen').value.trim();
+      const nguonGocTen = document.getElementById('bg_nguonGocTen').value.trim();
+      if (!daiLyMa || !nguonGocMa){ document.getElementById('bg_maPreview').textContent = '—'; document.getElementById('bg_noiDungPreview').textContent=''; return; }
+      document.getElementById('bg_maPreview').textContent = daiLyMa + '_' + nguonGocMa + '_' + hinhAnh;
+      document.getElementById('bg_noiDungPreview').textContent = (daiLyTen && nguonGocTen)
+        ? ('Đại lý ' + daiLyTen + ' Nguồn gốc ' + nguonGocTen + ', ' + (hinhAnh === 'Y' ? 'có' : 'không') + ' hình ảnh')
+        : '';
+    }
+    ['bg_daiLyMa','bg_daiLyTen','bg_nguonGocMa','bg_nguonGocTen','bg_hinhAnh'].forEach(id=>{
+      document.getElementById(id).addEventListener('input', bgUpdateMaBaoGiaPreview);
+      document.getElementById(id).addEventListener('change', bgUpdateMaBaoGiaPreview);
+    });
+
+    document.getElementById('bgBtnAddMaBaoGia').addEventListener('click', async ()=>{
+      const fields = {
+        daiLyMa: document.getElementById('bg_daiLyMa').value,
+        daiLyTen: document.getElementById('bg_daiLyTen').value,
+        nguonGocMa: document.getElementById('bg_nguonGocMa').value,
+        nguonGocTen: document.getElementById('bg_nguonGocTen').value,
+        hinhAnh: document.getElementById('bg_hinhAnh').value
+      };
+      showOverlay('Đang thêm mã báo giá…');
+      try {
+        const res = await runServer('BG_addMaBaoGia', fields);
+        toast(res.message, res.status === 'success');
+        if (res.status === 'success'){
+          ['bg_daiLyMa','bg_daiLyTen','bg_nguonGocMa','bg_nguonGocTen'].forEach(id=> document.getElementById(id).value='');
+          bgUpdateMaBaoGiaPreview();
+          const maBg = await runServer('BG_getMaBaoGiaList');
+          if (maBg.status === 'success'){ state.bgMaBaoGiaList = maBg.data; renderMaBaoGiaTable(); bgFillDatalists(); }
+        }
+      } catch(err){ toast('Lỗi thêm mã báo giá: ' + err, false); }
+      finally { hideOverlay(); }
+    });
+
+    async function bgDeleteMaBaoGia(maBaoGia){
+      showOverlay('Đang xóa mã báo giá…');
+      try {
+        const res = await runServer('BG_deleteMaBaoGia', maBaoGia);
+        toast(res.message, res.status === 'success');
+        if (res.status === 'success'){
+          const maBg = await runServer('BG_getMaBaoGiaList');
+          if (maBg.status === 'success'){ state.bgMaBaoGiaList = maBg.data; renderMaBaoGiaTable(); bgFillDatalists(); }
+        }
+      } catch(err){ toast('Lỗi xóa mã báo giá: ' + err, false); }
+      finally { hideOverlay(); }
+    }
+
+    // ---------- Danh mục mã khối lượng ----------
+    function renderMaKLTable(){
+      document.getElementById('bg_maKLCount').textContent = state.bgMaKLList.length + ' mã';
+      const body = document.getElementById('bg_maKLBody');
+      if (state.bgMaKLList.length === 0){ body.innerHTML = '<tr><td colspan="5" class="empty-state">Danh mục trống.</td></tr>'; return; }
+      body.innerHTML = state.bgMaKLList.map(k=>(
+        '<tr><td class="mono">'+escapeHtml(k.maKL)+'</td><td class="num">'+fmtNum(k.klMinKg/1000)+'</td>'
+        + '<td class="num">'+fmtNum(k.klMaxKg/1000)+'</td><td>'+escapeHtml(k.timestamp)+'</td>'
+        + '<td><button class="btn btn-danger btn-sm" data-delkl="'+escapeHtml(k.maKL)+'">Xóa</button></td></tr>'
+      )).join('');
+      body.querySelectorAll('[data-delkl]').forEach(btn=>{
+        btn.addEventListener('click', ()=> bgDeleteMaKL(btn.getAttribute('data-delkl')));
+      });
+    }
+    function bgUpdateKLPreview(){
+      const min = document.getElementById('bg_klMin').value;
+      const max = document.getElementById('bg_klMax').value;
+      document.getElementById('bg_klPreview').textContent = (min !== '' && max !== '') ? (min + '_' + max) : '—';
+    }
+    document.getElementById('bg_klMin').addEventListener('input', bgUpdateKLPreview);
+    document.getElementById('bg_klMax').addEventListener('input', bgUpdateKLPreview);
+
+    document.getElementById('bgBtnAddMaKL').addEventListener('click', async ()=>{
+      const fields = { klMinTan: document.getElementById('bg_klMin').value, klMaxTan: document.getElementById('bg_klMax').value };
+      showOverlay('Đang thêm mã khối lượng…');
+      try {
+        const res = await runServer('BG_addMaKL', fields);
+        toast(res.message, res.status === 'success');
+        if (res.status === 'success'){
+          document.getElementById('bg_klMin').value = ''; document.getElementById('bg_klMax').value = '';
+          bgUpdateKLPreview();
+          const maKl = await runServer('BG_getMaKLList');
+          if (maKl.status === 'success'){ state.bgMaKLList = maKl.data; renderMaKLTable(); }
+        }
+      } catch(err){ toast('Lỗi thêm mã khối lượng: ' + err, false); }
+      finally { hideOverlay(); }
+    });
+
+    async function bgDeleteMaKL(maKL){
+      showOverlay('Đang xóa mã khối lượng…');
+      try {
+        const res = await runServer('BG_deleteMaKL', maKL);
+        toast(res.message, res.status === 'success');
+        if (res.status === 'success'){
+          const maKl = await runServer('BG_getMaKLList');
+          if (maKl.status === 'success'){ state.bgMaKLList = maKl.data; renderMaKLTable(); }
+        }
+      } catch(err){ toast('Lỗi xóa mã khối lượng: ' + err, false); }
+      finally { hideOverlay(); }
+    }
+
+    // ---------- Hiệu lực báo giá ----------
+    document.getElementById('bgBtnUpdateHieuLuc').addEventListener('click', async ()=>{
+      showOverlay('Đang cập nhật hiệu lực…');
+      try {
+        const res = await runServer('BG_updateHieuLuc');
+        if (res.status !== 'success'){ toast(res.message, false); return; }
+        state.bgHieuLucData = res.data; state.bgViewType = res.viewType; state.bgUncheckedIds = new Set();
+        renderHieuLucTable();
+        toast('Đã cập nhật, hiện đang xem các mã CÒN HIỆU LỰC.', true);
+      } catch(err){ toast('Lỗi cập nhật hiệu lực: ' + err, false); }
+      finally { hideOverlay(); }
+    });
+    document.getElementById('bgBtnShowAll').addEventListener('click', async ()=>{
+      showOverlay('Đang tải toàn bộ lịch sử báo giá…');
+      try {
+        const res = await runServer('BG_showAllData');
+        if (res.status !== 'success'){ toast(res.message, false); return; }
+        state.bgHieuLucData = res.data; state.bgViewType = res.viewType; state.bgUncheckedIds = new Set();
+        renderHieuLucTable();
+        toast('Đã tải toàn bộ lịch sử báo giá.', true);
+      } catch(err){ toast('Lỗi tải lịch sử: ' + err, false); }
+      finally { hideOverlay(); }
+    });
+
+    function renderHieuLucTable(){
+      const kw = document.getElementById('bg_search').value.trim().toLowerCase();
+      const rows = state.bgHieuLucData.filter(r => !kw || (r.ma + ' ' + r.dienGiai).toLowerCase().includes(kw));
+      const body = document.getElementById('bg_hieuLucBody');
+      if (rows.length === 0){ body.innerHTML = '<tr><td colspan="10" class="empty-state">Chưa có dữ liệu. Bấm "Cập nhật hiệu lực" hoặc "Xem toàn bộ lịch sử".</td></tr>'; return; }
+      body.innerHTML = rows.map(r=>{
+        let badgeClass = 'badge-neutral';
+        if (r.trangThai === 'Còn hiệu lực') badgeClass = 'badge-ok';
+        else if (r.trangThai === 'Hết hiệu lực') badgeClass = 'badge-warn';
+        // Giữ đúng trạng thái tick đã chọn trước đó (kể cả sau khi lọc/tìm kiếm làm render lại bảng)
+        const isChecked = !state.bgUncheckedIds.has(r.id) ? ' checked' : '';
+        // r.editable/r.reason/r.daApDung do backend tính sẵn (BG_annotateApplied_):
+        // không được sửa/xóa nếu ĐÃ hết hiệu lực HOẶC ĐÃ có phiếu cân áp dụng.
+        const daApDungBadge = r.daApDung ? ' <span class="badge badge-ok" title="Đã có phiếu cân dùng mã này trong khoảng hiệu lực">📌 Đã áp dụng</span>' : '';
+        const actionCell = r.editable
+          ? ('<div class="btnrow" style="margin:0;gap:6px;">'
+             + '<button class="btn btn-ghost btn-sm" data-editbg="'+escapeHtml(r.id)+'">✏️ Sửa</button>'
+             + '<button class="btn btn-danger btn-sm" data-delbg="'+escapeHtml(r.id)+'">🗑️ Xóa</button>'
+             + '</div>')
+          : ('<span class="badge badge-neutral" title="'+escapeHtml(r.reason || 'Không thể sửa/xóa')+'" style="cursor:help;">🔒 Đã khóa</span>');
+        return '<tr>'
+          + '<td><input type="checkbox" class="bg-row-check" data-id="'+escapeHtml(r.id)+'"'+isChecked+'></td>'
+          + '<td class="mono">'+escapeHtml(r.ma)+'</td><td>'+escapeHtml(r.dienGiai)+'</td>'
+          + '<td class="num">'+fmtNum(r.klMin)+'</td><td class="num">'+fmtNum(r.klMax)+'</td>'
+          + '<td class="num">'+fmtNum(r.gia)+'</td><td>'+escapeHtml(r.tuNgay)+'</td><td>'+escapeHtml(r.denNgay)+'</td>'
+          + '<td><span class="badge '+badgeClass+'">'+escapeHtml(r.trangThai)+'</span>'+daApDungBadge+'</td>'
+          + '<td>'+actionCell+'</td>'
+          + '</tr>';
+      }).join('');
+      body.querySelectorAll('.bg-row-check').forEach(cb=>{
+        cb.addEventListener('change', ()=>{
+          const id = cb.getAttribute('data-id');
+          if (cb.checked) state.bgUncheckedIds.delete(id); else state.bgUncheckedIds.add(id);
+        });
+      });
+      body.querySelectorAll('[data-editbg]').forEach(btn=>{
+        btn.addEventListener('click', ()=> bgEditRow(btn.getAttribute('data-editbg')));
+      });
+      body.querySelectorAll('[data-delbg]').forEach(btn=>{
+        btn.addEventListener('click', ()=> bgDeleteRow(btn.getAttribute('data-delbg')));
+      });
+    }
+    document.getElementById('bg_search').addEventListener('input', renderHieuLucTable);
+    document.getElementById('bgBtnToggleAll').addEventListener('click', ()=>{
+      const boxes = document.querySelectorAll('.bg-row-check');
+      const anyUnchecked = Array.from(boxes).some(b => !b.checked);
+      boxes.forEach(b => {
+        b.checked = anyUnchecked;
+        const id = b.getAttribute('data-id');
+        if (anyUnchecked) state.bgUncheckedIds.delete(id); else state.bgUncheckedIds.add(id);
+      });
+    });
+    document.getElementById('bg_checkHeader').addEventListener('change', (e)=>{
+      document.querySelectorAll('.bg-row-check').forEach(b => {
+        b.checked = e.target.checked;
+        const id = b.getAttribute('data-id');
+        if (e.target.checked) state.bgUncheckedIds.delete(id); else state.bgUncheckedIds.add(id);
+      });
+    });
+
+    document.getElementById('bgBtnExport').addEventListener('click', async ()=>{
+      const ids = Array.from(new Set(
+        Array.from(document.querySelectorAll('.bg-row-check:checked')).map(b => b.getAttribute('data-id'))
+      ));
+      if (ids.length === 0){ toast('Vui lòng chọn ít nhất 1 dòng để xuất.', false); return; }
+      const dateStr = document.getElementById('bg_exportDate').value || todayStr();
+      showOverlay('Đang tạo file Excel báo giá…');
+      try {
+        const res = await runServer('BG_exportFileSmart', dateStr, state.bgViewType, ids);
+        if (res.status === 'success') window.open(res.url, '_blank'); else toast(res.message, false);
+      } catch(err){ toast('Lỗi xuất file: ' + err, false); }
+      finally { hideOverlay(); }
+    });
+  </script>
 </body>
 </html>
