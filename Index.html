@@ -206,6 +206,63 @@
       border-top:2px solid var(--border);white-space:nowrap;
     }
 
+    /* ===== KHO DĂM GỖ: định dạng lại theo đúng bảng màu/font webapp chính,
+       scoped trong #view-khodam để không ảnh hưởng các view khác. Các class
+       này giữ NGUYÊN TÊN như code gốc (form-container, nav-btn, dokho-table...)
+       vì tên class được sinh trực tiếp trong rất nhiều template string JS —
+       đổi tên sẽ phải sửa hàng trăm chỗ, rủi ro cao hơn nhiều so với lợi ích. ===== */
+    #view-khodam .form-container{
+      background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+      box-shadow:var(--shadow);padding:20px;display:flex;flex-direction:column;gap:10px;
+      width:100%;box-sizing:border-box;margin-bottom:16px;
+    }
+    #view-khodam .form-container > b{
+      color:var(--brand-dark);font-size:15px;text-transform:uppercase;letter-spacing:.3px;
+      border-bottom:2px solid var(--border);padding-bottom:8px;margin-bottom:4px;font-weight:700;
+    }
+    #view-khodam .form-container label{font-size:12px;font-weight:600;color:var(--ink-soft);margin-top:4px;}
+    #view-khodam input[type="text"], #view-khodam input[type="date"], #view-khodam input[type="datetime-local"],
+    #view-khodam input[type="number"], #view-khodam select{
+      padding:9px 11px;border:1px solid var(--border);border-radius:8px;outline:none;
+      font-size:13.5px;font-family:'Be Vietnam Pro',sans-serif;box-sizing:border-box;width:100%;background:#fff;color:var(--ink);
+    }
+    #view-khodam input:focus, #view-khodam select:focus{outline:2px solid var(--brand-light);outline-offset:1px;border-color:var(--brand);}
+    #view-khodam .nav-btn{
+      background:#EEF1EC;border:1px solid var(--border);padding:8px 15px;border-radius:8px;
+      cursor:pointer;font-weight:600;color:var(--ink);font-size:13px;transition:filter .12s ease;
+    }
+    #view-khodam .nav-btn:hover{filter:brightness(.97);}
+    #view-khodam .nav-btn:disabled{opacity:.5;cursor:not-allowed;}
+    #view-khodam .sub-nav-bar{background:var(--accent-soft);padding:8px 20px;display:flex;gap:8px;border-bottom:1px solid var(--accent);flex-wrap:wrap;border-radius:8px;margin-bottom:12px;}
+    #view-khodam .sub-nav-btn{background:#fff;border:1px solid var(--brand);padding:6px 12px;border-radius:6px;cursor:pointer;font-weight:600;color:var(--brand);font-size:12px;}
+    #view-khodam .sub-nav-btn.active{background:var(--brand);color:#fff;}
+    #view-khodam .form-submit-btn{background:var(--brand);color:#fff;border:none;padding:10px 15px;border-radius:8px;font-weight:600;cursor:pointer;font-size:14px;flex:1;font-family:inherit;}
+    #view-khodam .form-submit-btn:hover{filter:brightness(1.08);}
+    #view-khodam .form-submit-btn:disabled{background:#9aa79e;cursor:not-allowed;}
+    #view-khodam .btn-scan{background:var(--accent);color:#3A2A05;border:1px solid #A5741F;padding:10px 15px;border-radius:8px;font-weight:600;cursor:pointer;font-size:14px;width:100%;margin-top:10px;display:block;font-family:inherit;}
+    #view-khodam .btn-scan:hover{filter:brightness(1.05);}
+    #view-khodam .dokho-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:8px;}
+    #view-khodam .dokho-table th, #view-khodam .dokho-table td{border:1px solid var(--border);padding:8px;text-align:center;}
+    #view-khodam .dokho-table th{background:var(--brand);color:#fff;font-weight:600;}
+    #view-khodam .btn-action{padding:5px 10px;font-size:11.5px;border-radius:6px;cursor:pointer;border:none;font-weight:700;font-family:inherit;}
+    #view-khodam .btn-sua{background:var(--accent-soft);color:#8A5F17;}
+    #view-khodam .btn-xoa{background:var(--danger-soft);color:var(--danger);}
+    #view-khodam .locked-row{background:#EEF1EC;color:var(--ink-soft);font-style:italic;}
+    #view-khodam .grid-2{display:grid;grid-template-columns:1.1fr 1.9fr;gap:15px;}
+    #view-khodam .btn.btn-info{background:#1B6EC2;color:#fff;border:none;border-radius:6px;padding:4px 10px;font-weight:700;cursor:pointer;font-family:inherit;}
+    #view-khodam .btn.btn-warning{background:var(--accent);color:#3A2A05;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-family:inherit;}
+    #view-khodam .btn.btn-success{background:var(--success);color:#fff;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-family:inherit;}
+    #view-khodam .btn.btn-secondary{background:#6b7280;color:#fff;border:none;border-radius:6px;padding:5px 12px;font-weight:700;cursor:pointer;font-family:inherit;}
+    #view-khodam .btn-sm{font-size:11.5px;padding:4px 9px;}
+    #view-khodam .text-white{color:#fff;}
+    #view-khodam .font-weight-bold{font-weight:700;}
+    #view-khodam .d-flex{display:flex;}
+    #view-khodam .justify-content-between{justify-content:space-between;}
+    #view-khodam .align-items-center{align-items:center;}
+    #view-khodam .mb-2{margin-bottom:8px;}
+    #view-khodam .text-danger{color:var(--danger);}
+    @media (max-width:820px){ #view-khodam .grid-2{grid-template-columns:1fr;} }
+
     .bg-group-card{
       border:1px solid var(--border);border-radius:9px;padding:14px;margin-bottom:12px;background:#FAFBF9;
     }
@@ -241,7 +298,9 @@
         </li>
         <li class="sub-menu open" id="submenu-import">
           <div class="sub-item active" data-tab="tab-file" data-group="import">Import file cân</div>
-          <div class="sub-item" data-tab="tab-manual" data-group="import">Nhập tay</div>
+          <div class="sub-item" data-tab="tab-manual" data-group="import">Nhập thủ công</div>
+          <div class="sub-item" data-tab="tab-xh-import" data-group="import">Import xuất hàng</div>
+          <div class="sub-item" data-tab="tab-xh-donhang" data-group="import">Đơn hàng xuất bán</div>
         </li>
 
         <li class="menu-item" data-view="view-nhapkho">
@@ -249,8 +308,17 @@
           Báo cáo tổng hợp nhập kho
         </li>
         <li class="sub-menu" id="submenu-nhapkho">
-          <div class="sub-item active" data-tab="nk-tab-tonghop" data-group="nhapkho">Báo cáo tổng hợp cân</div>
-          <div class="sub-item" data-tab="nk-tab-misa" data-group="nhapkho">Báo cáo Misa</div>
+          <div class="sub-item active" data-tab="nk-tab-tonghop" data-group="nhapkho">Báo cáo nhập qua cân</div>
+          <div class="sub-item" data-tab="nk-tab-misa" data-group="nhapkho">Báo cáo nhập kết xuất Misa</div>
+        </li>
+
+        <li class="menu-item" data-view="view-xuatkho">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-6 9 6v10a1 1 0 01-1 1H4a1 1 0 01-1-1V9z"/><path d="M9 21V12h6v9" transform="rotate(180 12 15)"/></svg>
+          Báo cáo tổng hợp xuất kho
+        </li>
+        <li class="sub-menu" id="submenu-xuatkho">
+          <div class="sub-item active" data-tab="xk-tab-tonghop" data-group="xuatkho">Báo cáo xuất qua cân</div>
+          <div class="sub-item" data-tab="xk-tab-misa" data-group="xuatkho">Báo cáo xuất kết xuất Misa</div>
         </li>
 
         <li class="menu-item" data-view="view-baogia">
@@ -262,6 +330,19 @@
           <div class="sub-item" data-tab="bg-tab-hieuluc" data-group="baogia">Hiệu lực báo giá</div>
           <div class="sub-item" data-tab="bg-tab-mabaogia" data-group="baogia">Danh mục mã báo giá</div>
           <div class="sub-item" data-tab="bg-tab-makl" data-group="baogia">Danh mục mã khối lượng</div>
+        </li>
+
+        <li class="menu-item" data-view="view-khodam">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-6 9 6v10a1 1 0 01-1 1H4a1 1 0 01-1-1V9z"/><path d="M9 21V12h6v9"/></svg>
+          Quản lý tồn kho dăm gỗ
+        </li>
+        <li class="sub-menu" id="submenu-khodam">
+          <div class="sub-item active" data-kd="danhmuc" data-group="khodam">Danh mục kho</div>
+          <div class="sub-item" data-kd="kyvetbai" data-group="khodam">Kỳ vét bãi</div>
+          <div class="sub-item" data-kd="dokho" data-group="khodam">Quản lý độ khô</div>
+          <div class="sub-item" data-kd="nhapkho" data-group="khodam">Nhập kho</div>
+          <div class="sub-item" data-kd="xuatkho" data-group="khodam">Xuất kho</div>
+          <div class="sub-item" data-kd="baocao" data-group="khodam">Báo cáo tồn kho</div>
         </li>
       </ul>
 
@@ -279,7 +360,9 @@
 
         <div class="tabbar">
           <div class="tabbtn active" data-pane="tab-file">📥 Import file cân</div>
-          <div class="tabbtn" data-pane="tab-manual">✍️ Nhập tay</div>
+          <div class="tabbtn" data-pane="tab-manual">✍️ Nhập thủ công</div>
+          <div class="tabbtn" data-pane="tab-xh-import">🚚 Import xuất hàng</div>
+          <div class="tabbtn" data-pane="tab-xh-donhang">📄 Đơn hàng xuất bán</div>
         </div>
 
         <!-- TAB: IMPORT FILE -->
@@ -294,6 +377,7 @@
             <div class="btnrow">
               <button class="btn btn-primary" id="btnPreview">Tải lên &amp; Xem trước</button>
               <button class="btn btn-danger" id="btnClearFolder">Dọn dẹp file tạm trong thư mục Input</button>
+              <button class="btn btn-ghost" id="btnTaiMauPhieuCan">📄 Tải file mẫu</button>
             </div>
           </div>
 
@@ -326,7 +410,7 @@
         <!-- TAB: NHẬP TAY -->
         <div class="tabpane" id="tab-manual">
           <div class="card">
-            <h2>Nhập tay 1 phiếu cân</h2>
+            <h2>Nhập thủ công 1 phiếu cân</h2>
             <div class="field-grid">
               <div class="field"><label>Số phiếu *</label><input id="m_soPhieu" placeholder="VD: 00123"></div>
               <div class="field"><label>Số xe *</label><input id="m_soXe" placeholder="VD: 51C-123.45"></div>
@@ -349,6 +433,112 @@
             </div>
           </div>
         </div>
+
+        <!-- TAB: IMPORT XUẤT HÀNG (NL_PC_XH_Draft -> NL_PC_XH) -->
+        <div class="tabpane" id="tab-xh-import">
+          <div class="card">
+            <h2>Bước 1 · Tải file cân xuất hàng lên</h2>
+            <p style="font-size:12px;color:var(--ink-soft);margin:0 0 10px;">Cùng định dạng file trạm cân như "Import file cân", nhưng dùng cho phiếu cân XUẤT HÀNG (dăm gỗ xuất bán/xuất khẩu). Dữ liệu xem trước được lưu vào sheet <b>NL_PC_XH_Draft</b> để đối soát trước khi duyệt ghi vào <b>NL_PC_XH</b>.</p>
+            <div class="field-grid" style="margin-bottom:12px;">
+              <div class="field"><label>Kho xuất (áp dụng cho cả lô, nếu file không có cột riêng)</label><select id="xh_khoXuatMacDinh"><option value="">-- Không chọn --</option></select></div>
+              <div class="field"><label>Kho nhập (áp dụng cho cả lô, nếu file không có cột riêng)</label><select id="xh_khoNhapMacDinh"><option value="">-- Không chọn --</option></select></div>
+            </div>
+            <div class="dropzone" id="xhDropzone">
+              <div>Kéo thả file .xls / .xlsx vào đây, hoặc <strong>bấm để chọn file</strong></div>
+              <input type="file" id="xhFileInput" accept=".xls,.xlsx" multiple>
+            </div>
+            <div class="filelist" id="xhFileList"></div>
+            <div class="btnrow">
+              <button class="btn btn-primary" id="btnXhPreview">Tải lên &amp; Xem trước</button>
+              <button class="btn btn-danger" id="btnXhClearFolder">Dọn dẹp file tạm trong thư mục Input</button>
+              <button class="btn btn-ghost" id="btnTaiMauXuatHang">📄 Tải file mẫu</button>
+            </div>
+          </div>
+
+          <div class="card" id="xhPreviewCard" style="display:none;">
+            <h2>Bước 2 · Xem trước &amp; đối soát <span class="tag" id="xhPreviewCount">0 dòng</span></h2>
+            <p style="font-size:12.5px;color:var(--ink-soft);margin:0 0 10px;">Bỏ tick những dòng KHÔNG muốn nhập (mặc định các dòng hợp lệ đều được chọn sẵn). Dòng lỗi không thể chọn.</p>
+            <div class="btnrow" style="margin-top:0;margin-bottom:10px;">
+              <button class="btn btn-ghost btn-sm" id="btnXhToggleAll">☑️ Chọn / Bỏ chọn tất cả</button>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th><input type="checkbox" id="xhCheckHeader" checked></th>
+                    <th>Trạng thái</th><th>Mã CT</th><th>Số phiếu</th><th>Số xe</th>
+                    <th>Ngày cân 1</th><th>Giờ cân 1</th><th>Ngày cân 2</th><th>Giờ cân 2</th>
+                    <th class="num">Cân lần 1</th><th class="num">Cân lần 2</th><th class="num">KL Hàng</th>
+                    <th>Đơn vị vận chuyển</th><th>Tên tài xế</th><th>Kho xuất</th><th>Kho nhập</th>
+                  </tr>
+                </thead>
+                <tbody id="xhPreviewBody"></tbody>
+              </table>
+            </div>
+            <div class="btnrow">
+              <button class="btn btn-primary" id="btnXhConfirmImport">✔️ Xác nhận nhập liệu (ghi vào NL_PC_XH)</button>
+              <button class="btn btn-ghost" id="btnXhCancelPreview">Hủy xem trước</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: ĐƠN HÀNG XUẤT BÁN (NL_DH_XB) -->
+        <div class="tabpane" id="tab-xh-donhang">
+          <div class="card">
+            <h2>Nhập đơn hàng xuất bán mới</h2>
+            <div class="field-grid">
+              <div class="field"><label>Ngày đơn hàng *</label><input type="date" id="dh_ngayDonHang"></div>
+              <div class="field"><label>Số TKHQ</label><input id="dh_soTKHQ" placeholder="Số tờ khai hải quan"></div>
+              <div class="field"><label>Tàu</label><input id="dh_tau" placeholder="Tên tàu xuất"></div>
+              <div class="field"><label>Khách hàng *</label><input id="dh_khachHang" placeholder="Tên khách hàng"></div>
+              <div class="field" style="grid-column:span 2;"><label>Địa chỉ khách hàng</label><input id="dh_diaChiKH" placeholder="Địa chỉ"></div>
+              <div class="field"><label>Tên hàng hóa</label><input id="dh_tenHangHoa" placeholder="VD: Dăm gỗ keo lai FSC Controlled Wood"></div>
+              <div class="field"><label>Đơn giá (USD)</label><input type="number" id="dh_donGiaUSD" placeholder="0"></div>
+              <div class="field"><label>KL_MT (Tấn tươi) *</label><input type="number" id="dh_klMT" placeholder="0"></div>
+              <div class="field"><label>Độ khô (%) *</label><input type="number" id="dh_doKho" placeholder="VD: 39.45" step="0.01"></div>
+              <div class="field"><label>KL_BDMT (Tấn khô) - tự tính</label><input type="text" id="dh_klBDMT" readonly placeholder="= KL_MT × Độ khô"></div>
+              <div class="field"><label>Kho xuất</label><select id="dh_khoXuat"><option value="">-- Chọn kho --</option></select></div>
+              <div class="field"><label>Loại xe</label>
+                <select id="dh_loaiXe"><option value="Y">Y</option><option value="N">N</option></select>
+              </div>
+            </div>
+
+            <h2 style="margin-top:18px;">Độ khô nhà máy (tự động tính)</h2>
+            <p style="font-size:12px;color:var(--ink-soft);margin:0 0 10px;">Chọn khoảng ngày "hàng nhập sản xuất" để hệ thống tự tính độ khô trung bình (lấy từ dữ liệu Nhapdokho của module Kho Dăm).</p>
+            <div class="field-grid">
+              <div class="field"><label>NL_Từ ngày</label><input type="date" id="dh_tuNgay"></div>
+              <div class="field"><label>NL_Đến ngày</label><input type="date" id="dh_denNgay"></div>
+              <div class="field"><label>Độ khô nhà máy (đã tính)</label><input type="text" id="dh_doKhoNhaMay" readonly placeholder="Bấm 'Tính độ khô' để lấy giá trị"></div>
+            </div>
+            <div class="btnrow" style="margin-top:0;">
+              <button class="btn btn-ghost" id="btnDhTinhDoKho">🧮 Tính độ khô nhà máy</button>
+            </div>
+
+            <div class="btnrow">
+              <button class="btn btn-primary" id="btnDhSave">✔️ Lưu đơn hàng xuất bán</button>
+              <button class="btn btn-ghost" id="btnDhReset">Làm mới form</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>Danh sách đơn hàng đã lập <span class="tag" id="dh_listCount">0 đơn</span></h2>
+            <div class="btnrow" style="margin-top:0;margin-bottom:10px;">
+              <button class="btn btn-ghost btn-sm" id="btnDhRefreshList">🔄 Tải lại danh sách</button>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Ngày</th><th>Số TKHQ</th><th>Tàu</th><th>Khách hàng</th><th>Kho xuất</th>
+                    <th class="num">KL_MT</th><th class="num">KL_BDMT</th><th class="num">Độ khô</th>
+                    <th class="num">Độ khô NM</th><th>NL Từ ngày</th><th>NL Đến ngày</th><th>Loại xe</th><th>Hành động</th>
+                  </tr>
+                </thead>
+                <tbody id="dh_listBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </section>
 
       <!-- ============ VIEW 2: BÁO CÁO TỔNG HỢP CÂN ============ -->
@@ -356,12 +546,12 @@
       <section id="view-nhapkho" class="view">
         <div class="page-head">
           <h1>Báo cáo tổng hợp nhập kho</h1>
-          <p>Gồm Báo cáo tổng hợp cân và Báo cáo Misa · Lọc theo ngày, xe, khách hàng, đại lý/nguồn gốc và trạng thái ĐNTT.</p>
+          <p>Gồm Báo cáo nhập qua cân và Báo cáo nhập kết xuất Misa · Lọc theo ngày, xe, khách hàng, đại lý/nguồn gốc và trạng thái ĐNTT.</p>
         </div>
 
         <div class="tabbar">
-          <div class="tabbtn active" data-pane="nk-tab-tonghop">📊 Báo cáo tổng hợp cân</div>
-          <div class="tabbtn" data-pane="nk-tab-misa">🧾 Báo cáo Misa</div>
+          <div class="tabbtn active" data-pane="nk-tab-tonghop">📊 Báo cáo nhập qua cân</div>
+          <div class="tabbtn" data-pane="nk-tab-misa">🧾 Báo cáo nhập kết xuất Misa</div>
         </div>
 
         <!-- TAB CẤP 1: BÁO CÁO TỔNG HỢP CÂN -->
@@ -533,6 +723,98 @@
         </div>
       </section>
 
+      <!-- ============ VIEW: BÁO CÁO TỔNG HỢP XUẤT KHO ============ -->
+      <section id="view-xuatkho" class="view">
+        <div class="page-head">
+          <h1>Báo cáo tổng hợp xuất kho</h1>
+          <p>Gồm Báo cáo xuất qua cân và Báo cáo xuất kết xuất Misa · Dữ liệu lấy từ NL_PC_XH và NL_DH_XB.</p>
+        </div>
+
+        <div class="tabbar">
+          <div class="tabbtn active" data-pane="xk-tab-tonghop">🚚 Báo cáo xuất qua cân</div>
+          <div class="tabbtn" data-pane="xk-tab-misa">🧾 Báo cáo xuất kết xuất Misa</div>
+        </div>
+
+        <!-- TAB: BÁO CÁO XUẤT QUA CÂN -->
+        <div class="tabpane active" id="xk-tab-tonghop">
+          <div class="card">
+            <h2>Bộ lọc</h2>
+            <div class="field-grid">
+              <div class="field"><label>Từ ngày</label><input type="date" id="xk_fromDate"></div>
+              <div class="field"><label>Đến ngày</label><input type="date" id="xk_toDate"></div>
+              <div class="field"><label>Đơn vị vận chuyển</label><select id="xk_dvvc"><option value="">Tất cả</option></select></div>
+              <div class="field"><label>Số xe</label><select id="xk_xe"><option value="">Tất cả</option></select></div>
+              <div class="field"><label>Số tờ khai hải quan</label><input id="xk_soTKHQ" placeholder="Nhập Số TKHQ..."></div>
+            </div>
+            <div class="btnrow">
+              <button class="btn btn-primary" id="btnLocXuatQuaCan">🔍 Lọc dữ liệu</button>
+              <button class="btn btn-accent" id="btnExcelXuatQuaCan">⬇️ Xuất Excel</button>
+              <button class="btn btn-accent" id="btnPdfXuatQuaCan">🖨️ Xuất PDF</button>
+            </div>
+          </div>
+
+          <div class="summary-row">
+            <div class="stat"><div class="label">SỐ LƯỢNG PHIẾU</div><div class="value" id="xk_sumSoLuong">0</div></div>
+            <div class="stat"><div class="label">TỔNG KL HÀNG (KG)</div><div class="value" id="xk_sumKLHang">0</div></div>
+            <div class="stat"><div class="label">TỔNG KHỐI LƯỢNG (TẤN)</div><div class="value" id="xk_sumTan">0</div></div>
+          </div>
+
+          <div class="card">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Số phiếu</th><th>Ngày giờ cân 1</th><th>Số xe</th>
+                    <th class="num">KL Hàng (Kg)</th><th class="num">KL (Tấn)</th>
+                    <th>Đơn vị vận chuyển</th><th>Tên tài xế</th><th>Số TKHQ</th><th>Kho xuất</th><th>Kho nhập</th>
+                  </tr>
+                </thead>
+                <tbody id="xk_tableBody"></tbody>
+              </table>
+            </div>
+            <div class="btnrow" style="justify-content:center;margin-top:14px;" id="xk_pagination"></div>
+          </div>
+        </div>
+
+        <!-- TAB: BÁO CÁO XUẤT KẾT XUẤT MISA -->
+        <div class="tabpane" id="xk-tab-misa">
+          <div class="card">
+            <h2>Bộ lọc</h2>
+            <div class="field-grid">
+              <div class="field"><label>Từ ngày</label><input type="date" id="xm_fromDate"></div>
+              <div class="field"><label>Đến ngày</label><input type="date" id="xm_toDate"></div>
+            </div>
+            <div class="btnrow">
+              <button class="btn btn-primary" id="btnLocXuatMisa">🔍 Lọc dữ liệu</button>
+              <button class="btn btn-accent" id="btnExcelXuatMisa">⬇️ Xuất Excel</button>
+            </div>
+            <p style="font-size:11.5px;color:var(--ink-soft);margin-top:8px;">Dữ liệu lấy từ đơn hàng xuất bán (NL_DH_XB) · Thành tiền = KL_BDMT × Đơn giá (USD).</p>
+          </div>
+
+          <div class="summary-row">
+            <div class="stat"><div class="label">SỐ LƯỢNG ĐƠN</div><div class="value" id="xm_sumSoLuong">0</div></div>
+            <div class="stat"><div class="label">TỔNG KL_MT</div><div class="value" id="xm_sumKLMT">0</div></div>
+            <div class="stat"><div class="label">TỔNG KL_BDMT</div><div class="value" id="xm_sumKLBDMT">0</div></div>
+            <div class="stat"><div class="label">TỔNG THÀNH TIỀN (USD)</div><div class="value" id="xm_sumTien">0</div></div>
+          </div>
+
+          <div class="card">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Ngày đơn hàng</th><th>Số TKHQ</th><th>Tàu</th><th>Khách hàng</th><th>Tên hàng hóa</th>
+                    <th class="num">Đơn giá (USD)</th><th class="num">KL_MT</th><th class="num">KL_BDMT</th>
+                    <th class="num">Thành tiền (USD)</th><th>Kho xuất</th>
+                  </tr>
+                </thead>
+                <tbody id="xm_tableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- ============ VIEW 4: QUẢN LÝ BÁO GIÁ ============ -->
       <section id="view-baogia" class="view">
         <div class="page-head">
@@ -599,6 +881,25 @@
           <div class="btnrow">
             <button class="btn btn-primary" id="bgBtnSaveQuote">✔️ Lưu báo giá</button>
             <button class="btn btn-danger" id="bgBtnResetQuote">Làm mới toàn bộ form</button>
+          </div>
+
+          <div class="card">
+            <h2>Danh sách báo giá đã lập <span class="tag" id="bg_quoteListCount">0 phiếu</span></h2>
+            <p style="font-size:12.5px;color:var(--ink-soft);margin:0 0 10px;">Xóa <strong>CẢ MỘT PHIẾU báo giá</strong> (gồm đầu phiếu trong QL_BaoGia và toàn bộ nhóm giá liên quan). Chỉ xóa được khi <strong>tất cả</strong> nhóm giá trong phiếu đều chưa hết hiệu lực và chưa có phiếu cân áp dụng.</p>
+            <div class="btnrow" style="margin-top:0;margin-bottom:10px;">
+              <button class="btn btn-ghost btn-sm" id="bgBtnRefreshQuoteList">🔄 Tải lại danh sách</button>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Số báo giá</th><th>Ngày báo giá</th><th>Hiệu lực</th><th>Sao chép từ</th>
+                    <th class="num">Số nhóm giá</th><th></th>
+                  </tr>
+                </thead>
+                <tbody id="bg_quoteListBody"></tbody>
+              </table>
+            </div>
           </div>
         </div>
 
@@ -704,6 +1005,44 @@
         </div>
       </section>
 
+      <!-- ============ VIEW: QUẢN LÝ TỒN KHO DĂM GỖ ============ -->
+      <section id="view-khodam" class="view">
+        <div class="page-head">
+          <h1>Quản lý tồn kho dăm gỗ</h1>
+          <p>Danh mục kho, Kỳ vét bãi, Độ khô, Nhập/Xuất kho, Báo cáo tồn kho.</p>
+        </div>
+        <div id="khodamSubNav"></div>
+        <div id="khodamContentArea">
+          <div class="card" style="text-align:center;padding:40px;color:var(--ink-soft);">
+            <h3 style="color:var(--brand-dark);">👋 Chào mừng đến với Quản lý tồn kho dăm gỗ!</h3>
+            <p>Chọn 1 mục ở menu bên trái để bắt đầu.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Modal hướng dẫn Hoàn thành đơn hàng (tự viết, không phụ thuộc Bootstrap/jQuery) -->
+      <div id="khodamModalOverlay" style="display:none;position:fixed;inset:0;background:rgba(22,36,28,.45);z-index:9990;align-items:center;justify-content:center;">
+        <div style="background:#fff;max-width:640px;width:92%;max-height:80vh;overflow-y:auto;border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,.25);">
+          <div style="background:var(--brand);color:#fff;padding:14px 20px;border-radius:12px 12px 0 0;display:flex;justify-content:space-between;align-items:center;">
+            <strong>📚 Hướng dẫn điều chỉnh &amp; hoàn thành đơn hàng</strong>
+            <span style="cursor:pointer;font-size:20px;line-height:1;" onclick="dongModalHuongDan()">&times;</span>
+          </div>
+          <div style="padding:18px 20px;font-size:13.5px;line-height:1.7;color:var(--ink);">
+            <h4 style="color:var(--brand-dark);margin:0 0 6px;">1. Nút 1: Tạo phiếu điều chỉnh Khô (BDMT)</h4>
+            <p style="margin:0 0 14px;">So sánh tổng dăm khô nhập trung chuyển (TC) vào kho xuất bán và tổng dăm khô xuất bán thực tế (TT) trong khoảng thời gian đã chọn:<br>
+            - <strong>Chênh lệch dương</strong> (xuất bán nhiều hơn TC đã về): Mở form Xuất trung chuyển với <strong>Kho Nhập mặc định = Kho Xuất Bán</strong>, <strong>Kho Xuất mặc định = kho đã trung chuyển vào Kho Xuất Bán nhiều nhất trong kỳ</strong> (nếu xác định được). Bạn vẫn có quyền đổi sang kho khác nếu không muốn dùng mặc định.<br>
+            - <strong>Chênh lệch âm</strong> (TC về nhiều hơn xuất bán): Mở form Xuất trung chuyển với <strong>Kho Xuất mặc định = Kho Xuất Bán</strong>, <strong>Kho Nhập mặc định = kho đã trung chuyển vào Kho Xuất Bán nhiều nhất trong kỳ</strong> (trả bớt hàng dư về đúng kho nguồn). Bạn vẫn có quyền đổi sang kho khác nếu không muốn dùng mặc định.</p>
+            <h4 style="color:var(--brand-dark);margin:0 0 6px;">2. Nút 2: Tạo phiếu điều chỉnh Tươi (MT)</h4>
+            <p style="margin:0;"><strong>Chỉ thực hiện được sau khi Bước 1 (Khô) đã cân bằng</strong> — nếu còn chênh lệch Khô, hệ thống sẽ báo lỗi và yêu cầu hoàn thành Bước 1 trước. Đối soát tấn tươi do ẩm (hao hụt bay hơi) sau khi tấn khô đã khớp:<br>
+            - Dư tươi: Lập phiếu Xuất khác (ĐC) tại kho xuất bán.<br>
+            - Thiếu tươi: Lập phiếu Nhập khác (ĐC) tại kho xuất bán.</p>
+          </div>
+          <div style="padding:12px 20px;border-top:1px solid var(--border);text-align:right;">
+            <button class="btn btn-ghost btn-sm" onclick="dongModalHuongDan()">Đóng</button>
+          </div>
+        </div>
+      </div>
+
     </main>
   </div>
 
@@ -757,6 +1096,8 @@
 
         if (viewId === 'view-nhapkho' && !state.loadedTongHop) { state.loadedTongHop = true; locTongHop(); }
         if (viewId === 'view-baogia' && !state.loadedBaoGia) { state.loadedBaoGia = true; bgInitView(); }
+        if (viewId === 'view-xuatkho' && !state.loadedXuatKho) { state.loadedXuatKho = true; xkInitView(); }
+        if (viewId === 'view-khodam' && !state.loadedKhoDam) { state.loadedKhoDam = true; moChucNang('danhmuc'); }
       });
     });
     // Chuyển tab: chỉ tác động trong PHẠM VI view cha chứa nút bấm (tránh 1 view
@@ -786,6 +1127,8 @@
         // Các tab con tự tải dữ liệu lần đầu được mở (giống các view chính)
         if (paneId === 'th-tab-bg' && !state.loadedDonGia) { state.loadedDonGia = true; locDonGia(); }
         if (paneId === 'nk-tab-misa' && !state.loadedMisa) { state.loadedMisa = true; locMisa(); }
+        if (paneId === 'tab-xh-donhang' && !state.loadedDonHangXB) { state.loadedDonHangXB = true; xhInitDonHang(); }
+        if (paneId === 'xk-tab-misa' && !state.loadedXuatMisa) { state.loadedXuatMisa = true; locXuatMisa(); }
       });
     });
     document.querySelectorAll('.sub-item[data-tab]').forEach(sub=>{
@@ -794,12 +1137,23 @@
         if (targetBtn) targetBtn.click();
       });
     });
+    // Sub-menu "Quản lý tồn kho dăm gỗ": không dùng cơ chế tabbtn/tabpane vì nội
+    // dung được render động bằng JS gốc (moChucNang) vào #khodamContentArea.
+    document.querySelectorAll('.sub-item[data-kd]').forEach(sub=>{
+      sub.addEventListener('click', ()=>{
+        document.querySelectorAll('.sub-item[data-group="khodam"]').forEach(s=>s.classList.remove('active'));
+        sub.classList.add('active');
+        moChucNang(sub.getAttribute('data-kd'));
+      });
+    });
 
     const state = {
       previewData: [], loadedTongHop:false, loadedMisa:false, filterOptions:null,
       loadedBaoGia:false, loadedDonGia:false, bgGroups: [], bgGroupSeq: 0, bgIdTam: '', bgEditingId: null,
       bgMaBaoGiaList: [], bgMaKLList: [], bgQuoteList: [],
-      bgHieuLucData: [], bgViewType: 'FINAL', bgUncheckedIds: new Set()
+      bgHieuLucData: [], bgViewType: 'FINAL', bgUncheckedIds: new Set(), loadedKhoDam: false,
+      loadedDonHangXB: false, xhPreviewData: [], dhEditingRow: null,
+      loadedXuatKho: false, loadedXuatMisa: false, xkTrangHienTai: 1
     };
 
     // ---------------------------------------------------------------
@@ -904,6 +1258,13 @@
         const res = await runServer('clearInputFolderFiles');
         toast(res.message, res.status === 'success');
       } catch(err){ toast('Lỗi: ' + err, false); } finally { hideOverlay(); }
+    });
+    document.getElementById('btnTaiMauPhieuCan').addEventListener('click', async ()=>{
+      showOverlay('Đang tạo file mẫu…');
+      try {
+        const res = await runServer('taoFileMauPhieuCan');
+        if (res.status === 'success') window.open(res.url, '_blank'); else toast(res.message, false);
+      } catch(err){ toast('Lỗi tạo file mẫu: ' + err, false); } finally { hideOverlay(); }
     });
 
     function renderPreview(){
@@ -1291,7 +1652,60 @@
         bgRenderGroups();
       } catch(e) { console.error(e); toast('Lỗi hiển thị khung nhập báo giá: ' + e, false); }
 
+      try { await bgLoadQuoteList(); } catch(e) { console.error(e); }
+
       hideOverlay();
+    }
+
+    // Tải bảng "Danh sách báo giá đã lập" (kèm trạng thái có xóa được cả phiếu hay không)
+    async function bgLoadQuoteList(){
+      try {
+        const res = await runServer('BG_getQuoteListWithStatus');
+        if (res.status !== 'success') { toast(res.message, false); return; }
+        renderQuoteList(res.data);
+      } catch(err){ toast('Lỗi tải danh sách báo giá: ' + err, false); }
+    }
+    function renderQuoteList(list){
+      document.getElementById('bg_quoteListCount').textContent = list.length + ' phiếu';
+      const body = document.getElementById('bg_quoteListBody');
+      if (list.length === 0){ body.innerHTML = '<tr><td colspan="6" class="empty-state">Chưa có báo giá nào.</td></tr>'; return; }
+      body.innerHTML = list.map(q=>{
+        const actionCell = q.deletable
+          ? '<button class="btn btn-danger btn-sm" data-delquote="'+escapeHtml(q.soBaoGia)+'">🗑️ Xóa cả phiếu</button>'
+          : '<span class="badge badge-neutral" title="'+escapeHtml(q.reason || 'Không thể xóa')+'" style="cursor:help;">🔒 Đã khóa</span>';
+        return '<tr>'
+          + '<td class="mono">'+escapeHtml(q.soBaoGia)+'</td>'
+          + '<td>'+escapeHtml(q.ngayBaoGia)+'</td>'
+          + '<td>'+escapeHtml(q.hieuLuc)+'</td>'
+          + '<td>'+(q.idTam ? escapeHtml(q.idTam) : '—')+'</td>'
+          + '<td class="num">'+q.soNhom+'</td>'
+          + '<td>'+actionCell+'</td>'
+          + '</tr>';
+      }).join('');
+      body.querySelectorAll('[data-delquote]').forEach(btn=>{
+        btn.addEventListener('click', ()=> bgDeleteQuote(btn.getAttribute('data-delquote')));
+      });
+    }
+    document.getElementById('bgBtnRefreshQuoteList').addEventListener('click', bgLoadQuoteList);
+
+    async function bgDeleteQuote(soBaoGia){
+      if (!confirm('Bạn có chắc muốn XÓA TOÀN BỘ báo giá ' + soBaoGia + '?\n\nSẽ xóa cả đầu phiếu và TẤT CẢ nhóm giá liên quan. Hành động không thể hoàn tác.')) return;
+      showOverlay('Đang kiểm tra và xóa toàn bộ báo giá…');
+      try {
+        const res = await runServer('BG_deleteQuote', soBaoGia);
+        toast(res.message, res.status === 'success');
+        if (res.status === 'success'){
+          await bgLoadQuoteList();
+          const quotes = await runServer('BG_getQuoteList');
+          if (quotes.status === 'success') { state.bgQuoteList = quotes.data; bgFillCopySelect(); }
+          // Nếu đang xem bảng Hiệu lực báo giá, tải lại luôn cho khớp dữ liệu mới
+          if (state.bgHieuLucData && state.bgHieuLucData.length > 0) {
+            const hl = await runServer(state.bgViewType === 'SAVE' ? 'BG_showAllData' : 'BG_updateHieuLuc');
+            if (hl.status === 'success') { state.bgHieuLucData = hl.data; state.bgViewType = hl.viewType; renderHieuLucTable(); }
+          }
+        }
+      } catch(err){ toast('Lỗi xóa báo giá: ' + err, false); }
+      finally { hideOverlay(); }
     }
 
     function bgFillCopySelect(){
@@ -1462,6 +1876,7 @@
             bgCancelEdit();
             const hl = await runServer(state.bgViewType === 'SAVE' ? 'BG_showAllData' : 'BG_updateHieuLuc');
             if (hl.status === 'success') { state.bgHieuLucData = hl.data; state.bgViewType = hl.viewType; renderHieuLucTable(); }
+            bgLoadQuoteList();
           }
         } catch(err){ toast('Lỗi cập nhật báo giá: ' + err, false); }
         finally { hideOverlay(); }
@@ -1483,6 +1898,7 @@
           bgResetQuoteForm();
           const quotes = await runServer('BG_getQuoteList');
           if (quotes.status === 'success') { state.bgQuoteList = quotes.data; bgFillCopySelect(); }
+          bgLoadQuoteList();
         }
       } catch(err){ toast('Lỗi lưu báo giá: ' + err, false); }
       finally { hideOverlay(); }
@@ -1544,6 +1960,7 @@
           if (hl.status === 'success') { state.bgHieuLucData = hl.data; state.bgViewType = hl.viewType; renderHieuLucTable(); }
           const quotes = await runServer('BG_getQuoteList');
           if (quotes.status === 'success') { state.bgQuoteList = quotes.data; bgFillCopySelect(); }
+          bgLoadQuoteList();
         }
       } catch(err){ toast('Lỗi xóa báo giá: ' + err, false); }
       finally { hideOverlay(); }
@@ -1775,6 +2192,1406 @@
       } catch(err){ toast('Lỗi xuất file: ' + err, false); }
       finally { hideOverlay(); }
     });
+
+
+    // =================================================================
+    // QUẢN LÝ TỒN KHO DĂM GỖ (sáp nhập từ hệ thống Kho Dăm Hòa Nhơn)
+    // Giữ NGUYÊN VẸN toàn bộ logic gốc, chỉ điều hướng render vào
+    // #khodamContentArea/#khodamSubNav thay vì #contentArea/#subNavContainer,
+    // và bỏ phụ thuộc jQuery/Bootstrap cho modal hướng dẫn.
+    // =================================================================
+
+        function renderScreen(htmlContent) { document.getElementById('khodamContentArea').innerHTML = htmlContent; }
+    function renderSubNav(htmlContent) { document.getElementById('khodamSubNav').innerHTML = htmlContent; }
+
+    function moModalHuongDan() { document.getElementById('khodamModalOverlay').style.display = 'flex'; }
+    function dongModalHuongDan() { document.getElementById('khodamModalOverlay').style.display = 'none'; }
+
+    function getTodayString() {
+      let now = new Date();
+      return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+    }
+    function getFirstDayOfMonthString() {
+      let now = new Date();
+      return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-01`;
+    }
+    /** Mặc định "Từ ngày" cho các danh sách/báo cáo: đúng ngày này 3 tháng trước. */
+    function get3ThangTruocString() {
+      let now = new Date();
+      now.setMonth(now.getMonth() - 3);
+      return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+    }
+    /** Sinh khối HTML điều hướng phân trang (20 phiếu/trang) dùng chung cho các danh sách. */
+    function renderPhanTrang(trangHienTai, tongSoTrang, tongSoPhieu, jsLuiTrang, jsTienTrang) {
+      return `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px; font-size:12px; color:#495057; flex-wrap:wrap; gap:6px;">
+          <span>Tổng: <b>${tongSoPhieu}</b> mục — Trang <b>${trangHienTai}</b>/<b>${tongSoTrang}</b></span>
+          <div style="display:flex; gap:6px;">
+            <button class="nav-btn" ${trangHienTai <= 1 ? 'disabled' : ''} onclick="${jsLuiTrang}">◀ Trang trước</button>
+            <button class="nav-btn" ${trangHienTai >= tongSoTrang ? 'disabled' : ''} onclick="${jsTienTrang}">Trang sau ▶</button>
+          </div>
+        </div>`;
+    }
+
+    function moChucNang(type, subParam) {
+      renderSubNav('');
+      if (type === 'danhmuc') taiDanhSachDanhMucKho();
+      else if (type === 'kyvetbai') taiDanhSachKyVetBai();
+      else if (type === 'dokho') taiDanhSachDoKho();
+      else if (type === 'nhapkho') {
+        let tab = subParam || 'Dăm sản xuất';
+        renderSubNav(`
+          <div class="sub-nav-bar">
+            <span style="font-weight:bold; align-self:center; font-size:12px; color:#006b5a;">TAB NHẬP KHO:</span>
+            <button class="sub-nav-btn ${tab==='Dăm sản xuất'?'active':''}" onclick="moChucNang('nhapkho', 'Dăm sản xuất')">📦 Dăm Sản Xuất (TP)</button>
+            <button class="sub-nav-btn ${tab==='Nhập khác'?'active':''}" onclick="moChucNang('nhapkho', 'Nhập khác')">📥 Nhập Khác</button>
+          </div>
+        `);
+        moFormGiaoDich('NHẬP', tab);
+      }
+      else if (type === 'xuatkho') {
+        let tab = subParam || 'Xuất bán';
+        renderSubNav(`
+          <div class="sub-nav-bar">
+            <span style="font-weight:bold; align-self:center; font-size:12px; color:#006b5a;">TAB XUẤT KHO:</span>
+            <button class="sub-nav-btn ${tab==='Xuất bán'?'active':''}" onclick="moChucNang('xuatkho', 'Xuất bán')">🚢 Xuất Bán (TT)</button>
+            <button class="sub-nav-btn ${tab==='Xuất khác'?'active':''}" onclick="moChucNang('xuatkho', 'Xuất khác')">📤 Xuất Khác</button>
+            <button class="sub-nav-btn ${tab==='Xuất trung chuyển'?'active':''}" onclick="moChucNang('xuatkho', 'Xuất trung chuyển')">🔄 Xuất Trung Chuyển</button>
+          </div>
+        `);
+        moFormGiaoDich('XUẤT', tab);
+      }
+      else if (type === 'baocao') {
+        let loaiBaoCao = subParam || 'kho';
+        renderSubNav(`
+          <div class="sub-nav-bar">
+            <span style="font-weight:bold; align-self:center; font-size:12px; color:#006b5a;">LOẠI BÁO CÁO:</span>
+            <button class="sub-nav-btn ${loaiBaoCao==='kho'?'active':''}" onclick="moChucNang('baocao', 'kho')">🏭 Theo Kho</button>
+            <button class="sub-nav-btn ${loaiBaoCao==='kyvetbai'?'active':''}" onclick="moChucNang('baocao', 'kyvetbai')">⏱️ Theo Kỳ Vét Bãi</button>
+          </div>
+        `);
+        if (loaiBaoCao === 'kyvetbai') taiBaoCaoTheoKyVetBai();
+        else taiBaoCaoTonKho();
+      }
+    }
+
+    // Lưu lại danh sách kho/nhà máy đã tải để giữ khi người dùng đổi bộ lọc
+    window._baocaoMeta = { khoList: [], nhaMayList: [] };
+
+    function taiBaoCaoTonKho() {
+      let cTuNgay = document.getElementById('baocaoTuNgay');
+      let cDenNgay = document.getElementById('baocaoDenNgay');
+      let cTenKho = document.getElementById('baocaoTenKho');
+      let cTenNhaMay = document.getElementById('baocaoTenNhaMay');
+
+      let params = {
+        tuNgay: cTuNgay ? cTuNgay.value : get3ThangTruocString(),
+        denNgay: cDenNgay ? cDenNgay.value : getTodayString(),
+        tenKho: cTenKho ? cTenKho.value : "Tất cả",
+        tenNhaMay: cTenNhaMay ? cTenNhaMay.value : "Tất cả"
+      };
+
+      renderScreen(`<div class="form-container"><b>📈 BÁO CÁO TỒN KHO</b><i>⏳ Đang tải...</i></div>`);
+
+      google.script.run
+        .withSuccessHandler(function(res) {
+          renderBaoCaoTonKho(res);
+        })
+        .withFailureHandler(function(err) {
+          renderScreen(`<div class="form-container text-danger"><b>❌ Lỗi tải báo cáo: ${err.message}</b></div>`);
+        })
+        .layBaoCaoTonKho(params);
+    }
+
+    function renderBaoCaoTonKho(res) {
+      res = res || {};
+      let khoList = res.khoList || [];
+      let nhaMayList = res.nhaMayList || [];
+      let chiTiet = res.chiTiet || [];
+      window._baocaoChiTiet = chiTiet;
+
+      let tuNgay = res.tuNgay || getFirstDayOfMonthString();
+      let denNgay = res.denNgay || getTodayString();
+
+      let khoOptions = '<option value="Tất cả">Tất cả</option>' + khoList.map(k => {
+        let safeK = String(k).replace(/'/g, "\\'");
+        return `<option value="${safeK}">${safeK}</option>`;
+      }).join('');
+      let nhaMayOptions = '<option value="Tất cả">Tất cả</option>' + nhaMayList.map(n => {
+        let safeN = String(n).replace(/'/g, "\\'");
+        return `<option value="${safeN}">${safeN}</option>`;
+      }).join('');
+
+      let fmtSo = (n) => (n || 0).toLocaleString('vi-VN', {minimumFractionDigits:2, maximumFractionDigits:2});
+      let fmtDoKho = (v) => (v === null || v === undefined) ? '—' : (v * 100).toFixed(1) + '%';
+
+      let rowsHTML = chiTiet.length === 0 ? '<tr><td colspan="9">Không có kho hoặc dữ liệu phù hợp bộ lọc.</td></tr>' : chiTiet.map(function(k, idx) {
+        let mauTon = k.tonCuoiBDMT < 0 ? '#dc3545' : '#006b5a';
+
+        let nhapCT = k.nhapTheoHinhThuc.length === 0 ? '<tr><td colspan="3">Không có phát sinh nhập</td></tr>' : k.nhapTheoHinhThuc.map(h =>
+          `<tr><td>${h.ten}</td><td style="text-align:right;">${fmtSo(h.mt)}</td><td style="text-align:right;">${fmtSo(h.bdmt)}</td></tr>`
+        ).join('');
+        let xuatCT = k.xuatTheoHinhThuc.length === 0 ? '<tr><td colspan="3">Không có phát sinh xuất</td></tr>' : k.xuatTheoHinhThuc.map(h =>
+          `<tr><td>${h.ten}</td><td style="text-align:right;">${fmtSo(h.mt)}</td><td style="text-align:right;">${fmtSo(h.bdmt)}</td></tr>`
+        ).join('');
+
+        return `
+          <tr>
+            <td>${k.tenNhaMay}</td>
+            <td><b>${k.tenKho}</b></td>
+            <td style="text-align:right;">${fmtSo(k.tonDauMT)}<br><small style="color:#6c757d;">${fmtSo(k.tonDauBDMT)} BDMT (${fmtDoKho(k.tonDauDoKho)})</small></td>
+            <td style="text-align:right; color:#0056b3;">${fmtSo(k.nhapKyMT)}<br><small style="color:#6c757d;">${fmtSo(k.nhapKyBDMT)} BDMT</small></td>
+            <td style="text-align:right; color:#c0392b;">${fmtSo(k.xuatKyMT)}<br><small style="color:#6c757d;">${fmtSo(k.xuatKyBDMT)} BDMT</small></td>
+            <td style="text-align:right; font-weight:bold; color:${mauTon};">${fmtSo(k.tonCuoiMT)}<br><small>${fmtSo(k.tonCuoiBDMT)} BDMT (${fmtDoKho(k.tonCuoiDoKho)})</small></td>
+            <td><button class="btn-action btn-sua" onclick="toggleChiTietBaoCao(${idx})">🔍 Chi tiết</button></td>
+          </tr>
+          <tr id="chitiet_baocao_${idx}" style="display:none;">
+            <td colspan="7" style="background:#f8f9fa; text-align:left;">
+              <div class="grid-2">
+                <div>
+                  <label style="font-weight:bold; color:#0056b3;">📥 Nhập trong kỳ theo hình thức</label>
+                  <table class="dokho-table"><tr><th>Hình thức</th><th>Tươi (MT)</th><th>Khô (BDMT)</th></tr>${nhapCT}</table>
+                </div>
+                <div>
+                  <label style="font-weight:bold; color:#c0392b;">📤 Xuất trong kỳ theo hình thức</label>
+                  <table class="dokho-table"><tr><th>Hình thức</th><th>Tươi (MT)</th><th>Khô (BDMT)</th></tr>${xuatCT}</table>
+                </div>
+              </div>
+            </td>
+          </tr>`;
+      }).join('');
+
+      renderScreen(`
+        <div class="form-container">
+          <b>📈 BÁO CÁO TỒN KHO</b>
+          <div style="background:#e7f5ff; padding:10px; border-radius:6px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+            <span style="font-weight:bold; font-size:12px;">Từ ngày:</span><input type="date" id="baocaoTuNgay" value="${tuNgay}" style="width:150px;">
+            <span style="font-weight:bold; font-size:12px;">Đến ngày:</span><input type="date" id="baocaoDenNgay" value="${denNgay}" style="width:150px;">
+            <span style="font-weight:bold; font-size:12px;">Nhà máy:</span>
+            <select id="baocaoTenNhaMay" style="width:180px;">${nhaMayOptions}</select>
+            <span style="font-weight:bold; font-size:12px;">Kho:</span>
+            <select id="baocaoTenKho" style="width:180px;">${khoOptions}</select>
+            <button class="nav-btn" style="background:#0d6efd; color:#fff;" onclick="taiBaoCaoTonKho()">Lọc Dữ Liệu</button>
+          </div>
+          <p style="font-size:12px; color:#6c757d; margin:0;">Kỳ báo cáo: <b>${tuNgay}</b> → <b>${denNgay}</b>. Bấm "🔍 Chi tiết" để xem nhập/xuất theo từng hình thức của mỗi kho.</p>
+          <div style="max-height: 550px; overflow-y: auto;">
+            <table class="dokho-table">
+              <tr><th>Nhà máy</th><th>Kho</th><th>Tồn đầu kỳ</th><th>Nhập trong kỳ</th><th>Xuất trong kỳ</th><th>Tồn cuối kỳ</th><th>Thao tác</th></tr>
+              ${rowsHTML}
+            </table>
+          </div>
+        </div>
+      `);
+
+      // Đặt lại đúng nhà máy/kho đã chọn trước khi filter lại (vì render lại toàn bộ select)
+      if (document.getElementById('baocaoTenNhaMay')) document.getElementById('baocaoTenNhaMay').value = (res.tenNhaMayLoc || 'Tất cả');
+      if (document.getElementById('baocaoTenKho')) document.getElementById('baocaoTenKho').value = (res.tenKhoLoc || 'Tất cả');
+    }
+
+    function toggleChiTietBaoCao(idx) {
+      let row = document.getElementById('chitiet_baocao_' + idx);
+      if (!row) return;
+      row.style.display = (row.style.display === 'none') ? '' : 'none';
+    }
+
+    // ==================== BÁO CÁO THEO KỲ VÉT BÃI ====================
+    function taiBaoCaoTheoKyVetBai() {
+      let cTuNgay = document.getElementById('bcKyTuNgay');
+      let cDenNgay = document.getElementById('bcKyDenNgay');
+      let cTenKho = document.getElementById('bcKyTenKho');
+
+      let params = {
+        tuNgay: cTuNgay ? cTuNgay.value : get3ThangTruocString(),
+        denNgay: cDenNgay ? cDenNgay.value : getTodayString(),
+        tenKho: cTenKho ? cTenKho.value : "Tất cả"
+      };
+
+      renderScreen(`<div class="form-container"><b>⏱️ BÁO CÁO THEO KỲ VÉT BÃI</b><i>⏳ Đang tải...</i></div>`);
+
+      google.script.run
+        .withSuccessHandler(function(res) { renderBaoCaoTheoKyVetBai(res); })
+        .withFailureHandler(function(err) {
+          renderScreen(`<div class="form-container text-danger"><b>❌ Lỗi tải báo cáo: ${err.message}</b></div>`);
+        })
+        .processFormData('BaocaoKyVetBai', params);
+    }
+
+    function renderBaoCaoTheoKyVetBai(res) {
+      res = res || {};
+      let chiTiet = res.chiTiet || [];
+      let khoList = res.khoList || [];
+      let tuNgay = res.tuNgay || get3ThangTruocString();
+      let denNgay = res.denNgay || getTodayString();
+
+      let khoOptions = '<option value="Tất cả">Tất cả</option>' + khoList.map(k => {
+        let safeK = String(k).replace(/'/g, "\\'");
+        return `<option value="${safeK}">${safeK}</option>`;
+      }).join('');
+
+      let fmtSo = (n) => (n || 0).toLocaleString('vi-VN', {minimumFractionDigits:2, maximumFractionDigits:2});
+
+      let rowsHTML = chiTiet.length === 0 ? '<tr><td colspan="7">Không có dữ liệu trong khoảng thời gian đã chọn.</td></tr>' : chiTiet.map(k => {
+        let mauCL = k.chenhLechBDMT < 0 ? '#dc3545' : '#006b5a';
+        return `
+          <tr>
+            <td><b>${k.tenKy}</b></td>
+            <td style="text-align:right; color:#0056b3;">${fmtSo(k.nhapMT)}<br><small style="color:#6c757d;">${fmtSo(k.nhapBDMT)} BDMT</small></td>
+            <td style="text-align:right;">${k.soPhieuNhap}</td>
+            <td style="text-align:right; color:#c0392b;">${fmtSo(k.xuatMT)}<br><small style="color:#6c757d;">${fmtSo(k.xuatBDMT)} BDMT</small></td>
+            <td style="text-align:right;">${k.soPhieuXuat}</td>
+            <td style="text-align:right; font-weight:bold; color:${mauCL};">${fmtSo(k.chenhLechMT)}<br><small>${fmtSo(k.chenhLechBDMT)} BDMT</small></td>
+          </tr>`;
+      }).join('');
+
+      renderScreen(`
+        <div class="form-container">
+          <b>⏱️ BÁO CÁO THEO KỲ VÉT BÃI</b>
+          <div style="background:#e7f5ff; padding:10px; border-radius:6px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+            <span style="font-weight:bold; font-size:12px;">Từ ngày:</span><input type="date" id="bcKyTuNgay" value="${tuNgay}" style="width:150px;">
+            <span style="font-weight:bold; font-size:12px;">Đến ngày:</span><input type="date" id="bcKyDenNgay" value="${denNgay}" style="width:150px;">
+            <span style="font-weight:bold; font-size:12px;">Kho:</span>
+            <select id="bcKyTenKho" style="width:180px;">${khoOptions}</select>
+            <button class="nav-btn" style="background:#0d6efd; color:#fff;" onclick="taiBaoCaoTheoKyVetBai()">Lọc Dữ Liệu</button>
+          </div>
+          <p style="font-size:12px; color:#6c757d; margin:0;">Kỳ báo cáo: <b>${tuNgay}</b> → <b>${denNgay}</b>. Gộp theo cột "Đợt vét bãi" của từng phiếu.</p>
+          <div style="max-height: 550px; overflow-y: auto;">
+            <table class="dokho-table">
+              <tr><th>Kỳ Vét Bãi</th><th>Tổng Nhập</th><th>Số phiếu Nhập</th><th>Tổng Xuất</th><th>Số phiếu Xuất</th><th>Chênh lệch (Nhập - Xuất)</th></tr>
+              ${rowsHTML}
+            </table>
+          </div>
+        </div>
+      `);
+
+      if (document.getElementById('bcKyTenKho')) document.getElementById('bcKyTenKho').value = (res.tenKhoLoc || 'Tất cả');
+    }
+
+    function tuDongQuyDoi(type) {
+      try {
+        let doKhoInput = document.getElementById('doKho');
+        let doAmInput = document.getElementById('doAm');
+        if (type === 'dokho' && doKhoInput.value !== '') {
+          let val = parseFloat(doKhoInput.value);
+          if (!isNaN(val)) { if (val > 1) val = val / 100; doAmInput.value = (1 - val).toFixed(4); }
+        } else if (type === 'doam' && doAmInput.value !== '') {
+          let val = parseFloat(doAmInput.value);
+          if (!isNaN(val)) { if (val > 1) val = val / 100; doKhoInput.value = (1 - val).toFixed(4); }
+        }
+      } catch(e) {}
+    }
+
+    function taiDanhSachDanhMucKho() {
+      renderScreen(`<b>⏳ Đang tải...</b>`);
+      google.script.run
+        .withSuccessHandler(function(danhSach) {
+          danhSach = danhSach || [];
+          let rowsHTML = danhSach.length === 0 ? '<tr><td colspan="4">Chưa có danh mục kho nào</td></tr>' : danhSach.map(item => {
+            let safeMaKho = String(item.maKho).replace(/'/g, "\\'");
+            return `<tr><td><b>${item.tenNhaMay}</b></td><td>${item.tenKho}</td><td>${item.ngayKhoiTao}</td><td><button class="btn-action btn-xoa" onclick="thucHienXoaKho('${safeMaKho}')">Xóa</button></td></tr>`;
+          }).join('');
+          renderScreen(`
+            <div class="form-container">
+              <b>🏭 QUẢN LÝ DANH MỤC KHO</b>
+              <div class="grid-2">
+                <div style="background: #f1f3f5; padding: 15px; border-radius: 6px;">
+                  <label style="color: #0d6efd; font-weight: bold;">➕ THÊM KHO MỚI</label>
+                  <label>Tên Nhà Máy</label><input type="text" id="tenNhaMay" placeholder="VD: Nhà Máy Dăm Hòa Nhơn">
+                  <label>Tên Kho Hàng</label><input type="text" id="tenKho" placeholder="VD: Kho Nguyên Liệu A">
+                  <label>Ngày Khởi Tạo</label><input type="date" id="ngayKhoiTao" value="${getTodayString()}">
+                  <div style="margin-top:10px;"><button class="form-submit-btn" style="width:100%;" onclick="luuDanhMucKho(this)">Lưu Kho</button></div>
+                </div>
+                <div>
+                  <label style="font-weight:bold;">DANH SÁCH KHO HIỆN TẠI</label>
+                  <div style="max-height: 250px; overflow-y: auto;"><table class="dokho-table"><tr><th>Nhà Máy</th><th>Tên Kho</th><th>Ngày</th><th>Xóa</th></tr>${rowsHTML}</table></div>
+                </div>
+              </div>
+            </div>
+          `);
+        })
+        .withFailureHandler(err => alert("❌ Lỗi tải danh mục kho: " + err.message))
+        .layDanhSachDanhMucKho();
+    }
+    
+    function thucHienXoaKho(maKho) {
+      if (!confirm("Xóa kho này?")) return;
+      google.script.run.withSuccessHandler(res => { alert(res); taiDanhSachDanhMucKho(); }).processFormData('Danhmuckho', { maKho: maKho, hanhDong: 'XOA' });
+    }
+    
+    function luuDanhMucKho(btn) {
+      let data = { tenNhaMay: document.getElementById('tenNhaMay').value, tenKho: document.getElementById('tenKho').value, ngayKhoiTao: document.getElementById('ngayKhoiTao').value, hanhDong: 'THEM' };
+      if (!data.tenNhaMay || !data.tenKho || !data.ngayKhoiTao) { alert("Nhập đủ thông tin!"); return; }
+      btn.disabled = true; btn.innerText = "Đang lưu...";
+      google.script.run.withSuccessHandler(res => { alert(res); taiDanhSachDanhMucKho(); }).withFailureHandler(err => { alert(err.message); btn.disabled = false; btn.innerText = "Lưu Kho"; }).processFormData('Danhmuckho', data);
+    }
+
+    function taiDanhSachKyVetBai() {
+      renderScreen(`<b>⏳ Đang tải...</b>`);
+      google.script.run
+        .withSuccessHandler(function(danhSach) {
+          danhSach = danhSach || [];
+          let rowsHTML = danhSach.length === 0 ? '<tr><td colspan="4">Chưa có kỳ nào</td></tr>' : danhSach.map(item => item.isLocked ? `<tr class="locked-row"><td><b>${item.kyVetBai}</b></td><td>${item.thoiGian}</td><td>${item.tieuHao}</td><td>🔒 Khóa</td></tr>` : `<tr><td><b>${item.kyVetBai}</b></td><td>${item.thoiGian}</td><td>${item.tieuHao}</td><td><button class="btn-action btn-xoa" onclick="thucHienXoaKy('${item.rowIndex}')">Xóa</button></td></tr>`).join('');
+          renderScreen(`
+            <div class="form-container">
+              <b>⚙️ QUẢN LÝ KỲ VÉT BÃI</b>
+              <div class="grid-2">
+                <div style="background: #f1f3f5; padding: 15px; border-radius: 6px;">
+                  <label style="color: #0d6efd; font-weight: bold;">➕ TẠO KỲ MỚI</label>
+                  <label>Kỳ Vét Bãi</label><input type="text" id="kyVetBai" placeholder="VD: 22026" value="22026">
+                  <label>Ngày & Giờ Bắt Đầu</label><input type="datetime-local" id="tuNgayKy" value="${getTodayString()}T00:00">
+                  <label>Mức Tiêu Hao (%)</label><input type="number" step="0.01" id="tieuHao" value="3.15">
+                  <div style="margin-top:15px;"><button class="form-submit-btn" style="width:100%; padding:12px;" onclick="luuKyVetBai(this)">💾 LƯU KỲ MỚI</button></div>
+                </div>
+                <div>
+                  <label style="font-weight:bold;">DANH SÁCH KỲ VÉT BÃI</label>
+                  <div style="max-height: 250px; overflow-y: auto;"><table class="dokho-table"><tr><th>Kỳ Bãi</th><th>Thời Gian</th><th>Tiêu Hao</th><th>Thao Tác</th></tr>${rowsHTML}</table></div>
+                </div>
+              </div>
+            </div>
+          `);
+        })
+        .withFailureHandler(err => alert("❌ Lỗi tải kỳ vét bãi: " + err.message))
+        .layDanhSachKyVetBai();
+    }
+    
+    function thucHienXoaKy(rowIdx) {
+      if (!confirm("Xóa kỳ này?")) return;
+      google.script.run.withSuccessHandler(res => { alert(res); taiDanhSachKyVetBai(); }).processFormData('Thongsokho', { rowIndex: rowIdx, hanhDong: 'XOA' });
+    }
+    
+    function luuKyVetBai(btn) {
+      let kyVal = document.getElementById('kyVetBai').value.trim();
+      let tuNgayVal = document.getElementById('tuNgayKy').value;
+      let tieuHaoVal = document.getElementById('tieuHao').value;
+      if (!kyVal || !tuNgayVal) { alert("Nhập đủ thông tin!"); return; }
+      btn.disabled = true; btn.innerText = "⏳ Đang xử lý...";
+      google.script.run.withSuccessHandler(res => { alert(res); taiDanhSachKyVetBai(); }).withFailureHandler(err => { alert(err.message); btn.disabled = false; btn.innerText = "💾 LƯU KỲ MỚI"; }).processFormData('Thongsokho', { kyVetBai: kyVal, tuNgay: tuNgayVal, tieuHao: tieuHaoVal, hanhDong: 'THEM' });
+    }
+
+    function taiDanhSachDoKho(tuNgayOverride, denNgayOverride, trangOverride) {
+      let todayStr = getTodayString();
+      let tuN = document.getElementById('locTuNgayDK');
+      let denN = document.getElementById('locDenNgayDK');
+      let tuNgay = tuNgayOverride || (tuN ? tuN.value : get3ThangTruocString());
+      let denNgay = denNgayOverride || (denN ? denN.value : todayStr);
+      let trang = trangOverride || 1;
+      
+      renderScreen(`<b>⏳ Đang tải...</b>`);
+      google.script.run
+        .withSuccessHandler(function(ketQua) {
+          ketQua = ketQua || { list: [], trang: 1, tongSoTrang: 1, tongSoPhieu: 0 };
+          let danhSach = ketQua.list || [];
+          let trangHienTai = ketQua.trang || 1;
+          let tongSoTrang = ketQua.tongSoTrang || 1;
+          let tongSoPhieu = ketQua.tongSoPhieu || 0;
+
+          let rowsHTML = danhSach.length === 0 ? '<tr><td colspan="5">Không có dữ liệu trong khoảng thời gian đã chọn</td></tr>' : danhSach.map(item => {
+            let safeNgay = String(item.ngay).replace(/'/g, "\\'");
+            let safeHinhThuc = String(item.hinhThuc).replace(/'/g, "\\'");
+            let safeDoKho = String(item.doKho).replace(/'/g, "\\'");
+            return item.isLocked ? 
+              `<tr class="locked-row"><td><b>${item.ngay}</b></td><td>${item.hinhThuc}</td><td>${(item.doKho * 100).toFixed(1)}%</td><td>${(item.doAm * 100).toFixed(1)}%</td><td>🔒 Khóa</td></tr>` : 
+              `<tr><td><b>${item.ngay}</b></td><td>${item.hinhThuc}</td><td>${(item.doKho * 100).toFixed(1)}%</td><td>${(item.doAm * 100).toFixed(1)}%</td><td><button class="btn-action btn-sua" onclick="chonSuaDoKho('${safeNgay}', '${safeHinhThuc}', '${safeDoKho}')">Sửa</button> <button class="btn-action btn-xoa" onclick="thucHienXoaDoKho('${safeNgay}')">Xóa</button></td></tr>`;
+          }).join('');
+
+          let phanTrangHTML = renderPhanTrang(trangHienTai, tongSoTrang, tongSoPhieu,
+            `taiDanhSachDoKho('${tuNgay}','${denNgay}',${trangHienTai - 1})`,
+            `taiDanhSachDoKho('${tuNgay}','${denNgay}',${trangHienTai + 1})`);
+          
+          renderScreen(`
+            <div class="form-container">
+              <b>📊 QUẢN LÝ ĐỘ KHÔ</b>
+              <div style="background: #e7f5ff; padding: 10px; border-radius: 6px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                <span style="font-weight:bold;">Lọc từ ngày:</span><input type="date" id="locTuNgayDK" value="${tuNgay}">
+                <span style="font-weight:bold;">Đến ngày:</span><input type="date" id="locDenNgayDK" value="${denNgay}">
+                <button class="nav-btn" style="background:#0d6efd; color:#fff;" onclick="taiDanhSachDoKho(document.getElementById('locTuNgayDK').value, document.getElementById('locDenNgayDK').value, 1)">Lọc Dữ Liệu</button>
+              </div>
+              <div class="grid-2" style="margin-top:10px;">
+                <div style="background: #f1f3f5; padding: 15px; border-radius: 6px;">
+                  <label style="color: #0d6efd; font-weight: bold;">➕ THÊM / SỬA ĐỘ KHÔ</label>
+                  <label>Ngày</label><input type="date" id="ngayNhapDK" value="${todayStr}">
+                  <label>Hình thức</label><input type="text" id="hinhThucDoKho" value="NKSX">
+                  <label>Độ Khô</label><input type="number" step="0.0001" id="doKho" oninput="tuDongQuyDoi('dokho')">
+                  <label>Độ Ấm</label><input type="number" step="0.0001" id="doAm" oninput="tuDongQuyDoi('doam')">
+                  <div style="margin-top:10px;"><button class="form-submit-btn" style="width:100%;" onclick="luuDoKhoForm(this)">Lưu Lại</button></div>
+                </div>
+                <div>
+                  <label style="font-weight:bold;">DANH SÁCH ĐỘ KHÔ</label>
+                  <div style="max-height: 250px; overflow-y: auto;"><table class="dokho-table" id="tableDoKho"><tr><th>Ngày</th><th>Hình thức</th><th>Độ khô</th><th>Độ ẩm</th><th>Thao tác</th></tr>${rowsHTML}</table></div>
+                  ${phanTrangHTML}
+                </div>
+              </div>
+            </div>
+          `);
+        })
+        .withFailureHandler(err => alert("❌ Lỗi tải độ khô: " + err.message))
+        .layDanhSachDoKhoTheoBoLoc(tuNgay, denNgay, trang);
+    }
+    
+    function chonSuaDoKho(ngay, hinhThuc, doKho) {
+      document.getElementById('ngayNhapDK').value = ngay;
+      document.getElementById('hinhThucDoKho').value = hinhThuc;
+      document.getElementById('doKho').value = doKho; tuDongQuyDoi('dokho');
+    }
+    
+    function thucHienXoaDoKho(ngay) {
+      if (!confirm("Xóa ngày " + ngay + "?")) return;
+      google.script.run.withSuccessHandler(res => { alert(res); taiDanhSachDoKho(); }).processFormData('Nhapdokho', { ngay: ngay, hanhDong: 'XOA' });
+    }
+    
+    function luuDoKhoForm(btn) {
+      let data = { ngay: document.getElementById('ngayNhapDK').value, hinhThuc: document.getElementById('hinhThucDoKho').value, doKho: document.getElementById('doKho').value, doAm: document.getElementById('doAm').value, hanhDong: 'SUA' };
+      if (!data.ngay) { alert("Chọn ngày!"); return; }
+      btn.disabled = true; btn.innerText = "Đang lưu...";
+      google.script.run.withSuccessHandler(res => { alert(res); taiDanhSachDoKho(); }).withFailureHandler(err => { alert(err.message); btn.disabled = false; btn.innerText = "Lưu Lại"; }).processFormData('Nhapdokho', data);
+    }
+
+    function moFormGiaoDich(loai, tab, tuNgayOverride, denNgayOverride, trangOverride, htTuNgayOverride, htDenNgayOverride) {
+      let todayStr = getTodayString();
+      let laXuatBan = (loai === 'XUẤT' && tab === 'Xuất bán');
+      let trang = trangOverride || 1;
+
+      let tuNgay, denNgay, htTuNgay, htDenNgay;
+      if (laXuatBan) {
+        htTuNgay = htTuNgayOverride || (get3ThangTruocString() + 'T00:00');
+        htDenNgay = htDenNgayOverride || (todayStr + 'T23:59');
+        tuNgay = htTuNgay.split('T')[0];
+        denNgay = htDenNgay.split('T')[0];
+      } else {
+        let tuN = document.getElementById('locTuNgay');
+        let denN = document.getElementById('locDenNgay');
+        tuNgay = tuNgayOverride || (tuN ? tuN.value : get3ThangTruocString());
+        denNgay = denNgayOverride || (denN ? denN.value : todayStr);
+      }
+
+      renderScreen(`<b>⏳ Đang tải dữ liệu...</b>`);
+      google.script.run
+        .withSuccessHandler(function(ketQua) {
+          ketQua = ketQua || { khoList: [], danhSach: [] };
+          let khoList = ketQua.khoList || [];
+          let danhSach = ketQua.danhSach || [];
+          let trangHienTai = ketQua.trang || 1;
+          let tongSoTrang = ketQua.tongSoTrang || 1;
+          let tongSoPhieu = ketQua.tongSoPhieu || 0;
+          
+          if (khoList.length === 0) {
+            renderScreen(`<div class="form-container"><b>⚠️ CẢNH BÁO: Chưa tạo danh mục kho! Vui lòng vào "Danh Mục Kho" để thêm kho trước.</b></div>`);
+            return;
+          }
+
+          let khoOptions = '<option value="Không có">Không có</option>' + khoList.map(k => {
+             let safeK = String(k).replace(/'/g, "\\'");
+             return `<option value="${safeK}">${safeK}</option>`;
+          }).join('');
+          
+          let hinhThucOptions = "";
+          if (loai === 'NHẬP') {
+            if (tab === 'Dăm sản xuất') hinhThucOptions = '<option value="TP">TP (Mặc định Dăm sản xuất)</option>';
+            else hinhThucOptions = `<option value="MUON_DH">MUON_DH - Mượn Đại Hiệp</option><option value="MUON_QC">MUON_QC - Mượn HAK_QN</option><option value="MUON_QS">MUON_QS - Mượn CNHAK</option><option value="DC">DC - Điều chuyển nội bộ</option><option value="Khác">Khác</option>`;
+          } else {
+            if (tab === 'Xuất bán') hinhThucOptions = '<option value="TT">TT (Mặc định Xuất bán)</option>';
+            else if (tab === 'Xuất khác') hinhThucOptions = `<option value="XB">XB - Xuất bán khác</option><option value="MUON_DH">MUON_DH - Mượn Đại Hiệp</option><option value="MUON_QC">MUON_QC - Mượn HAK_QN</option><option value="MUON_QS">MUON_QS - Mượn CNHAK</option><option value="DC">DC - Điều chuyển nội bộ</option>`;
+            else hinhThucOptions = '<option value="TC">TC (Mặc định Xuất trung chuyển)</option>';
+          }
+
+          let placeholderDoKho = 'Bỏ trống để ráp tự động, hoặc điền số để tự điền (VD: 0.45)...';
+          if (laXuatBan) placeholderDoKho = 'Bắt buộc nhập độ khô xuất bán (VD: 0.45)...';
+          let labelNgayText = (loai === 'NHẬP') ? 'Ngày Nhập' : 'Ngày Xuất';
+
+          let phanTrangHTML = laXuatBan
+            ? renderPhanTrang(trangHienTai, tongSoTrang, tongSoPhieu,
+                `moFormGiaoDich('${loai}','${tab}',null,null,${trangHienTai - 1},'${htTuNgay}','${htDenNgay}')`,
+                `moFormGiaoDich('${loai}','${tab}',null,null,${trangHienTai + 1},'${htTuNgay}','${htDenNgay}')`)
+            : renderPhanTrang(trangHienTai, tongSoTrang, tongSoPhieu,
+                `moFormGiaoDich('${loai}','${tab}','${tuNgay}','${denNgay}',${trangHienTai - 1})`,
+                `moFormGiaoDich('${loai}','${tab}','${tuNgay}','${denNgay}',${trangHienTai + 1})`);
+
+          if (laXuatBan) {
+            renderFormXuatBan(loai, tab, danhSach, khoOptions, todayStr, placeholderDoKho, phanTrangHTML, htTuNgay, htDenNgay);
+          } else {
+            renderFormGiaoDichChung(loai, tab, danhSach, khoOptions, hinhThucOptions, todayStr, placeholderDoKho, labelNgayText, tuNgay, denNgay, phanTrangHTML);
+          }
+        })
+        .withFailureHandler(err => alert("❌ Lỗi tải biểu mẫu giao dịch: " + err.message))
+        .getDataForGiaoDichForm(loai, tab, tuNgay, denNgay, trang);
+    }
+
+    /** Dựng các dòng bảng kê phiếu dùng chung cho layout lưới (Nhập kho / Xuất khác / Xuất trung chuyển) — 10 cột. */
+    function buildRowsGiaoDich(loai, tab, danhSach) {
+      return danhSach.length === 0 ? '<tr><td colspan="10">Không có phiếu nào trong khoảng thời gian đã chọn</td></tr>' : danhSach.map(item => {
+        let safeMaPhieu = String(item.maPhieu).replace(/'/g, "\\'");
+        let safeNgay = String(item.ngay).replace(/'/g, "\\'");
+        let safeHinhThuc = String(item.hinhThuc).replace(/'/g, "\\'");
+        let safeKhoXuat = String(item.khoXuat).replace(/'/g, "\\'");
+        let safeKhoNhap = String(item.khoNhap).replace(/'/g, "\\'");
+        let safeDotVetBai = String(item.dotVetBai || "Mặc định").replace(/'/g, "\\'");
+        let safeMt = String(item.mt);
+        let safeDoKho = String(item.doKho);
+        let dkStr = (item.doKho * 100).toFixed(1) + '%';
+
+        return item.isLocked ? 
+          `<tr class="locked-row"><td><b>${item.maPhieu}</b></td><td>${item.ngay}</td><td>${safeDotVetBai}</td><td>${item.hinhThuc}</td><td>${item.khoXuat}->${item.khoNhap}</td><td>${item.mt.toFixed(2)}</td><td>${dkStr}</td><td><small>${item.nguonDK}</small></td><td>${item.bdmt.toFixed(2)}</td><td>🔒 Khóa</td></tr>` : 
+          `<tr><td><b>${item.maPhieu}</b></td><td>${item.ngay}</td><td>${safeDotVetBai}</td><td>${item.hinhThuc}</td><td>${item.khoXuat}->${item.khoNhap}</td><td>${item.mt.toFixed(2)}</td><td>${dkStr}</td><td><small style="color:#0056b3; font-weight:bold;">${item.nguonDK}</small></td><td>${item.bdmt.toFixed(2)}</td><td><button class="btn-action btn-sua" onclick="chonSuaGiaoDich('${loai}', '${tab}', '${safeMaPhieu}', '${safeNgay}', '${safeHinhThuc}', '${safeKhoXuat}', '${safeKhoNhap}', '${safeMt}', '${safeDoKho}')">Sửa</button> <button class="btn-action btn-xoa" onclick="thucHienXoaGiaoDich('${loai}', '${tab}', '${safeMaPhieu}')">Xóa</button></td></tr>`;
+      }).join('');
+    }
+
+    /** Layout dạng lưới (form gọn bên trái, bảng kê bên phải) — dùng cho Nhập kho / Xuất khác / Xuất trung chuyển. */
+    function renderFormGiaoDichChung(loai, tab, danhSach, khoOptions, hinhThucOptions, todayStr, placeholderDoKho, labelNgayText, tuNgay, denNgay, phanTrangHTML) {
+      let rowsHTML = buildRowsGiaoDich(loai, tab, danhSach);
+
+      let hideHinhThucStyle = ((loai === 'NHẬP' && tab === 'Dăm sản xuất') || (loai === 'XUẤT' && tab === 'Xuất trung chuyển')) ? 'display:none;' : '';
+      let hideKhoXuatStyle = (loai === 'NHẬP') ? 'display:none;' : '';
+      let hideKhoNhapStyle = (loai === 'XUẤT' && tab === 'Xuất khác') ? 'display:none;' : '';
+      let hideKhoiLuongTuoiStyle = (loai === 'NHẬP' && tab === 'Dăm sản xuất') ? 'display:none;' : '';
+
+      let khuVucTaiPhieuCanHtml = "";
+      if (loai === 'NHẬP' && tab === 'Dăm sản xuất') {
+        khuVucTaiPhieuCanHtml = `
+          <div style="background: #e2f0ed; padding: 12px; border-radius: 6px; margin: 10px 0; border: 1px dashed #006b5a;">
+            <label style="color: #006b5a; font-weight: bold; font-size: 13px;">🔗 TẢI DỮ LIỆU PHIẾU CÂN</label>
+            <button type="button" id="btnTaiPhieuCan" class="btn-scan" onclick="taiPhieuCanThucTe('${loai}', '${tab}', null, this)">🔄 TẢI DỮ LIỆU PHIẾU CÂN NGÀY NÀY</button>
+            <div id="infoScanText_NHẬP" style="font-size: 13px; color: #006b5a; font-weight: bold; margin-top: 8px;"></div>
+          </div>
+        `;
+      }
+
+      renderScreen(`
+        <div class="form-container">
+          <b>${loai === 'NHẬP' ? '📥 QUẢN LÝ NHẬP KHO - ' + tab : '📤 QUẢN LÝ XUẤT KHO - ' + tab}</b>
+          <div style="background: #e7f5ff; padding: 10px; border-radius: 6px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+            <span style="font-weight:bold;">Lọc từ ngày:</span><input type="date" id="locTuNgay" value="${tuNgay}">
+            <span style="font-weight:bold;">Đến ngày:</span><input type="date" id="locDenNgay" value="${denNgay}">
+            <button class="nav-btn" style="background:#0d6efd; color:#fff;" onclick="moFormGiaoDich('${loai}', '${tab}', document.getElementById('locTuNgay').value, document.getElementById('locDenNgay').value, 1)">Lọc Dữ Liệu</button>
+          </div>
+          <div class="grid-2" style="margin-top:10px;">
+            <div style="background: #f1f3f5; padding: 15px; border-radius: 6px;">
+              <label id="lblFormMode_${loai}" style="color: #0d6efd; font-weight: bold;">➕ LẬP / SỬA PHIẾU</label>
+              <input type="hidden" id="editMaPhieu_${loai}">
+              
+              <label>${labelNgayText}</label><input type="date" id="ngayGiaoDich_${loai}" value="${todayStr}">
+              
+              <div id="groupDoKho_${loai}" style="margin-top: 5px;">
+                <label>Độ Khô</label>
+                <input type="number" step="0.0001" id="doKho_${loai}" placeholder="${placeholderDoKho}">
+              </div>
+
+              ${khuVucTaiPhieuCanHtml}
+              
+              <div id="groupHinhThuc_${loai}" style="${hideHinhThucStyle}">
+                <label>Hình thức</label><select id="hinhThuc_${loai}">${hinhThucOptions}</select>
+              </div>
+              
+              <div id="groupKhoXuat_${loai}" style="${hideKhoXuatStyle}">
+                <label>Kho Xuất</label><select id="khoXuat_${loai}">${khoOptions}</select>
+              </div>
+              
+              <div id="groupKhoNhap_${loai}" style="${hideKhoNhapStyle}">
+                <label>Kho Nhập (Kho Nhận)</label><select id="khoNhap_${loai}">${khoOptions}</select>
+              </div>
+
+              <div id="groupKhoiLuongTuoi_${loai}" style="${hideKhoiLuongTuoiStyle}">
+                <label>Khối lượng tươi (MT)</label><input type="number" id="khoiLuongMT_${loai}" placeholder="Nhập khối lượng...">
+              </div>
+
+              <div style="margin-top:15px;">
+                <button class="form-submit-btn" style="width:100%; padding:12px; font-size:15px;" onclick="luuGiaoDichForm('${loai}', '${tab}', this)">💾 HOÀN THÀNH & LƯU PHIẾU</button>
+              </div>
+            </div>
+            <div style="overflow-x: auto;">
+              <label style="font-weight:bold;">DANH SÁCH PHIẾU (${tab})</label>
+              <div style="max-height: 500px; overflow-y: auto;">
+                <table class="dokho-table" id="tableGiaoDich">
+                  <tr><th>Mã</th><th>Thời gian</th><th>Kỳ bãi</th><th>Hình thức</th><th>Từ->Đến</th><th>Tươi (MT)</th><th>Độ khô</th><th>Nguồn tham chiếu</th><th>Khô (BDMT)</th><th>Thao tác</th></tr>
+                  ${rowsHTML}
+                </table>
+              </div>
+              ${phanTrangHTML}
+            </div>
+          </div>
+        </div>
+      `);
+    }
+
+    /** Dựng các dòng bảng kê phiếu Xuất bán (không có cột "Từ->Đến" vì luôn Xuất từ 1 kho) — 9 cột. */
+    function buildRowsXuatBan(danhSach) {
+      return danhSach.length === 0 ? '<tr><td colspan="9">Không có phiếu nào trong khoảng thời gian đã chọn</td></tr>' : danhSach.map(item => {
+        let safeMaPhieu = String(item.maPhieu).replace(/'/g, "\\'");
+        let safeNgay = String(item.ngay).replace(/'/g, "\\'");
+        let safeHinhThuc = String(item.hinhThuc).replace(/'/g, "\\'");
+        let safeKhoXuat = String(item.khoXuat).replace(/'/g, "\\'");
+        let safeKhoNhap = String(item.khoNhap).replace(/'/g, "\\'");
+        let safeDotVetBai = String(item.dotVetBai || "Mặc định").replace(/'/g, "\\'");
+        let safeMt = String(item.mt);
+        let safeDoKho = String(item.doKho);
+        let dkStr = (item.doKho * 100).toFixed(1) + '%';
+
+        return item.isLocked ?
+          `<tr class="locked-row"><td><b>${item.maPhieu}</b></td><td>${item.ngay}</td><td>${safeDotVetBai}</td><td>${item.khoXuat}</td><td>${item.mt.toFixed(2)}</td><td>${dkStr}</td><td><small>${item.nguonDK}</small></td><td>${item.bdmt.toFixed(2)}</td><td>🔒 Khóa</td></tr>` :
+          `<tr><td><b>${item.maPhieu}</b></td><td>${item.ngay}</td><td>${safeDotVetBai}</td><td>${item.khoXuat}</td><td>${item.mt.toFixed(2)}</td><td>${dkStr}</td><td><small style="color:#0056b3; font-weight:bold;">${item.nguonDK}</small></td><td>${item.bdmt.toFixed(2)}</td><td><button class="btn-action btn-sua" onclick="chonSuaGiaoDich('XUẤT', 'Xuất bán', '${safeMaPhieu}', '${safeNgay}', '${safeHinhThuc}', '${safeKhoXuat}', '${safeKhoNhap}', '${safeMt}', '${safeDoKho}')">Sửa</button> <button class="btn-action btn-xoa" onclick="thucHienXoaGiaoDich('XUẤT', 'Xuất bán', '${safeMaPhieu}')">Xóa</button></td></tr>`;
+      }).join('');
+    }
+
+    /**
+     * Layout gộp cho tab Xuất Bán: form ngang gọn (ít cột) phía trên, panel "Hoàn thành đơn hàng" ở giữa,
+     * và bảng kê phiếu Xuất Bán ở dưới dùng CHUNG bộ lọc thời gian với panel Hoàn thành đơn hàng
+     * (tránh phải quản lý 2 bộ lọc riêng biệt cho cùng 1 tab).
+     */
+    function renderFormXuatBan(loai, tab, danhSach, khoOptions, todayStr, placeholderDoKho, phanTrangHTML, htTuNgay, htDenNgay) {
+      let rowsHTML = buildRowsXuatBan(danhSach);
+
+      renderScreen(`
+        <div class="form-container">
+          <b>📤 QUẢN LÝ XUẤT KHO - Xuất bán</b>
+          <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:flex-end; background:#f1f3f5; padding:15px; border-radius:6px;">
+            <input type="hidden" id="editMaPhieu_XUẤT">
+            <div id="groupHinhThuc_XUẤT" style="display:none;"><select id="hinhThuc_XUẤT"><option value="TT">TT (Mặc định Xuất bán)</option></select></div>
+            <div style="min-width:170px;">
+              <label id="lblFormMode_XUẤT" style="color:#0d6efd; font-weight:bold; display:block;">➕ LẬP / SỬA PHIẾU</label>
+            </div>
+            <div style="min-width:140px;"><label>Ngày Xuất</label><input type="date" id="ngayGiaoDich_XUẤT" value="${todayStr}"></div>
+            <div id="groupDoKho_XUẤT" style="min-width:220px;"><label>Độ Khô</label><input type="number" step="0.0001" id="doKho_XUẤT" placeholder="${placeholderDoKho}"></div>
+            <div id="groupKhoXuat_XUẤT" style="min-width:170px;"><label>Kho Xuất</label><select id="khoXuat_XUẤT">${khoOptions}</select></div>
+            <div id="groupKhoNhap_XUẤT" style="display:none;"><select id="khoNhap_XUẤT">${khoOptions}</select></div>
+            <div id="groupKhoiLuongTuoi_XUẤT" style="min-width:150px;"><label>Khối lượng tươi (MT)</label><input type="number" id="khoiLuongMT_XUẤT" placeholder="Nhập khối lượng..."></div>
+            <div style="min-width:150px;"><button class="form-submit-btn" style="width:100%; padding:10px;" onclick="luuGiaoDichForm('XUẤT', 'Xuất bán', this)">💾 LƯU PHIẾU</button></div>
+          </div>
+
+          <div style="background: #fff3cd; padding: 15px; border-radius: 6px; border: 1px solid #ffeeba; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+            <div class="d-flex justify-content-between align-items-center mb-2" style="border-bottom: 1px dashed #c69500; padding-bottom: 6px;">
+              <label style="color: #856404; font-weight: bold; font-size: 13px; margin: 0;">🏁 ĐIỀU CHỈNH & HOÀN THÀNH ĐƠN HÀNG</label>
+              <button type="button" class="btn btn-info btn-sm text-white font-weight-bold" onclick="moModalHuongDan()" style="font-size: 11px; padding: 3px 8px;">📖 Hướng dẫn</button>
+            </div>
+            <span style="font-size:11px; color: #6c757d; display:block; margin-bottom: 8px; font-style: italic;">Bộ lọc thời gian bên dưới dùng CHUNG cho cả đối soát và bảng kê phiếu Xuất bán phía dưới cùng.</span>
+            <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end;">
+              <div><label style="font-size:11px;">Từ ngày giờ:</label><input type="datetime-local" id="htTuNgay" value="${htTuNgay}"></div>
+              <div><label style="font-size:11px;">Đến ngày giờ:</label><input type="datetime-local" id="htDenNgay" value="${htDenNgay}"></div>
+              <button type="button" class="btn btn-secondary btn-sm font-weight-bold" onclick="locLaiDanhSachXuatBan()">🔍 Lọc Danh Sách</button>
+              <button type="button" class="btn btn-warning btn-sm font-weight-bold" style="color:#fff;" onclick="xuLyNutDieuChinh('BDMT')">1️⃣ Tạo phiếu ĐC Khô (BDMT)</button>
+              <button type="button" class="btn btn-success btn-sm font-weight-bold" onclick="xuLyNutDieuChinh('MT')">2️⃣ Tạo phiếu ĐC Tươi (MT)</button>
+            </div>
+          </div>
+
+          <div>
+            <label style="font-weight:bold;">DANH SÁCH PHIẾU (Xuất bán) — theo bộ lọc thời gian phía trên</label>
+            <div style="max-height: 450px; overflow-y: auto;">
+              <table class="dokho-table" id="tableGiaoDichXuatBan">
+                <tr><th>Mã</th><th>Thời gian</th><th>Kỳ bãi</th><th>Kho xuất</th><th>Tươi (MT)</th><th>Độ khô</th><th>Nguồn tham chiếu</th><th>Khô (BDMT)</th><th>Thao tác</th></tr>
+                ${rowsHTML}
+              </table>
+            </div>
+            ${phanTrangHTML}
+          </div>
+        </div>
+      `);
+    }
+
+    /** Lọc lại bảng kê Xuất Bán theo đúng bộ lọc thời gian đang dùng cho panel Hoàn thành đơn hàng. */
+    function locLaiDanhSachXuatBan() {
+      let htTuNgay = document.getElementById('htTuNgay').value;
+      let htDenNgay = document.getElementById('htDenNgay').value;
+      if (!htTuNgay || !htDenNgay) { alert("Vui lòng chọn đầy đủ Từ ngày giờ / Đến ngày giờ!"); return; }
+      moFormGiaoDich('XUẤT', 'Xuất bán', null, null, 1, htTuNgay, htDenNgay);
+    }
+
+    /** Tải lại đúng tab hiện tại, giữ nguyên bộ lọc đang dùng (gọi sau khi Lưu/Xóa phiếu). */
+    function moLaiTheoTab(loai, tab) {
+      if (loai === 'XUẤT' && tab === 'Xuất bán') {
+        let t1 = document.getElementById('htTuNgay');
+        let t2 = document.getElementById('htDenNgay');
+        moFormGiaoDich(loai, tab, null, null, 1, t1 ? t1.value : null, t2 ? t2.value : null);
+      } else {
+        let t1 = document.getElementById('locTuNgay');
+        let t2 = document.getElementById('locDenNgay');
+        moFormGiaoDich(loai, tab, t1 ? t1.value : null, t2 ? t2.value : null, 1);
+      }
+    }
+
+    function taiPhieuCanThucTe(loai, tab, optionChon, btn) {
+      let ngay = document.getElementById('ngayGiaoDich_' + loai).value;
+      if (!ngay) { alert("Vui lòng chọn ngày trước khi tải dữ liệu phiếu cân!"); return; }
+
+      btn.disabled = true;
+      let originalText = btn.innerText;
+      btn.innerText = "⏳ Đang quét dữ liệu...";
+
+      google.script.run.withSuccessHandler(function(res) {
+        btn.disabled = false;
+        btn.innerText = originalText;
+        window._scannedData = res;
+
+        if (res.status === "need_dokho_choice") {
+          document.getElementById('infoScanText_NHẬP').innerHTML = `✅ Đã quét dữ liệu phiếu cân:<br>- Gỗ keo: <b>${res.tongGoKeo.toLocaleString()} kg</b><br>- Dăm tươi: <b>${res.tongKhoiLuongUot.toLocaleString()} MT</b><br><span style="color:#dc3545;">⚠️ Chưa có độ khô ngày này! Vui lòng chọn nguồn thay thế hoặc tự điền phía trên.</span>`;
+          let luaChon = prompt("⚠️ " + res.message + "\n\nBạn muốn lấy độ khô nào thay thế?\n1. Ngày trước đó gần nhất\n2. Độ khô trung bình tháng\n3. Hủy để tự điền tay vào ô Độ Khô ngay dưới Ngày Nhập", "1");
+          if (luaChon === "1" || luaChon === "2") {
+            taiPhieuCanThucTe(loai, tab, luaChon, btn);
+          } else {
+            alert("👉 Đã lưu sẵn số tấn tươi (" + res.tongKhoiLuongUot.toLocaleString() + " MT)!\n\nGiờ bạn chỉ cần gõ số Độ Khô vào ô 'Độ Khô' phía trên rồi bấm Lưu Phiếu là xong!");
+            if (document.getElementById('doKho_' + loai)) document.getElementById('doKho_' + loai).focus();
+          }
+        } else if (res.status === "success") {
+          document.getElementById('infoScanText_NHẬP').innerHTML = `✅ Thành phẩm:<br>- Gỗ keo: <b>${res.tongGoKeo.toLocaleString()} kg</b><br>- Dăm tươi: <b>${res.tongKhoiLuongUot.toLocaleString()} MT</b><br>- Độ khô: <b>${(res.doKho*100).toFixed(1)}%</b><br>- Nguồn: <b style="color:#d9822b;">${res.dienGiaiDoKho}</b>`;
+          alert("✅ Tải phiếu cân thành công! Nhấn 'Hoàn Thành & Lưu Phiếu'.");
+        } else {
+          alert("⚠️ " + res.message);
+        }
+      }).withFailureHandler(function(err) {
+        btn.disabled = false;
+        btn.innerText = originalText;
+        alert("❌ Lỗi: " + err.message);
+      }).xuLyNhapSanPhamSanXuat(ngay, optionChon);
+    }
+
+    function xuLyNutDieuChinh(loaiDieuChinh) {
+      let khoXuatBan = document.getElementById('khoXuat_XUẤT') ? document.getElementById('khoXuat_XUẤT').value : '';
+      let tuNgayRaw = document.getElementById('htTuNgay').value;
+      let denNgayRaw = document.getElementById('htDenNgay').value;
+      
+      if (!khoXuatBan || khoXuatBan === 'Không có') { alert("Vui lòng chọn Kho Xuất (kho xuất bán)!"); return; }
+      if (!tuNgayRaw || !denNgayRaw) { alert("Vui lòng chọn đầy đủ thời gian từ ngày đến ngày!"); return; }
+
+      let tuNgay = tuNgayRaw.replace('T', ' ') + ':00';
+      let denNgay = denNgayRaw.replace('T', ' ') + ':59'; 
+
+      google.script.run
+        .withSuccessHandler(res => {
+          if (typeof res === 'string' && res.indexOf("DATA_STEP1::") === 0) {
+              let data = JSON.parse(res.substring(12));
+              
+              if (loaiDieuChinh === 'BDMT') {
+                  // FIX #7: đồng bộ ngưỡng với backend (0.01, khớp 2 chữ số thập phân hiển thị)
+                  if (Math.abs(data.chenhLechKho) <= 0.01) {
+                      alert("ℹ️ Lượng tấn khô (BDMT) tại kho [" + khoXuatBan + "] đã cân bằng hoàn toàn, không cần điều chỉnh!");
+                      return;
+                  }
+                  xacNhanVaTaoPhieuDieuChinhBDMT(data);
+              } else {
+                  alert("⚠️ Bạn đang bấm nút tạo phiếu Tươi (MT). Vui lòng dùng nút 1 để xử lý Khô (BDMT) trước.");
+              }
+
+          } else if (typeof res === 'string' && res.indexOf("DATA_STEP2::") === 0) {
+              let data = JSON.parse(res.substring(12));
+              
+              if (loaiDieuChinh === 'MT') {
+                  // FIX #7: đồng bộ ngưỡng với backend (0.01, khớp 2 chữ số thập phân hiển thị)
+                  if (Math.abs(data.chenhLechMT) <= 0.01) {
+                      alert("ℹ️ Lượng tấn tươi (MT) tại kho [" + khoXuatBan + "] đã khớp hoàn toàn, không có chênh lệch bay hơi!");
+                      return;
+                  }
+                  xacNhanVaTaoPhieuDieuChinhMT(data);
+              } else {
+                  alert("ℹ️ " + data.msg);
+              }
+          } else {
+              alert(res);
+          }
+        })
+        .withFailureHandler(err => alert("❌ Lỗi: " + err.message))
+        .processFormData('Hoanthanhdonhang', { 
+          khoXuatBan: khoXuatBan, tuNgay: tuNgay, denNgay: denNgay, cheDo: loaiDieuChinh 
+        });
+    }
+
+    /**
+     * FIX #9: Hỏi xác nhận NGAY TẠI CHỖ (không điều hướng sang form thủ công) rồi
+     * tạo VÀ LƯU trực tiếp phiếu điều chỉnh Khô (BDMT). Bấm OK dùng luôn kho gợi ý
+     * mặc định; bấm Cancel để tự nhập kho khác qua 2 ô hỏi nhanh. Sau khi lưu, chỉ
+     * làm mới lại đúng bảng kê + panel Hoàn thành đơn hàng đang đứng (không rời tab
+     * Xuất bán), để có thể bấm nút 2️⃣ ngay mà không cần tự quay lại tab.
+     */
+    function xacNhanVaTaoPhieuDieuChinhBDMT(data) {
+      let khoGoiY = data.khoNguonTC || "Không có";
+      let khoXuat, khoNhap;
+      if (data.chenhLechKho > 0) {
+        // Chênh lệch dương: thiếu nhập TC vào kho xuất bán => tạo thêm phiếu TC vào kho xuất bán
+        khoNhap = data.khoXuatBan; khoXuat = khoGoiY;
+      } else {
+        // Chênh lệch âm: dư nhập TC => trả bớt hàng dư về đúng kho đã chuyển đến (nếu xác định được)
+        khoXuat = data.khoXuatBan; khoNhap = khoGoiY;
+      }
+
+      let ghiChuKho = data.khoNguonTC
+        ? ("Kho gợi ý tự động (đã trung chuyển vào [" + data.khoXuatBan + "] nhiều nhất trong kỳ): [" + data.khoNguonTC + "].")
+        : "⚠️ Không xác định được kho gợi ý — vui lòng kiểm tra kỹ trước khi xác nhận.";
+
+      let dongY = confirm(
+        "📦 XÁC NHẬN TẠO PHIẾU ĐIỀU CHỈNH KHÔ (BDMT)\n\n" +
+        "Kho Xuất: " + khoXuat + "\n" +
+        "Kho Nhập: " + khoNhap + "\n" +
+        "Khối lượng: " + data.mt.toFixed(2) + " MT\n" +
+        "Độ khô: " + (data.doKho * 100).toFixed(2) + "%\n\n" +
+        ghiChuKho +
+        "\n\nBấm OK để tạo phiếu với thông tin trên.\nBấm Cancel nếu muốn tự chọn Kho Xuất/Kho Nhập khác."
+      );
+
+      if (!dongY) {
+        let khoXuatMoi = prompt("Nhập tên Kho Xuất (để trống = giữ mặc định):", khoXuat);
+        if (khoXuatMoi === null) return; // người dùng bấm Cancel ở prompt -> hủy thao tác hoàn toàn
+        let khoNhapMoi = prompt("Nhập tên Kho Nhập (để trống = giữ mặc định):", khoNhap);
+        if (khoNhapMoi === null) return;
+        khoXuat = khoXuatMoi.trim() || khoXuat;
+        khoNhap = khoNhapMoi.trim() || khoNhap;
+        if (khoXuat === khoNhap) { alert("❌ Kho Xuất và Kho Nhập không được trùng nhau. Đã hủy tạo phiếu."); return; }
+      }
+
+      google.script.run
+        .withSuccessHandler(res => {
+          alert(res);
+          locLaiDanhSachXuatBan(); // vẫn ở nguyên tab Xuất bán, sẵn sàng bấm nút 2️⃣
+        })
+        .withFailureHandler(err => alert("❌ Lỗi tạo phiếu điều chỉnh Khô: " + err.message))
+        .processFormData('HoanthanhTuDong', {
+          buoc: 'BDMT', khoXuatBan: data.khoXuatBan, ngay: data.denNgay.split(' ')[0],
+          khoXuat: khoXuat, khoNhap: khoNhap, mt: data.mt, doKho: data.doKho
+        });
+    }
+
+    /** FIX #9: Tương tự xacNhanVaTaoPhieuDieuChinhBDMT nhưng cho Bước 2 (Tươi/MT). Kho
+     * Xuất/Nhập ở bước này không mơ hồ (luôn là kho xuất bán + "Không có") nên chỉ cần
+     * xác nhận 1 lần, không cần hỏi lại kho. */
+    function xacNhanVaTaoPhieuDieuChinhMT(data) {
+      let laDuTuoi = data.chenhLechMT > 0;
+      let dongY = confirm(
+        "📦 XÁC NHẬN TẠO PHIẾU ĐIỀU CHỈNH TƯƠI (MT)\n\n" +
+        "Loại phiếu: " + (laDuTuoi ? "XUẤT KHÁC (dư tươi)" : "NHẬP KHÁC (thiếu tươi)") + "\n" +
+        "Kho: " + data.khoXuatBan + "\n" +
+        (laDuTuoi ? "Kho Nhập: Không có\n" : "Kho Xuất: Không có\n") +
+        "Khối lượng chênh lệch: " + Math.abs(data.chenhLechMT).toFixed(2) + " MT\n" +
+        "Độ khô: 0% (điều chỉnh Tươi thuần túy, không ảnh hưởng số Khô đã cân bằng)\n\n" +
+        data.msg + "\n\nBấm OK để tạo phiếu."
+      );
+      if (!dongY) return;
+
+      google.script.run
+        .withSuccessHandler(res => {
+          alert(res);
+          locLaiDanhSachXuatBan();
+        })
+        .withFailureHandler(err => alert("❌ Lỗi tạo phiếu điều chỉnh Tươi: " + err.message))
+        .processFormData('HoanthanhTuDong', {
+          buoc: 'MT', khoXuatBan: data.khoXuatBan, ngay: data.denNgay.split(' ')[0], chenhLechMT: data.chenhLechMT
+        });
+    }
+
+    function chonSuaGiaoDich(loai, tab, maPhieu, ngay, hinhThuc, khoXuat, khoNhap, mt, doKho) {
+      document.getElementById('editMaPhieu_' + loai).value = maPhieu;
+      document.getElementById('ngayGiaoDich_' + loai).value = ngay.split(' ')[0];
+      if (document.getElementById('hinhThuc_' + loai)) document.getElementById('hinhThuc_' + loai).value = hinhThuc;
+      if (document.getElementById('khoXuat_' + loai)) document.getElementById('khoXuat_' + loai).value = khoXuat;
+      if (document.getElementById('khoNhap_' + loai)) document.getElementById('khoNhap_' + loai).value = khoNhap;
+      if (document.getElementById('khoiLuongMT_' + loai)) document.getElementById('khoiLuongMT_' + loai).value = mt;
+      if (document.getElementById('doKho_' + loai) && doKho !== undefined) document.getElementById('doKho_' + loai).value = doKho;
+      document.getElementById('lblFormMode_' + loai).innerText = "✏️ ĐANG SỬA MÃ: " + maPhieu;
+    }
+
+    function thucHienXoaGiaoDich(loai, tab, maPhieu) {
+      if (!confirm("Xóa phiếu " + maPhieu + "?")) return;
+      google.script.run.withSuccessHandler(res => { alert(res); moLaiTheoTab(loai, tab); }).processFormData(loai === 'NHẬP' ? 'Nhapkho' : 'Xuatkho', { maPhieu: maPhieu, hanhDong: 'XOA' });
+    }
+
+    function luuGiaoDichForm(loai, tab, btn) {
+      let maPhieu = document.getElementById('editMaPhieu_' + loai).value;
+      let ngayVal = document.getElementById('ngayGiaoDich_' + loai).value;
+      
+      let hinhThucVal = "TP";
+      if (loai === 'NHẬP') {
+        if (tab === 'Dăm sản xuất') hinhThucVal = "TP";
+        else hinhThucVal = document.getElementById('hinhThuc_' + loai).value;
+      } else {
+        if (tab === 'Xuất bán') hinhThucVal = "TT";
+        else if (tab === 'Xuất trung chuyển') hinhThucVal = "TC";
+        else hinhThucVal = document.getElementById('hinhThuc_' + loai).value;
+      }
+
+      let doKhoInputVal = document.getElementById('doKho_' + loai) ? document.getElementById('doKho_' + loai).value : '';
+
+      if (loai === 'XUẤT' && tab === 'Xuất bán') {
+        let dkCheck = parseFloat(doKhoInputVal);
+        if (isNaN(dkCheck) || dkCheck <= 0) {
+          alert("❌ Lỗi: Phiếu xuất bán bắt buộc phải điền độ khô thủ công, không được để trống!");
+          return;
+        }
+      }
+
+      // FIX #8: hình thức DC (điều chuyển/điều chỉnh) được phép độ khô = 0 —
+      // dùng cho phiếu điều chỉnh Tươi (MT) thuần túy, không ảnh hưởng số Khô.
+      if (loai === 'NHẬP' && hinhThucVal !== 'TP' && hinhThucVal !== 'DC' && (!doKhoInputVal || parseFloat(doKhoInputVal) <= 0)) {
+        alert("❌ Lỗi: Hình thức nhập [" + hinhThucVal + "] bắt buộc phải điền độ khô, không được để trống!");
+        return;
+      }
+
+      let khoXuatVal = document.getElementById('khoXuat_' + loai) && document.getElementById('groupKhoXuat_' + loai).style.display !== 'none' ? document.getElementById('khoXuat_' + loai).value : 'Không có';
+      let khoNhapVal = document.getElementById('khoNhap_' + loai) && document.getElementById('groupKhoNhap_' + loai).style.display !== 'none' ? document.getElementById('khoNhap_' + loai).value : 'Không có';
+      
+      let mtVal = 0;
+      let dienGiaiVal = "";
+
+      if (loai === 'NHẬP' && tab === 'Dăm sản xuất') {
+        if (!window._scannedData || window._scannedData.tongKhoiLuongUot === undefined) {
+           alert("⚠️ Vui lòng bấm nút 'TẢI DỮ LIỆU PHIẾU CÂN' trước khi lưu!");
+           return;
+        }
+        mtVal = window._scannedData.tongKhoiLuongUot;
+        
+        if (doKhoInputVal && parseFloat(doKhoInputVal) > 0) {
+           let valDK = parseFloat(doKhoInputVal);
+           if (valDK > 1) valDK = valDK / 100;
+           doKhoInputVal = valDK;
+           dienGiaiVal = "Tự điền độ khô thủ công (" + (valDK * 100).toFixed(2) + "%)";
+        } else if (window._scannedData.doKho) {
+           doKhoInputVal = window._scannedData.doKho;
+           dienGiaiVal = window._scannedData.dienGiaiDoKho;
+        } else {
+           alert("❌ Lỗi: Bạn chưa có độ khô! Vui lòng gõ số độ khô vào ô 'Độ Khô' phía trên trước khi lưu.");
+           return;
+        }
+      } else {
+        mtVal = document.getElementById('khoiLuongMT_' + loai) ? document.getElementById('khoiLuongMT_' + loai).value : 0;
+      }
+
+      if (!ngayVal) { alert("Vui lòng chọn ngày!"); return; }
+
+      let data = { 
+        loai: loai, tab: tab, maPhieu: maPhieu, 
+        ngay: ngayVal, hinhThuc: hinhThucVal, 
+        khoXuat: khoXuatVal, khoNhap: khoNhapVal, 
+        khoiLuongMT: mtVal, doKho: doKhoInputVal,
+        dienGiaiDoKho: dienGiaiVal,
+        hanhDong: maPhieu ? 'SUA' : 'THEM' 
+      };
+      
+      guiPhieuGiaoDich(loai, tab, btn, data);
+    }
+
+    function guiPhieuGiaoDich(loai, tab, btn, data) {
+      let nhanNutGoc = btn.innerText;
+      btn.disabled = true; btn.innerText = "Đang lưu...";
+      google.script.run
+        .withSuccessHandler(res => {
+          if (typeof res === 'string' && res.indexOf('⚠️TRUNG_LAP_TP::') === 0) {
+            let msg = res.replace('⚠️TRUNG_LAP_TP::', '');
+            btn.disabled = false; btn.innerText = nhanNutGoc;
+            if (confirm(msg)) {
+              data.boQuaTrung = true;
+              guiPhieuGiaoDich(loai, tab, btn, data);
+            }
+            return;
+          }
+          alert(res); 
+          window._scannedData = null; 
+          moLaiTheoTab(loai, tab); 
+        })
+        .withFailureHandler(err => {
+          alert("❌ Lỗi lưu dữ liệu: " + err.message);
+          btn.disabled = false; btn.innerText = nhanNutGoc;
+        })
+        .processFormData(loai === 'NHẬP' ? 'Nhapkho' : 'Xuatkho', data);
+    }
+
+    // =================================================================
+    // IMPORT XUẤT HÀNG (NL_PC_XH_Draft -> NL_PC_XH)
+    // =================================================================
+    const xhDropzone = document.getElementById('xhDropzone');
+    const xhFileInput = document.getElementById('xhFileInput');
+    let xhPendingFiles = [];
+
+    xhDropzone.addEventListener('click', ()=> xhFileInput.click());
+    xhDropzone.addEventListener('dragover', e=>{ e.preventDefault(); xhDropzone.classList.add('drag'); });
+    xhDropzone.addEventListener('dragleave', ()=> xhDropzone.classList.remove('drag'));
+    xhDropzone.addEventListener('drop', e=>{
+      e.preventDefault(); xhDropzone.classList.remove('drag');
+      xhPendingFiles = Array.from(e.dataTransfer.files);
+      xhRenderFileList();
+    });
+    xhFileInput.addEventListener('change', ()=>{
+      xhPendingFiles = Array.from(xhFileInput.files);
+      xhRenderFileList();
+    });
+    function xhRenderFileList(){
+      const box = document.getElementById('xhFileList');
+      if (xhPendingFiles.length === 0) { box.innerHTML = ''; return; }
+      box.innerHTML = xhPendingFiles.map(f=>'<div class="fitem"><span>'+escapeHtml(f.name)+'</span><span>'+(Math.round(f.size/1024))+' KB</span></div>').join('');
+    }
+
+    document.getElementById('btnXhPreview').addEventListener('click', async ()=>{
+      if (xhPendingFiles.length === 0) { toast('Vui lòng chọn ít nhất 1 file cân xuất hàng (.xls/.xlsx).', false); return; }
+      const khoXuatMacDinh = document.getElementById('xh_khoXuatMacDinh').value;
+      const khoNhapMacDinh = document.getElementById('xh_khoNhapMacDinh').value;
+      showOverlay('Đang tải file lên & đối soát…');
+      try {
+        let lastResult = null;
+        for (const file of xhPendingFiles){
+          const base64 = await fileToBase64(file);
+          lastResult = await runServer('XH_step1_PreviewDraft', { base64, mimeType: file.type || 'application/vnd.ms-excel', name: file.name }, khoXuatMacDinh, khoNhapMacDinh);
+        }
+        if (lastResult.status !== 'success') { toast(lastResult.message, false); return; }
+        state.xhPreviewData = lastResult.data;
+        xhRenderPreview();
+        xhPendingFiles = []; xhFileInput.value = ''; xhRenderFileList();
+        toast('Đã xem trước ' + lastResult.data.length + ' dòng.', true);
+      } catch(err){
+        toast('Lỗi xem trước: ' + err, false);
+      } finally { hideOverlay(); }
+    });
+
+    document.getElementById('btnXhClearFolder').addEventListener('click', async ()=>{
+      showOverlay('Đang dọn dẹp thư mục Input…');
+      try {
+        const res = await runServer('clearInputFolderFiles');
+        toast(res.message, res.status === 'success');
+      } catch(err){ toast('Lỗi: ' + err, false); } finally { hideOverlay(); }
+    });
+    document.getElementById('btnTaiMauXuatHang').addEventListener('click', async ()=>{
+      showOverlay('Đang tạo file mẫu…');
+      try {
+        const res = await runServer('taoFileMauXuatHang');
+        if (res.status === 'success') window.open(res.url, '_blank'); else toast(res.message, false);
+      } catch(err){ toast('Lỗi tạo file mẫu: ' + err, false); } finally { hideOverlay(); }
+    });
+
+    // Tải danh mục kho cho 2 ô chọn mặc định của cả lô (dùng chung danh mục Kho Dăm)
+    async function xhLoadKhoMacDinhOptions(){
+      try {
+        const res = await runServer('XH_getKhoXuatList');
+        if (res.status !== 'success') return;
+        const options = '<option value="">-- Không chọn --</option>' + res.data.map(k=>'<option value="'+escapeHtml(k)+'">'+escapeHtml(k)+'</option>').join('');
+        document.getElementById('xh_khoXuatMacDinh').innerHTML = options;
+        document.getElementById('xh_khoNhapMacDinh').innerHTML = options;
+      } catch(err){ /* im lặng bỏ qua, không chặn luồng import chính */ }
+    }
+    xhLoadKhoMacDinhOptions();
+
+    function xhRenderPreview(){
+      const card = document.getElementById('xhPreviewCard');
+      const body = document.getElementById('xhPreviewBody');
+      const rows = state.xhPreviewData;
+      document.getElementById('xhPreviewCount').textContent = rows.length + ' dòng';
+      if (rows.length === 0){ card.style.display='none'; return; }
+      card.style.display='block';
+      body.innerHTML = rows.map((r,i)=>{
+        const badge = r.isError ? '<span class="badge badge-warn">❌ Lỗi</span>' : '<span class="badge badge-ok">✔️ '+escapeHtml(r.typeImport)+'</span>';
+        const checkboxCell = r.isError
+          ? '<input type="checkbox" disabled title="Dòng lỗi, không thể chọn">'
+          : '<input type="checkbox" class="xh-row-check" data-idx="'+i+'" checked>';
+        return '<tr>'
+          + '<td>'+checkboxCell+'</td>'
+          + '<td>'+badge+'</td>'
+          + '<td class="mono">'+escapeHtml(r.uniqueKey)+'</td>'
+          + '<td>'+escapeHtml(r.soPhieu)+'</td>'
+          + '<td>'+escapeHtml(r.bienSo)+'</td>'
+          + '<td>'+escapeHtml(r.ngayCan1)+'</td>'
+          + '<td>'+escapeHtml(r.gioCan1)+'</td>'
+          + '<td>'+escapeHtml(r.ngayCan2)+'</td>'
+          + '<td>'+escapeHtml(r.gioCan2)+'</td>'
+          + '<td class="num">'+fmtNum(r.canLan1)+'</td>'
+          + '<td class="num">'+fmtNum(r.canLan2)+'</td>'
+          + '<td class="num">'+fmtNum(r.klHang)+'</td>'
+          + '<td>'+escapeHtml(r.donViVanChuyen)+'</td>'
+          + '<td>'+escapeHtml(r.tenTaiXe)+'</td>'
+          + '<td>'+(r.khoXuat ? escapeHtml(r.khoXuat) : '—')+'</td>'
+          + '<td>'+(r.khoNhap ? escapeHtml(r.khoNhap) : '—')+'</td>'
+          + '</tr>';
+      }).join('');
+    }
+
+    document.getElementById('btnXhToggleAll').addEventListener('click', ()=>{
+      const boxes = document.querySelectorAll('.xh-row-check');
+      const anyUnchecked = Array.from(boxes).some(b => !b.checked);
+      boxes.forEach(b => b.checked = anyUnchecked);
+    });
+    document.getElementById('xhCheckHeader').addEventListener('change', (e)=>{
+      document.querySelectorAll('.xh-row-check').forEach(b => b.checked = e.target.checked);
+    });
+    document.getElementById('btnXhCancelPreview').addEventListener('click', ()=>{
+      state.xhPreviewData = [];
+      document.getElementById('xhPreviewCard').style.display='none';
+    });
+
+    document.getElementById('btnXhConfirmImport').addEventListener('click', async ()=>{
+      if (state.xhPreviewData.length === 0) return;
+      const checkedIdx = new Set(
+        Array.from(document.querySelectorAll('.xh-row-check:checked')).map(b => parseInt(b.getAttribute('data-idx'), 10))
+      );
+      const selectedRows = state.xhPreviewData.filter((r, i) => checkedIdx.has(i));
+      if (selectedRows.length === 0) { toast('Vui lòng chọn ít nhất 1 dòng hợp lệ để nhập.', false); return; }
+      showOverlay('Đang ghi dữ liệu vào NL_PC_XH…');
+      try {
+        const res = await runServer('XH_step1_ConfirmImport', selectedRows);
+        toast(res.message, res.status === 'success');
+        if (res.status === 'success'){
+          state.xhPreviewData = [];
+          document.getElementById('xhPreviewCard').style.display = 'none';
+        }
+      } catch(err){ toast('Lỗi xác nhận: ' + err, false); } finally { hideOverlay(); }
+    });
+
+    // =================================================================
+    // ĐƠN HÀNG XUẤT BÁN (NL_DH_XB)
+    // =================================================================
+    async function xhInitDonHang(){
+      showOverlay('Đang tải dữ liệu đơn hàng xuất bán…');
+      try {
+        const khoRes = await runServer('XH_getKhoXuatList');
+        if (khoRes.status === 'success') {
+          const sel = document.getElementById('dh_khoXuat');
+          sel.innerHTML = '<option value="">-- Chọn kho --</option>' + khoRes.data.map(k=>'<option value="'+escapeHtml(k)+'">'+escapeHtml(k)+'</option>').join('');
+        }
+        await xhLoadDonHangList();
+      } catch(err){ toast('Lỗi tải dữ liệu: ' + err, false); }
+      finally { hideOverlay(); }
+    }
+
+    document.getElementById('btnDhTinhDoKho').addEventListener('click', async ()=>{
+      const tuNgay = document.getElementById('dh_tuNgay').value;
+      const denNgay = document.getElementById('dh_denNgay').value;
+      if (!tuNgay || !denNgay) { toast('Vui lòng chọn đủ NL_Từ ngày và NL_Đến ngày.', false); return; }
+      showOverlay('Đang tính độ khô nhà máy…');
+      try {
+        const res = await runServer('XH_tinhDoKhoNhaMay', tuNgay, denNgay);
+        if (res.status !== 'success') { toast(res.message, false); return; }
+        if (res.doKho === null) {
+          document.getElementById('dh_doKhoNhaMay').value = '';
+          toast(res.message, false);
+        } else {
+          document.getElementById('dh_doKhoNhaMay').value = (res.doKho * 100).toFixed(2) + '%  (' + res.doKho.toFixed(4) + ')';
+          document.getElementById('dh_doKhoNhaMay').dataset.raw = res.doKho;
+          toast(res.message, true);
+        }
+      } catch(err){ toast('Lỗi tính độ khô: ' + err, false); } finally { hideOverlay(); }
+    });
+
+    document.getElementById('btnDhSave').addEventListener('click', async ()=>{
+      const payload = {
+        ngayDonHang: document.getElementById('dh_ngayDonHang').value,
+        soTKHQ: document.getElementById('dh_soTKHQ').value,
+        tau: document.getElementById('dh_tau').value,
+        khachHang: document.getElementById('dh_khachHang').value,
+        diaChiKH: document.getElementById('dh_diaChiKH').value,
+        tenHangHoa: document.getElementById('dh_tenHangHoa').value,
+        donGiaUSD: document.getElementById('dh_donGiaUSD').value,
+        klMT: document.getElementById('dh_klMT').value,
+        doKho: document.getElementById('dh_doKho').value,
+        khoXuat: document.getElementById('dh_khoXuat').value,
+        tuNgay: document.getElementById('dh_tuNgay').value,
+        denNgay: document.getElementById('dh_denNgay').value,
+        doKhoNhaMay: document.getElementById('dh_doKhoNhaMay').dataset.raw || 0,
+        loaiXe: document.getElementById('dh_loaiXe').value
+      };
+      showOverlay(state.dhEditingRow ? 'Đang cập nhật đơn hàng…' : 'Đang lưu đơn hàng…');
+      try {
+        const res = state.dhEditingRow
+          ? await runServer('XH_updateDonHang', state.dhEditingRow, payload)
+          : await runServer('XH_saveDonHang', payload);
+        toast(res.message, res.status === 'success');
+        if (res.status === 'success'){ xhResetDonHangForm(); await xhLoadDonHangList(); }
+      } catch(err){ toast('Lỗi lưu đơn hàng: ' + err, false); } finally { hideOverlay(); }
+    });
+
+    // Tự tính KL_BDMT = KL_MT × Độ khô theo thời gian thực, hiển thị ngay khi người dùng nhập
+    function xhCapNhatKLBDMT(){
+      const klMT = parseFloat(document.getElementById('dh_klMT').value) || 0;
+      let doKho = parseFloat(document.getElementById('dh_doKho').value) || 0;
+      if (doKho > 1) doKho = doKho / 100;
+      const klBDMT = klMT * doKho;
+      document.getElementById('dh_klBDMT').value = (klMT > 0 && doKho > 0) ? klBDMT.toFixed(2) : '';
+    }
+    document.getElementById('dh_klMT').addEventListener('input', xhCapNhatKLBDMT);
+    document.getElementById('dh_doKho').addEventListener('input', xhCapNhatKLBDMT);
+
+    document.getElementById('btnDhReset').addEventListener('click', xhResetDonHangForm);
+    function xhResetDonHangForm(){
+      ['dh_ngayDonHang','dh_soTKHQ','dh_tau','dh_khachHang','dh_diaChiKH','dh_tenHangHoa','dh_donGiaUSD',
+       'dh_klMT','dh_doKho','dh_klBDMT','dh_tuNgay','dh_denNgay','dh_doKhoNhaMay'].forEach(id=>{
+        const el = document.getElementById(id);
+        el.value = ''; delete el.dataset.raw;
+      });
+      document.getElementById('dh_khoXuat').value = '';
+      document.getElementById('dh_loaiXe').value = 'Y';
+      state.dhEditingRow = null;
+      document.getElementById('btnDhSave').textContent = '✔️ Lưu đơn hàng xuất bán';
+    }
+
+    // Nạp 1 đơn hàng đã có vào form để SỬA
+    async function xhEditDonHang(rowIndex){
+      showOverlay('Đang tải dữ liệu đơn hàng…');
+      try {
+        const res = await runServer('XH_getDonHangByRow', rowIndex);
+        if (res.status !== 'success') { toast(res.message, false); return; }
+        document.getElementById('dh_ngayDonHang').value = res.ngayDonHang;
+        document.getElementById('dh_soTKHQ').value = res.soTKHQ;
+        document.getElementById('dh_tau').value = res.tau;
+        document.getElementById('dh_khachHang').value = res.khachHang;
+        document.getElementById('dh_diaChiKH').value = res.diaChiKH;
+        document.getElementById('dh_tenHangHoa').value = res.tenHangHoa;
+        document.getElementById('dh_donGiaUSD').value = res.donGiaUSD;
+        document.getElementById('dh_klMT').value = res.klMT;
+        document.getElementById('dh_doKho').value = res.doKho.toFixed(2);
+        document.getElementById('dh_khoXuat').value = res.khoXuat;
+        document.getElementById('dh_tuNgay').value = res.tuNgay;
+        document.getElementById('dh_denNgay').value = res.denNgay;
+        document.getElementById('dh_loaiXe').value = res.loaiXe;
+        document.getElementById('dh_doKhoNhaMay').value = res.doKhoNhaMay ? (res.doKhoNhaMay*100).toFixed(2) + '%  (' + res.doKhoNhaMay.toFixed(4) + ')' : '';
+        document.getElementById('dh_doKhoNhaMay').dataset.raw = res.doKhoNhaMay || 0;
+        xhCapNhatKLBDMT();
+        state.dhEditingRow = res.rowIndex;
+        document.getElementById('btnDhSave').textContent = '💾 Cập nhật đơn hàng';
+        toast('Đã nạp đơn hàng để sửa. Chỉnh xong bấm "Cập nhật đơn hàng".', true);
+      } catch(err){ toast('Lỗi tải dữ liệu: ' + err, false); } finally { hideOverlay(); }
+    }
+
+    async function xhDeleteDonHangRow(rowIndex){
+      if (!confirm('Bạn có chắc muốn XÓA đơn hàng này? Hành động không thể hoàn tác.')) return;
+      showOverlay('Đang xóa đơn hàng…');
+      try {
+        const res = await runServer('XH_deleteDonHang', rowIndex);
+        toast(res.message, res.status === 'success');
+        if (res.status === 'success') await xhLoadDonHangList();
+      } catch(err){ toast('Lỗi xóa đơn hàng: ' + err, false); } finally { hideOverlay(); }
+    }
+
+    document.getElementById('btnDhRefreshList').addEventListener('click', xhLoadDonHangList);
+    async function xhLoadDonHangList(){
+      try {
+        const res = await runServer('XH_getDonHangList');
+        if (res.status !== 'success') { toast(res.message, false); return; }
+        document.getElementById('dh_listCount').textContent = res.data.length + ' đơn';
+        const body = document.getElementById('dh_listBody');
+        if (res.data.length === 0){ body.innerHTML = '<tr><td colspan="13" class="empty-state">Chưa có đơn hàng nào.</td></tr>'; return; }
+        body.innerHTML = res.data.map(d=>(
+          '<tr><td>'+escapeHtml(d.ngayDonHang)+'</td><td class="mono">'+escapeHtml(d.soTKHQ)+'</td><td>'+escapeHtml(d.tau)+'</td>'
+          + '<td>'+escapeHtml(d.khachHang)+'</td><td>'+escapeHtml(d.khoXuat)+'</td>'
+          + '<td class="num">'+fmtNum(d.klMT)+'</td><td class="num">'+fmtNum(d.klBDMT)+'</td>'
+          + '<td class="num">'+(d.doKho*100).toFixed(2)+'%</td><td class="num">'+(d.doKhoNhaMay*100).toFixed(2)+'%</td>'
+          + '<td>'+(d.tuNgay ? escapeHtml(d.tuNgay) : '—')+'</td><td>'+(d.denNgay ? escapeHtml(d.denNgay) : '—')+'</td>'
+          + '<td>'+escapeHtml(d.loaiXe)+'</td>'
+          + '<td><div class="btnrow" style="margin:0;gap:6px;">'
+          + '<button class="btn btn-ghost btn-sm" data-editdh="'+d.rowIndex+'">✏️ Sửa</button>'
+          + '<button class="btn btn-danger btn-sm" data-deldh="'+d.rowIndex+'">🗑️ Xóa</button>'
+          + '</div></td></tr>'
+        )).join('');
+        body.querySelectorAll('[data-editdh]').forEach(btn=>{
+          btn.addEventListener('click', ()=> xhEditDonHang(btn.getAttribute('data-editdh')));
+        });
+        body.querySelectorAll('[data-deldh]').forEach(btn=>{
+          btn.addEventListener('click', ()=> xhDeleteDonHangRow(btn.getAttribute('data-deldh')));
+        });
+      } catch(err){ toast('Lỗi tải danh sách: ' + err, false); }
+    }
+
+    // =================================================================
+    // BÁO CÁO TỔNG HỢP XUẤT KHO
+    // =================================================================
+    async function xkInitView(){
+      showOverlay('Đang tải báo cáo xuất qua cân…');
+      try { await locXuatQuaCan(1); } catch(e){ console.error(e); }
+      finally { hideOverlay(); }
+    }
+
+    function xkReadFilters(){
+      return {
+        tuNgay: document.getElementById('xk_fromDate').value,
+        denNgay: document.getElementById('xk_toDate').value,
+        donViVanChuyen: document.getElementById('xk_dvvc').value,
+        soXe: document.getElementById('xk_xe').value,
+        soTKHQ: document.getElementById('xk_soTKHQ').value
+      };
+    }
+
+    async function locXuatQuaCan(trang){
+      const filters = xkReadFilters();
+      filters.trang = trang || state.xkTrangHienTai || 1;
+      showOverlay('Đang tải báo cáo xuất qua cân…');
+      try {
+        const res = await runServer('XH_getBaoCaoXuatQuaCan', filters);
+        if (res.status !== 'success'){ toast(res.message, false); return; }
+        state.xkTrangHienTai = res.trang;
+        renderXuatQuaCan(res);
+      } catch(err){ toast('Lỗi tải báo cáo: ' + err, false); } finally { hideOverlay(); }
+    }
+
+    function renderXuatQuaCan(res){
+      document.getElementById('xk_sumSoLuong').textContent = res.summary.soLuong;
+      document.getElementById('xk_sumKLHang').textContent = fmtNum(res.summary.tongKLHang);
+      document.getElementById('xk_sumTan').textContent = fmtNum(res.summary.tongTan);
+
+      // Đổ danh mục lọc (giữ nguyên lựa chọn hiện tại nếu có)
+      fillSelect('xk_dvvc', res.dsDonViVanChuyen);
+      fillSelect('xk_xe', res.dsSoXe);
+
+      const body = document.getElementById('xk_tableBody');
+      if (res.data.length === 0){
+        body.innerHTML = '<tr><td colspan="10" class="empty-state">Không có dữ liệu phù hợp bộ lọc.</td></tr>';
+      } else {
+        body.innerHTML = res.data.map(r=>(
+          '<tr><td class="mono">'+escapeHtml(r.soPhieu)+'</td><td>'+escapeHtml(r.ngayGioCan1)+'</td><td>'+escapeHtml(r.bienSo)+'</td>'
+          + '<td class="num">'+fmtNum(r.klHang)+'</td><td class="num">'+fmtNum(r.khoiLuongTan)+'</td>'
+          + '<td>'+escapeHtml(r.donViVanChuyen)+'</td><td>'+escapeHtml(r.tenTaiXe)+'</td>'
+          + '<td>'+(r.soTKHQ ? escapeHtml(r.soTKHQ) : '—')+'</td>'
+          + '<td>'+(r.khoXuat ? escapeHtml(r.khoXuat) : '—')+'</td><td>'+(r.khoNhap ? escapeHtml(r.khoNhap) : '—')+'</td></tr>'
+        )).join('');
+      }
+
+      // Phân trang 20 dòng/trang
+      const pag = document.getElementById('xk_pagination');
+      if (res.tongSoTrang <= 1){ pag.innerHTML = ''; return; }
+      let html = '<button class="btn btn-ghost btn-sm" '+(res.trang<=1?'disabled':'')+' data-xktrang="'+(res.trang-1)+'">‹ Trước</button>';
+      html += '<span style="align-self:center;font-size:13px;color:var(--ink-soft);padding:0 10px;">Trang '+res.trang+' / '+res.tongSoTrang+' ('+res.tongSoDong+' dòng)</span>';
+      html += '<button class="btn btn-ghost btn-sm" '+(res.trang>=res.tongSoTrang?'disabled':'')+' data-xktrang="'+(res.trang+1)+'">Sau ›</button>';
+      pag.innerHTML = html;
+      pag.querySelectorAll('[data-xktrang]').forEach(btn=>{
+        btn.addEventListener('click', ()=> locXuatQuaCan(parseInt(btn.getAttribute('data-xktrang'), 10)));
+      });
+    }
+
+    document.getElementById('btnLocXuatQuaCan').addEventListener('click', ()=> locXuatQuaCan(1));
+    document.getElementById('btnExcelXuatQuaCan').addEventListener('click', async ()=>{
+      showOverlay('Đang tạo file Excel…');
+      try {
+        const res = await runServer('XH_exportBaoCaoXuatQuaCanExcel', xkReadFilters());
+        if (res.status === 'success') window.open(res.url, '_blank'); else toast(res.message, false);
+      } catch(err){ toast('Lỗi xuất Excel: ' + err, false); } finally { hideOverlay(); }
+    });
+    document.getElementById('btnPdfXuatQuaCan').addEventListener('click', async ()=>{
+      showOverlay('Đang tạo file PDF…');
+      try {
+        const res = await runServer('XH_exportBaoCaoXuatQuaCanPDF', xkReadFilters());
+        if (res.status === 'success') window.open(res.url, '_blank'); else toast(res.message, false);
+      } catch(err){ toast('Lỗi xuất PDF: ' + err, false); } finally { hideOverlay(); }
+    });
+
+    // ---------- Báo cáo xuất kết xuất Misa ----------
+    function xmReadFilters(){
+      return { tuNgay: document.getElementById('xm_fromDate').value, denNgay: document.getElementById('xm_toDate').value };
+    }
+    async function locXuatMisa(){
+      showOverlay('Đang tải báo cáo xuất kết xuất Misa…');
+      try {
+        const res = await runServer('XH_getBaoCaoXuatMisa', xmReadFilters());
+        if (res.status !== 'success'){ toast(res.message, false); return; }
+        renderXuatMisa(res);
+      } catch(err){ toast('Lỗi tải báo cáo: ' + err, false); } finally { hideOverlay(); }
+    }
+    function renderXuatMisa(res){
+      document.getElementById('xm_sumSoLuong').textContent = res.summary.soLuong;
+      document.getElementById('xm_sumKLMT').textContent = fmtNum(res.summary.tongKLMT);
+      document.getElementById('xm_sumKLBDMT').textContent = fmtNum(res.summary.tongKLBDMT);
+      document.getElementById('xm_sumTien').textContent = fmtNum(res.summary.tongThanhTienUSD);
+      const body = document.getElementById('xm_tableBody');
+      if (res.data.length === 0){ body.innerHTML = '<tr><td colspan="10" class="empty-state">Không có dữ liệu phù hợp bộ lọc.</td></tr>'; return; }
+      body.innerHTML = res.data.map(r=>(
+        '<tr><td>'+escapeHtml(r.ngayDonHang)+'</td><td class="mono">'+escapeHtml(r.soTKHQ)+'</td><td>'+escapeHtml(r.tau)+'</td>'
+        + '<td>'+escapeHtml(r.khachHang)+'</td><td>'+escapeHtml(r.tenHangHoa)+'</td>'
+        + '<td class="num">'+fmtNum(r.donGiaUSD)+'</td><td class="num">'+fmtNum(r.klMT)+'</td><td class="num">'+fmtNum(r.klBDMT)+'</td>'
+        + '<td class="num">'+fmtNum(r.thanhTienUSD)+'</td><td>'+(r.khoXuat ? escapeHtml(r.khoXuat) : '—')+'</td></tr>'
+      )).join('');
+    }
+    document.getElementById('btnLocXuatMisa').addEventListener('click', locXuatMisa);
+    document.getElementById('btnExcelXuatMisa').addEventListener('click', async ()=>{
+      showOverlay('Đang tạo file Excel…');
+      try {
+        const res = await runServer('XH_exportBaoCaoXuatMisaExcel', xmReadFilters());
+        if (res.status === 'success') window.open(res.url, '_blank'); else toast(res.message, false);
+      } catch(err){ toast('Lỗi xuất Excel: ' + err, false); } finally { hideOverlay(); }
+    });
+
   </script>
 </body>
 </html>

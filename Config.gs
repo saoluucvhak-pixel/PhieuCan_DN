@@ -66,3 +66,27 @@ const BAOGIA_CONFIG = {
 /* ---------- HẰNG SỐ DÙNG CHUNG KHÁC ---------- */
 // Tên công ty hiển thị trên các phiếu in (Phiếu nhập kho, bảng báo giá xuất Excel...)
 const COMPANY_NAME = "CÔNG TY TNHH HOÀNG ANH KHÔI";
+
+/* ---------- CẤU HÌNH HỆ THỐNG XUẤT HÀNG (NL_PC_XH / NL_DH_XB) ---------- */
+// Spreadsheet RIÊNG cho phiếu cân xuất hàng (dăm gỗ xuất bán/xuất khẩu) và đơn
+// hàng xuất bán - khác với CONFIG (PhieuCan_DN nhập gỗ), BAOGIA_CONFIG và
+// KHODAM_CONFIG ở trên.
+const XUATHANG_CONFIG = {
+  SPREADSHEET_ID: "1ZZ2iUwkkKe8wXdztA7mL-v9j6fmgY5c5rlDdI1sNoAk",
+  SHEET_NLPCXH: "NL_PC_XH",             // Dữ liệu phiếu cân xuất hàng CHÍNH THỨC (sau khi duyệt)
+  SHEET_NLPCXH_DRAFT: "NL_PC_XH_Draft", // Sheet tạm để xem trước/đối soát trước khi duyệt
+  SHEET_DHXB: "NL_DH_XB"                // Đơn hàng xuất bán (nhập liệu tay theo lô/tàu)
+};
+
+/* ---------- CẤU HÌNH HỆ THỐNG QUẢN LÝ TỒN KHO DĂM GỖ ---------- */
+// Spreadsheet RIÊNG cho module Kho Dăm (khác với CONFIG.SPREADSHEET_ID và
+// BAOGIA_CONFIG.SPREADSHEET_ID ở trên) - đã xác nhận với người dùng đây là
+// Sheet ĐANG CHẠY THẬT, chứa dữ liệu Nhập/Xuất/Tồn kho dăm gỗ.
+// Tên các sheet giữ NGUYÊN như hệ thống gốc để không phải di chuyển dữ liệu.
+const KHODAM_CONFIG = {
+  SPREADSHEET_ID: "1MQ6eCOKgJyd4t1J84nA24hvkjSTufdH8jhJX-EJTWQU",
+  SHEET_GIAODICH: "DATA_GIAODICH",     // Log tất cả phiếu Nhập/Xuất kho
+  SHEET_CAUHINH: "SYS_CAUHINH",        // Cấu hình Kỳ Vét Bãi (thời gian hiệu lực + tỷ lệ tiêu hao)
+  SHEET_NHAPDOKHO: "Nhapdokho",         // Độ khô/độ ẩm theo ngày, dùng tham chiếu khi nhập Dăm sản xuất
+  SHEET_DANHMUCKHO: "SYS_DANHMUCKHO"   // Danh mục Nhà máy / Kho hàng
+};
