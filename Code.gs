@@ -256,11 +256,22 @@ function step1_ConfirmImport(confirmedDataList) {
       const startRow = dataSheet.getLastRow() + 1;
       dataSheet.getRange(startRow, 1, batchNew.length, NUM_COLUMNS).setValues(batchNew);
 
-      // Định dạng hiển thị khớp với giá trị THẬT đã ghi (Ngày thuần / Giờ thuần)
-      dataSheet.getRange(startRow, 2, batchNew.length, 1).setNumberFormat("dd/MM/yyyy"); // Ngày Cân 1
-      dataSheet.getRange(startRow, 3, batchNew.length, 1).setNumberFormat("HH:mm:ss");   // Giờ Cân 1
-      dataSheet.getRange(startRow, 4, batchNew.length, 1).setNumberFormat("dd/MM/yyyy"); // Ngày Cân 2
-      dataSheet.getRange(startRow, 5, batchNew.length, 1).setNumberFormat("HH:mm:ss");   // Giờ Cân 2
+      // FIX #11: Chỉ đổi ĐỊNH DẠNG HIỂN THỊ khi ghi vào PhieuCan_DN theo yêu cầu
+      // (MM/dd/yyyy - định dạng cũ quen dùng), KHÔNG đụng đến giá trị Date bên
+      // trong ô (vẫn được phân tích đúng nhờ FIX #10). Đổi định dạng là thao
+      // tác THUẦN HIỂN THỊ, an toàn tuyệt đối - không thể làm sai lệch dữ liệu
+      // như lỗi phân tích chuỗi ngày trước đây.
+      // FIX #12: Giờ Cân đổi sang định dạng 12 giờ + AM/PM ("hh:mm:ss AM/PM").
+      // Token "AM/PM" được Google Sheets TỰ ĐỘNG dịch theo Locale của bảng
+      // tính: Locale "Vietnam" sẽ hiển thị đúng "SA"/"CH" (Sáng/Chiều), Locale
+      // "United States" sẽ hiển thị "AM"/"PM". Đây VẪN CHỈ là đổi hiển thị -
+      // giá trị Date gốc bên trong ô không đổi, nên hàm tính giá
+      // (runCalculatePrice_core dùng t.getHours()/t.getMinutes() trực tiếp
+      // trên Date object) hoàn toàn không bị ảnh hưởng.
+      dataSheet.getRange(startRow, 2, batchNew.length, 1).setNumberFormat("MM/dd/yyyy"); // Ngày Cân 1
+      dataSheet.getRange(startRow, 3, batchNew.length, 1).setNumberFormat("hh:mm:ss AM/PM"); // Giờ Cân 1
+      dataSheet.getRange(startRow, 4, batchNew.length, 1).setNumberFormat("MM/dd/yyyy"); // Ngày Cân 2
+      dataSheet.getRange(startRow, 5, batchNew.length, 1).setNumberFormat("hh:mm:ss AM/PM"); // Giờ Cân 2
     }
 
     const folder = DriveApp.getFolderById(CONFIG.FOLDER_INPUT); const files = folder.getFiles();
@@ -368,10 +379,11 @@ function addManualPhieuCan(fields) {
 
     const startRow = dataSheet.getLastRow() + 1;
     dataSheet.getRange(startRow, 1, 1, NUM_COLUMNS).setValues([newRow]);
-    dataSheet.getRange(startRow, 2, 1, 1).setNumberFormat("dd/MM/yyyy");
-    dataSheet.getRange(startRow, 3, 1, 1).setNumberFormat("HH:mm:ss");
-    dataSheet.getRange(startRow, 4, 1, 1).setNumberFormat("dd/MM/yyyy");
-    dataSheet.getRange(startRow, 5, 1, 1).setNumberFormat("HH:mm:ss");
+    // FIX #11/#12: đồng bộ với step1_ConfirmImport - MM/dd/yyyy + Giờ 12h AM/PM khi ghi vào PhieuCan_DN
+    dataSheet.getRange(startRow, 2, 1, 1).setNumberFormat("MM/dd/yyyy");
+    dataSheet.getRange(startRow, 3, 1, 1).setNumberFormat("hh:mm:ss AM/PM");
+    dataSheet.getRange(startRow, 4, 1, 1).setNumberFormat("MM/dd/yyyy");
+    dataSheet.getRange(startRow, 5, 1, 1).setNumberFormat("hh:mm:ss AM/PM");
 
     // Gọi bản _core (không khóa) vì đang giữ khóa của addManualPhieuCan rồi
     const priceResult = runCalculatePrice_core();
