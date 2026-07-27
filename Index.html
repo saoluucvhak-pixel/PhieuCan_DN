@@ -76,6 +76,11 @@
     .menu-item.active svg{opacity:1;}
     .menu-sep{height:1px;background:rgba(255,255,255,.08);margin:14px 4px;}
     .sub-menu{margin:2px 0 8px 30px;display:none;flex-direction:column;gap:2px;}
+    .sub-group-label{
+      font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;
+      color:#6E8074;padding:8px 10px 3px;margin-top:2px;cursor:default;user-select:none;
+    }
+    .sub-group-label:first-child{margin-top:0;}
     .sub-menu.open{display:flex;}
     .sub-item{
       padding:7px 10px;border-radius:7px;font-size:12.5px;color:#9BAFA1;cursor:pointer;
@@ -263,6 +268,56 @@
     #view-khodam .text-danger{color:var(--danger);}
     @media (max-width:820px){ #view-khodam .grid-2{grid-template-columns:1fr;} }
 
+    /* ===== HỆ THỐNG: Quy trình tổng quan + Hướng dẫn sử dụng ===== */
+    .process-flow{display:flex;flex-wrap:wrap;gap:0;align-items:stretch;}
+    .process-step{
+      flex:1;min-width:200px;background:var(--surface);border:1px solid var(--border);
+      border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;position:relative;
+    }
+    .process-step .step-num{
+      width:28px;height:28px;border-radius:50%;background:var(--brand);color:#fff;
+      display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;margin-bottom:10px;
+    }
+    .process-step h4{margin:0 0 6px;font-size:13.5px;color:var(--brand-dark);}
+    .process-step p{margin:0;font-size:12px;color:var(--ink-soft);line-height:1.5;}
+    .process-arrow{
+      display:flex;align-items:center;justify-content:center;color:var(--accent);
+      font-size:22px;padding:0 6px;flex:0 0 auto;
+    }
+    .process-phase{margin-bottom:22px;}
+    .process-phase > .phase-title{
+      font-size:14px;font-weight:700;color:var(--brand-dark);margin-bottom:10px;
+      display:flex;align-items:center;gap:8px;
+    }
+    .process-phase > .phase-title .phase-badge{
+      background:var(--accent-soft);color:#8A5F17;font-size:10.5px;padding:2px 10px;border-radius:20px;font-weight:700;
+    }
+    @media (max-width:820px){ .process-arrow{transform:rotate(90deg);padding:6px 0;} }
+
+    .guide-accordion details{
+      background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+      box-shadow:var(--shadow);margin-bottom:10px;overflow:hidden;
+    }
+    .guide-accordion summary{
+      padding:13px 16px;cursor:pointer;font-weight:700;font-size:13.5px;color:var(--brand-dark);
+      list-style:none;display:flex;align-items:center;justify-content:space-between;user-select:none;
+    }
+    .guide-accordion summary::-webkit-details-marker{display:none;}
+    .guide-accordion summary::after{content:"▸";color:var(--accent);font-size:14px;transition:transform .15s ease;}
+    .guide-accordion details[open] summary::after{transform:rotate(90deg);}
+    .guide-accordion .guide-body{padding:0 16px 16px;font-size:13px;line-height:1.7;color:var(--ink);}
+    .guide-accordion .guide-body ol, .guide-accordion .guide-body ul{margin:6px 0;padding-left:22px;}
+    .guide-accordion .guide-body li{margin-bottom:4px;}
+    .guide-accordion .guide-body h5{margin:12px 0 4px;color:var(--brand-dark);font-size:12.5px;text-transform:uppercase;letter-spacing:.3px;}
+    .guide-note{
+      background:var(--accent-soft);border:1px solid var(--accent);border-radius:8px;
+      padding:8px 12px;font-size:12px;color:#5C4109;margin:8px 0;
+    }
+    .guide-warn{
+      background:var(--danger-soft);border:1px solid var(--danger);border-radius:8px;
+      padding:8px 12px;font-size:12px;color:var(--danger);margin:8px 0;
+    }
+
     .bg-group-card{
       border:1px solid var(--border);border-radius:9px;padding:14px;margin-bottom:12px;background:#FAFBF9;
     }
@@ -294,31 +349,47 @@
       <ul class="menu">
         <li class="menu-item active" data-view="view-import">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
-          Import &amp; Nhập liệu
+          Import
         </li>
         <li class="sub-menu open" id="submenu-import">
-          <div class="sub-item active" data-tab="tab-file" data-group="import">Import file cân</div>
-          <div class="sub-item" data-tab="tab-manual" data-group="import">Nhập thủ công</div>
-          <div class="sub-item" data-tab="tab-xh-import" data-group="import">Import xuất hàng</div>
-          <div class="sub-item" data-tab="tab-xh-donhang" data-group="import">Đơn hàng xuất bán</div>
+          <div class="sub-item active" data-tab="tab-file" data-group="import">Nhập kho theo phiếu cân</div>
+          <div class="sub-item" data-tab="tab-xh-import" data-group="import">Xuất kho theo phiếu cân</div>
         </li>
 
-        <li class="menu-item" data-view="view-nhapkho">
+        <li class="menu-item" data-view="view-router-nhaplieu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
+          Nhập liệu
+        </li>
+        <li class="sub-menu" id="submenu-router-nhaplieu">
+          <div class="sub-group-label">Nhập kho</div>
+          <div class="sub-item" data-route-view="view-import" data-route-tab="tab-manual" data-group="nl">Nhập thủ công kho gỗ keo</div>
+          <div class="sub-item" data-route-view="view-khodam" data-route-kd="nhapkho|Dăm sản xuất" data-group="nl">Nhập TP dăm</div>
+          <div class="sub-item" data-route-view="view-khodam" data-route-kd="nhapkho|Nhập khác" data-group="nl">Nhập khác</div>
+          <div class="sub-group-label">Xuất kho</div>
+          <div class="sub-item" data-route-view="view-khodam" data-route-kd="xuatkho|Xuất bán" data-group="nl">Xuất bán</div>
+          <div class="sub-item" data-route-view="view-khodam" data-route-kd="xuatkho|Xuất trung chuyển" data-group="nl">Xuất trung chuyển</div>
+          <div class="sub-item" data-route-view="view-khodam" data-route-kd="xuatkho|Xuất khác" data-group="nl">Xuất khác</div>
+          <div class="sub-item" data-route-view="view-import" data-route-tab="tab-xh-donhang" data-group="nl">Đơn hàng xuất bán</div>
+          <div class="sub-group-label">Nhập khác</div>
+          <div class="sub-item" data-route-view="view-khodam" data-route-kd="danhmuc" data-group="nl">Danh mục kho</div>
+          <div class="sub-item" data-route-view="view-khodam" data-route-kd="dokho" data-group="nl">Độ ẩm dăm gỗ (quản lý độ khô)</div>
+          <div class="sub-item" data-route-view="view-khodam" data-route-kd="kyvetbai" data-group="nl">Kỳ vét bãi</div>
+        </li>
+
+        <li class="menu-item" data-view="view-router-baocaokho">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg>
-          Báo cáo tổng hợp nhập kho
+          Báo cáo tổng hợp kho
         </li>
-        <li class="sub-menu" id="submenu-nhapkho">
-          <div class="sub-item active" data-tab="nk-tab-tonghop" data-group="nhapkho">Báo cáo nhập qua cân</div>
-          <div class="sub-item" data-tab="nk-tab-misa" data-group="nhapkho">Báo cáo nhập kết xuất Misa</div>
-        </li>
-
-        <li class="menu-item" data-view="view-xuatkho">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-6 9 6v10a1 1 0 01-1 1H4a1 1 0 01-1-1V9z"/><path d="M9 21V12h6v9" transform="rotate(180 12 15)"/></svg>
-          Báo cáo tổng hợp xuất kho
-        </li>
-        <li class="sub-menu" id="submenu-xuatkho">
-          <div class="sub-item active" data-tab="xk-tab-tonghop" data-group="xuatkho">Báo cáo xuất qua cân</div>
-          <div class="sub-item" data-tab="xk-tab-misa" data-group="xuatkho">Báo cáo xuất kết xuất Misa</div>
+        <li class="sub-menu" id="submenu-router-baocaokho">
+          <div class="sub-group-label">Báo cáo tổng hợp nhập kho</div>
+          <div class="sub-item" data-route-view="view-nhapkho" data-route-tab="nk-tab-tonghop" data-group="bck">Báo cáo gỗ keo nhập qua cân</div>
+          <div class="sub-item" data-route-view="view-nhapkho" data-route-tab="nk-tab-misa" data-group="bck">Báo cáo gỗ keo nhập kết xuất Misa</div>
+          <div class="sub-group-label">Báo cáo tổng hợp dăm gỗ xuất kho</div>
+          <div class="sub-item" data-route-view="view-xuatkho" data-route-tab="xk-tab-tonghop" data-group="bck">Báo cáo dăm gỗ xuất qua cân</div>
+          <div class="sub-item" data-route-view="view-xuatkho" data-route-tab="xk-tab-misa" data-group="bck">Báo cáo xuất kho dăm gỗ kết xuất Misa</div>
+          <div class="sub-group-label">Báo cáo tồn kho dăm gỗ</div>
+          <div class="sub-item" data-route-view="view-khodam" data-route-kd="baocao|kho" data-group="bck">Theo kho</div>
+          <div class="sub-item" data-route-view="view-khodam" data-route-kd="baocao|kyvetbai" data-group="bck">Theo kỳ vét bãi</div>
         </li>
 
         <li class="menu-item" data-view="view-baogia">
@@ -332,17 +403,13 @@
           <div class="sub-item" data-tab="bg-tab-makl" data-group="baogia">Danh mục mã khối lượng</div>
         </li>
 
-        <li class="menu-item" data-view="view-khodam">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-6 9 6v10a1 1 0 01-1 1H4a1 1 0 01-1-1V9z"/><path d="M9 21V12h6v9"/></svg>
-          Quản lý tồn kho dăm gỗ
+        <li class="menu-item" data-view="view-hethong">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 005 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.6a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+          Hệ thống
         </li>
-        <li class="sub-menu" id="submenu-khodam">
-          <div class="sub-item active" data-kd="danhmuc" data-group="khodam">Danh mục kho</div>
-          <div class="sub-item" data-kd="kyvetbai" data-group="khodam">Kỳ vét bãi</div>
-          <div class="sub-item" data-kd="dokho" data-group="khodam">Quản lý độ khô</div>
-          <div class="sub-item" data-kd="nhapkho" data-group="khodam">Nhập kho</div>
-          <div class="sub-item" data-kd="xuatkho" data-group="khodam">Xuất kho</div>
-          <div class="sub-item" data-kd="baocao" data-group="khodam">Báo cáo tồn kho</div>
+        <li class="sub-menu" id="submenu-hethong">
+          <div class="sub-item active" data-tab="ht-tab-quytrinh" data-group="hethong">Quy trình tổng quan</div>
+          <div class="sub-item" data-tab="ht-tab-huongdan" data-group="hethong">Hướng dẫn sử dụng</div>
         </li>
       </ul>
 
@@ -354,15 +421,15 @@
       <!-- ============ VIEW 1: IMPORT & NHẬP LIỆU ============ -->
       <section id="view-import" class="view active">
         <div class="page-head">
-          <h1>Import &amp; Nhập liệu phiếu cân</h1>
-          <p>Tải file cân lên để đối soát tự động, hoặc nhập tay từng phiếu.</p>
+          <h1>Import phiếu cân</h1>
+          <p>Tải file cân lên để đối soát tự động - Nhập kho (gỗ keo) hoặc Xuất kho (dăm gỗ) theo phiếu cân.</p>
         </div>
 
         <div class="tabbar">
-          <div class="tabbtn active" data-pane="tab-file">📥 Import file cân</div>
-          <div class="tabbtn" data-pane="tab-manual">✍️ Nhập thủ công</div>
-          <div class="tabbtn" data-pane="tab-xh-import">🚚 Import xuất hàng</div>
-          <div class="tabbtn" data-pane="tab-xh-donhang">📄 Đơn hàng xuất bán</div>
+          <div class="tabbtn active" data-pane="tab-file">📥 Nhập kho theo phiếu cân</div>
+          <div class="tabbtn" data-pane="tab-manual" style="display:none;">✍️ Nhập thủ công</div>
+          <div class="tabbtn" data-pane="tab-xh-import">🚚 Xuất kho theo phiếu cân</div>
+          <div class="tabbtn" data-pane="tab-xh-donhang" style="display:none;">📄 Đơn hàng xuất bán</div>
         </div>
 
         <!-- TAB: IMPORT FILE -->
@@ -1005,6 +1072,174 @@
         </div>
       </section>
 
+      <!-- ============ VIEW: HỆ THỐNG ============ -->
+      <section id="view-hethong" class="view">
+        <div class="page-head">
+          <h1>Hệ thống</h1>
+          <p>Quy trình tổng quan và hướng dẫn sử dụng toàn bộ hệ thống Quản Lý HAKGROUP.</p>
+        </div>
+
+        <div class="tabbar">
+          <div class="tabbtn active" data-pane="ht-tab-quytrinh">🗺️ Quy trình tổng quan</div>
+          <div class="tabbtn" data-pane="ht-tab-huongdan">📖 Hướng dẫn sử dụng</div>
+        </div>
+
+        <!-- TAB: QUY TRÌNH TỔNG QUAN -->
+        <div class="tabpane active" id="ht-tab-quytrinh">
+          <div class="card">
+            <p style="font-size:12.5px;color:var(--ink-soft);margin:0;">Toàn bộ hoạt động của công ty được chia làm 5 giai đoạn liên kết với nhau. Mỗi ô dưới đây tương ứng với 1 chức năng cụ thể trong hệ thống - bấm vào menu bên trái để thao tác trực tiếp.</p>
+          </div>
+
+          <div class="process-phase">
+            <div class="phase-title">1️⃣ Nhập gỗ nguyên liệu (gỗ keo) <span class="phase-badge">Import → Nhập liệu</span></div>
+            <div class="process-flow">
+              <div class="process-step"><div class="step-num">1</div><h4>Cân xe tại trạm cân</h4><p>Xe chở gỗ nguyên liệu đến, phần mềm trạm cân xuất file Excel (STT, Số phiếu, Ngày giờ cân, Biển số, Khối lượng...).</p></div>
+              <div class="process-arrow">→</div>
+              <div class="process-step"><div class="step-num">2</div><h4>Import → Nhập kho theo phiếu cân</h4><p>Tải file lên, xem trước &amp; đối soát, chọn dòng cần nhập, xác nhận ghi vào PhieuCan_DN. Có thể nhập bổ sung thủ công (Nhập liệu → Nhập thủ công kho gỗ keo).</p></div>
+              <div class="process-arrow">→</div>
+              <div class="process-step"><div class="step-num">3</div><h4>Tự động tính giá</h4><p>Hệ thống tự tra Mã đơn giá (Đại lý_Nguồn gốc_Hình ảnh) trong <b>Quản lý báo giá</b> đang hiệu lực tại đúng thời điểm cân để tính Thành tiền.</p></div>
+              <div class="process-arrow">→</div>
+              <div class="process-step"><div class="step-num">4</div><h4>Báo cáo &amp; thanh toán</h4><p>Xem <b>Báo cáo tổng hợp kho → Báo cáo gỗ keo nhập qua cân</b>, xuất Excel/PDF, xuất dữ liệu Misa để hạch toán và lập Đề nghị thanh toán (ĐNTT).</p></div>
+            </div>
+          </div>
+
+          <div class="process-phase">
+            <div class="phase-title">2️⃣ Quản lý báo giá <span class="phase-badge">Chạy song song, phục vụ Giai đoạn 1</span></div>
+            <div class="process-flow">
+              <div class="process-step"><div class="step-num">1</div><h4>Nhập báo giá mới</h4><p>Chọn Mã báo giá (Đại lý + Nguồn gốc + Hình ảnh) + Mã khối lượng + Đơn giá + Thời điểm hiệu lực. Có thể sao chép từ báo giá cũ để nhanh hơn.</p></div>
+              <div class="process-arrow">→</div>
+              <div class="process-step"><div class="step-num">2</div><h4>Hệ thống tự tính hiệu lực</h4><p>Tự động xác định "Còn hiệu lực / Chưa đến hạn / Hết hiệu lực" theo mốc thời gian, không cần thao tác thủ công.</p></div>
+              <div class="process-arrow">→</div>
+              <div class="process-step"><div class="step-num">3</div><h4>Sửa / Xóa có kiểm soát</h4><p>Chỉ cho sửa/xóa khi báo giá <b>chưa hết hiệu lực</b> và <b>chưa có phiếu cân nào áp dụng</b> - bảo toàn tính đúng đắn của số liệu đã tính tiền.</p></div>
+            </div>
+          </div>
+
+          <div class="process-phase">
+            <div class="phase-title">3️⃣ Sản xuất &amp; quản lý kho dăm gỗ <span class="phase-badge">Nhập liệu</span></div>
+            <div class="process-flow">
+              <div class="process-step"><div class="step-num">1</div><h4>Gỗ nguyên liệu → sản xuất dăm</h4><p>Gỗ nhập kho được đưa vào sản xuất, cho ra thành phẩm dăm gỗ.</p></div>
+              <div class="process-arrow">→</div>
+              <div class="process-step"><div class="step-num">2</div><h4>Nhập TP dăm / Nhập khác</h4><p>Ghi nhận thành phẩm dăm nhập vào từng kho cụ thể (Nhập liệu → Nhập TP dăm / Nhập khác).</p></div>
+              <div class="process-arrow">→</div>
+              <div class="process-step"><div class="step-num">3</div><h4>Theo dõi hàng ngày</h4><p>Độ ẩm dăm gỗ (độ khô) cập nhật mỗi ngày; Kỳ vét bãi theo dõi tỷ lệ tiêu hao theo từng đợt.</p></div>
+              <div class="process-arrow">→</div>
+              <div class="process-step"><div class="step-num">4</div><h4>Xuất trung chuyển</h4><p>Chuyển dăm giữa các kho khi cần điều phối trước khi xuất bán.</p></div>
+            </div>
+          </div>
+
+          <div class="process-phase">
+            <div class="phase-title">4️⃣ Xuất bán / xuất khẩu dăm gỗ <span class="phase-badge">Nhập liệu → Import</span></div>
+            <div class="process-flow">
+              <div class="process-step"><div class="step-num">1</div><h4>Lập đơn hàng xuất bán</h4><p>Nhập liệu → Đơn hàng xuất bán: Khách hàng, Tàu, Số TKHQ (Tờ khai hải quan) - đây là <b>bảng mẹ</b> mà mọi phiếu cân xuất sẽ đối chiếu vào.</p></div>
+              <div class="process-arrow">→</div>
+              <div class="process-step"><div class="step-num">2</div><h4>Cân xe xuất tại trạm cân</h4><p>Xe chở dăm ra cảng/điểm giao, cân xuất, phần mềm trạm cân xuất file Excel.</p></div>
+              <div class="process-arrow">→</div>
+              <div class="process-step"><div class="step-num">3</div><h4>Import → Xuất kho theo phiếu cân</h4><p>Tải file lên, xem trước, xác nhận ghi vào NL_PC_XH (kèm Kho xuất/Kho nhập nếu có).</p></div>
+              <div class="process-arrow">→</div>
+              <div class="process-step"><div class="step-num">4</div><h4>Đối chiếu hoàn thành đơn hàng</h4><p>Tại Nhập liệu → Xuất bán: đối chiếu Khô (BDMT) rồi Tươi (MT) theo 2 bước, tự động gợi ý phiếu điều chỉnh nếu còn chênh lệch.</p></div>
+            </div>
+          </div>
+
+          <div class="process-phase">
+            <div class="phase-title">5️⃣ Báo cáo tổng hợp <span class="phase-badge">Xem lại toàn bộ số liệu</span></div>
+            <div class="process-flow">
+              <div class="process-step"><div class="step-num">1</div><h4>Báo cáo tổng hợp nhập kho</h4><p>Theo dõi gỗ keo nhập qua cân + số liệu kết xuất Misa để hạch toán mua hàng.</p></div>
+              <div class="process-arrow">→</div>
+              <div class="process-step"><div class="step-num">2</div><h4>Báo cáo tổng hợp xuất kho</h4><p>Theo dõi dăm gỗ xuất qua cân (lọc theo đơn vị vận chuyển, xe, TKHQ) + kết xuất Misa để hạch toán bán hàng.</p></div>
+              <div class="process-arrow">→</div>
+              <div class="process-step"><div class="step-num">3</div><h4>Báo cáo tồn kho dăm gỗ</h4><p>Xem tồn kho hiện tại theo từng kho hoặc theo kỳ vét bãi.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: HƯỚNG DẪN SỬ DỤNG -->
+        <div class="tabpane" id="ht-tab-huongdan">
+          <div class="guide-accordion">
+
+            <details open>
+              <summary>📥 Import — Nhập/Xuất kho theo phiếu cân</summary>
+              <div class="guide-body">
+                <h5>Nhập kho theo phiếu cân (gỗ keo)</h5>
+                <ol>
+                  <li>Chuẩn bị file Excel xuất ra từ phần mềm trạm cân (kiểu cân "Nhập"). Nếu chưa có mẫu, bấm <b>"📄 Tải file mẫu"</b> để tham khảo đúng định dạng cột.</li>
+                  <li>Kéo thả hoặc chọn file .xls/.xlsx, bấm <b>"Tải lên &amp; Xem trước"</b>.</li>
+                  <li>Kiểm tra bảng xem trước: dòng lỗi (❌) sẽ không chọn được; bỏ tick những dòng không muốn nhập.</li>
+                  <li>Bấm <b>"✔️ Xác nhận nhập liệu"</b> để ghi chính thức vào PhieuCan_DN. Hệ thống tự tính giá ngay sau khi ghi xong.</li>
+                </ol>
+                <div class="guide-note">Nếu Import nhiều lần, nhớ bấm <b>"Dọn dẹp file tạm"</b> trước khi tải file mới, vì hệ thống quét toàn bộ file còn nằm trong thư mục tạm mỗi lần xem trước.</div>
+
+                <h5>Xuất kho theo phiếu cân (dăm gỗ)</h5>
+                <ol>
+                  <li>Tương tự Nhập kho, nhưng dùng file trạm cân kiểu "Xuất" và ghi vào NL_PC_XH_Draft rồi duyệt vào NL_PC_XH.</li>
+                  <li>Có thể chọn <b>Kho xuất / Kho nhập mặc định</b> áp dụng cho cả lô nếu file không có sẵn 2 cột này.</li>
+                </ol>
+                <div class="guide-warn">File mẫu Xuất hàng hiện là suy đoán tốt nhất (chưa có mẫu thật kiểu "Xuất" để đối chiếu) — nếu tên cột trên trạm cân khác, chỉ cần sửa lại đúng tên tiêu đề cột trong file tải lên (hệ thống đọc theo tên cột, không theo vị trí).</div>
+              </div>
+            </details>
+
+            <details>
+              <summary>📝 Nhập liệu — Nhập kho</summary>
+              <div class="guide-body">
+                <ul>
+                  <li><b>Nhập thủ công kho gỗ keo</b>: dùng khi có phiếu cân lẻ chưa kịp import qua file, hoặc cần bổ sung 1 phiếu bị thiếu. Lưu ý: nếu số khối lượng nhập &lt; 70, hệ thống tự hiểu là đơn vị Tấn và quy đổi ra Kg.</li>
+                  <li><b>Nhập TP dăm</b>: ghi nhận thành phẩm dăm gỗ sản xuất ra, nhập vào 1 kho cụ thể.</li>
+                  <li><b>Nhập khác</b>: các trường hợp nhập kho không phải từ sản xuất (điều chỉnh, trả hàng...).</li>
+                </ul>
+              </div>
+            </details>
+
+            <details>
+              <summary>🚚 Nhập liệu — Xuất kho</summary>
+              <div class="guide-body">
+                <ul>
+                  <li><b>Xuất bán</b>: xuất dăm gỗ để bán/xuất khẩu. Đây cũng là nơi thực hiện <b>Đối chiếu hoàn thành đơn hàng</b> (panel riêng trong màn hình này) — đối chiếu Khô (BDMT) trước, Tươi (MT) sau, hệ thống tự tính và hỏi xác nhận trước khi tạo phiếu điều chỉnh.</li>
+                  <li><b>Xuất trung chuyển</b>: chuyển hàng giữa 2 kho nội bộ, không phải bán ra ngoài.</li>
+                  <li><b>Xuất khác</b>: các trường hợp xuất kho khác (hao hụt, điều chỉnh...).</li>
+                  <li><b>Đơn hàng xuất bán</b>: lập thông tin đơn hàng theo Số TKHQ (Khách hàng, Tàu, Đơn giá USD, KL_MT, Độ khô...). Đây là <b>bảng mẹ</b> để đối chiếu với các phiếu cân xuất — nên lập đơn hàng TRƯỚC khi import phiếu cân xuất tương ứng.</li>
+                </ul>
+                <div class="guide-note">Công thức: <b>KL_BDMT = KL_MT × Độ khô</b> — chỉ cần nhập KL_MT và Độ khô, hệ thống tự tính KL_BDMT.</div>
+              </div>
+            </details>
+
+            <details>
+              <summary>🗂️ Nhập liệu — Nhập khác (Danh mục &amp; theo dõi)</summary>
+              <div class="guide-body">
+                <ul>
+                  <li><b>Danh mục kho</b>: khai báo/quản lý danh sách các kho (nhà máy, bãi chứa...) dùng chung cho toàn hệ thống Kho Dăm.</li>
+                  <li><b>Độ ẩm dăm gỗ (quản lý độ khô)</b>: nhập độ khô đo được mỗi ngày — dữ liệu này được dùng để tự động tính "Độ khô nhà máy" khi lập Đơn hàng xuất bán.</li>
+                  <li><b>Kỳ vét bãi</b>: cấu hình thời gian hiệu lực và tỷ lệ tiêu hao cho từng đợt vét bãi, ảnh hưởng đến cách tính tồn kho.</li>
+                </ul>
+              </div>
+            </details>
+
+            <details>
+              <summary>📊 Báo cáo tổng hợp kho</summary>
+              <div class="guide-body">
+                <ul>
+                  <li><b>Báo cáo gỗ keo nhập qua cân</b>: lọc theo ngày, xe, khách hàng, đại lý/nguồn gốc, tình trạng thanh toán; xuất Excel/PDF; in phiếu nhập kho từng dòng.</li>
+                  <li><b>Báo cáo gỗ keo nhập kết xuất Misa</b>: dữ liệu đã map sẵn để import lên phần mềm MISA hạch toán mua hàng.</li>
+                  <li><b>Báo cáo dăm gỗ xuất qua cân</b>: lọc theo đơn vị vận chuyển, số xe, số tờ khai hải quan, khoảng ngày; phân trang 20 dòng/trang.</li>
+                  <li><b>Báo cáo xuất kho dăm gỗ kết xuất Misa</b>: tổng hợp theo đơn hàng xuất bán, tính sẵn thành tiền USD.</li>
+                  <li><b>Báo cáo tồn kho dăm gỗ</b>: xem tồn kho hiện tại theo từng kho hoặc theo kỳ vét bãi.</li>
+                </ul>
+              </div>
+            </details>
+
+            <details>
+              <summary>💰 Quản lý báo giá</summary>
+              <div class="guide-body">
+                <ol>
+                  <li><b>Nhập báo giá</b>: Bước 1 chọn ngày/thời điểm hiệu lực → Bước 2 (tùy chọn) sao chép từ báo giá cũ → Bước 3 chọn Mã báo giá + Mã khối lượng + Đơn giá cho từng nhóm, có thể "Tách nhóm" nếu cần đặt giá riêng cho từng mã.</li>
+                  <li><b>Hiệu lực báo giá</b>: xem toàn bộ lịch sử hoặc chỉ các mã còn hiệu lực; xuất Excel; Sửa/Xóa từng dòng hoặc xóa cả phiếu (chỉ khi chưa hết hiệu lực và chưa có phiếu cân áp dụng).</li>
+                  <li><b>Danh mục mã báo giá</b> / <b>Danh mục mã khối lượng</b>: khai báo các mã dùng khi nhập báo giá.</li>
+                </ol>
+              </div>
+            </details>
+
+          </div>
+        </div>
+      </section>
+
       <!-- ============ VIEW: QUẢN LÝ TỒN KHO DĂM GỖ ============ -->
       <section id="view-khodam" class="view">
         <div class="page-head">
@@ -1086,20 +1321,58 @@
         document.querySelectorAll('.menu-item[data-view]').forEach(i=>i.classList.remove('active'));
         item.classList.add('active');
         const viewId = item.getAttribute('data-view');
-        document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-        document.getElementById(viewId).classList.add('active');
         // Mỗi menu-item có thể sở hữu 1 sub-menu riêng (id="submenu-<phần sau 'view-'>").
         // Đóng hết các sub-menu khác, chỉ mở đúng sub-menu của mục đang chọn (nếu có).
         document.querySelectorAll('.sub-menu').forEach(sm => sm.classList.remove('open'));
         const submenu = document.getElementById('submenu-' + viewId.replace('view-', ''));
         if (submenu) submenu.classList.add('open');
 
-        if (viewId === 'view-nhapkho' && !state.loadedTongHop) { state.loadedTongHop = true; locTongHop(); }
+        // "Nhập liệu" và "Báo cáo tổng hợp kho" là MENU ĐIỀU HƯỚNG THUẦN (gom
+        // nhiều màn hình có sẵn khác nhau, không có 1 màn hình mặc định riêng).
+        // Bấm vào chính nó chỉ mở/đóng submenu để chọn mục con cụ thể bên dưới
+        // (xem handler .sub-item[data-route-view] phía dưới) - KHÔNG chuyển view ở đây.
+        if (viewId.indexOf('view-router-') === 0) return;
+
+        document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+        document.getElementById(viewId).classList.add('active');
+
         if (viewId === 'view-baogia' && !state.loadedBaoGia) { state.loadedBaoGia = true; bgInitView(); }
-        if (viewId === 'view-xuatkho' && !state.loadedXuatKho) { state.loadedXuatKho = true; xkInitView(); }
-        if (viewId === 'view-khodam' && !state.loadedKhoDam) { state.loadedKhoDam = true; moChucNang('danhmuc'); }
       });
     });
+
+    // Điều hướng cho các mục con dạng "gom nhiều màn hình có sẵn" (Nhập liệu /
+    // Báo cáo tổng hợp kho): chuyển đúng view đích, rồi hoặc bấm đúng tab có sẵn
+    // (data-route-tab) hoặc gọi thẳng moChucNang(...) của module Kho Dăm
+    // (data-route-kd="loai" hoặc "loai|subLoai"). Toàn bộ nội dung/logic đích
+    // giữ NGUYÊN VẸN, không đụng tới - chỉ thêm 1 lớp điều hướng phía trên.
+    document.querySelectorAll('.sub-item[data-route-view]').forEach(sub=>{
+      sub.addEventListener('click', ()=>{
+        const submenu = sub.closest('.sub-menu');
+        if (submenu) submenu.querySelectorAll('.sub-item').forEach(s=>s.classList.remove('active'));
+        sub.classList.add('active');
+
+        const viewId = sub.getAttribute('data-route-view');
+        const tabId = sub.getAttribute('data-route-tab');
+        const kdAttr = sub.getAttribute('data-route-kd');
+
+        document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+        const viewEl = document.getElementById(viewId);
+        if (viewEl) viewEl.classList.add('active');
+
+        if (tabId) {
+          const tabBtn = document.querySelector('.tabbtn[data-pane="'+tabId+'"]');
+          if (tabBtn) tabBtn.click();
+        }
+        if (kdAttr) {
+          moChucNang.apply(null, kdAttr.split('|'));
+        }
+
+        // Lazy-load cấp view y hệt hành vi cũ khi các view này còn là top-level menu riêng
+        if (viewId === 'view-nhapkho' && !state.loadedTongHop) { state.loadedTongHop = true; locTongHop(); }
+        if (viewId === 'view-xuatkho' && !state.loadedXuatKho) { state.loadedXuatKho = true; xkInitView(); }
+      });
+    });
+
     // Chuyển tab: chỉ tác động trong PHẠM VI view cha chứa nút bấm (tránh 1 view
     // có nhiều nhóm tab con làm ảnh hưởng lẫn nhau, vd Import và Báo giá).
     document.querySelectorAll('.tabbtn').forEach(btn=>{
