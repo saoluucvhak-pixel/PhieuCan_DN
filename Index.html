@@ -1410,15 +1410,6 @@
         if (targetBtn) targetBtn.click();
       });
     });
-    // Sub-menu "Quản lý tồn kho dăm gỗ": không dùng cơ chế tabbtn/tabpane vì nội
-    // dung được render động bằng JS gốc (moChucNang) vào #khodamContentArea.
-    document.querySelectorAll('.sub-item[data-kd]').forEach(sub=>{
-      sub.addEventListener('click', ()=>{
-        document.querySelectorAll('.sub-item[data-group="khodam"]').forEach(s=>s.classList.remove('active'));
-        sub.classList.add('active');
-        moChucNang(sub.getAttribute('data-kd'));
-      });
-    });
 
     const state = {
       previewData: [], loadedTongHop:false, loadedMisa:false, filterOptions:null,
